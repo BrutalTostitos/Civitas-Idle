@@ -20,7 +20,6 @@ public class GameController : MonoBehaviour
     public Dictionary<string, int> mWorkerCaps; //May need moved to workercontroller
     public List<string> ItemsToSell;
 
-
     public System.Random mRandom = new System.Random();
 
     Mutex goldMutex;
@@ -29,8 +28,9 @@ public class GameController : MonoBehaviour
 
     private GameController()
     {
+        mInstance = this;
         goldMutex = new Mutex();
-        //mWorkers = new Dictionary<string, Worker>();
+        
         ItemsToSell = new List<string>();
         mResources = new Dictionary<string, Resource>();
         //? mSeeds = new List<Seeds>();
@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
         
         if (mInstance == null)
         {
-            GameObject go = new GameObject();
+            GameObject go = new GameObject("GameController");
             mInstance = go.AddComponent<GameController>();
         }
         return mInstance;

@@ -15,15 +15,16 @@ public class MiningController : MonoBehaviour
     public System.Random mRandom = new System.Random();
     int amount = 1;
 
-    void Start()
+    void Awake()
     {
-        Debug.Log("test");
+        mInstance = this;
     }
 
     public static MiningController GetInstance()
     {
         if (mInstance == null)
         {
+            Debug.Log("ABORTMINING");
             GameObject go = new GameObject();
             mInstance = go.AddComponent<MiningController>();
         }

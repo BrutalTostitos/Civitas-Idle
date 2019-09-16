@@ -20,9 +20,9 @@ public class WorkerController : MonoBehaviour
     private int popCap = 100;
 
 
-    void Start()
+    void Awake()
     {
-
+        mInstance = this;
         mWorkerCaps = new Dictionary<string, int>();
         mWorkers = new Dictionary<string, Worker>();
         //? mSeeds = new List<Seeds>();
@@ -46,24 +46,24 @@ public class WorkerController : MonoBehaviour
         mWorkerCaps["Tin Mine"] = 10;
         mWorkerCaps["Coal Mine"] = 10;
         mWorkerCaps["Iron Mine"] = 10;
+
     }
     //private WorkerController()
     //{
         
     //}
-  
+
 
     public static WorkerController GetInstance()
     {
         if (mInstance == null)
         {
-            Debug.Log("Made a new instance of WorkerController!");
+            Debug.Log("ABORTWORKER");
             GameObject go = new GameObject();
             mInstance = go.AddComponent<WorkerController>();
         }
         return mInstance;
     }
-    
 
     public int getPop()
     {
@@ -85,6 +85,7 @@ public class WorkerController : MonoBehaviour
     //Legacy: used to take string key, int amount = 1. Amount hard coded in the function
     //Due to the inspector not liking multiple args
     //Make a work around
+    //This is obnoxious and maybe unecessary in Unity. More research needed
     public void BuyWorker(string key)
     {
         int amount = 1;
@@ -97,10 +98,15 @@ public class WorkerController : MonoBehaviour
                 if (mWorkers[key].getCount() >= mWorkerCaps["Copper Mine"] ||
                     !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
+                    //No purchase made
                     return;
                 }
+                //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                
+                if (WorkerUpdate != null)
+                {
+                    WorkerUpdate();
+                }
                 return;
 
             case "Tin Miner":
@@ -109,7 +115,12 @@ public class WorkerController : MonoBehaviour
                 {
                     return;
                 }
+                //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
+                if (WorkerUpdate != null)
+                {
+                    WorkerUpdate();
+                }
                 return;
             case "Coal Miner":
                 if (mWorkers[key].getCount() >= mWorkerCaps["Coal Mine"] ||
@@ -117,7 +128,12 @@ public class WorkerController : MonoBehaviour
                 {
                     return;
                 }
+                //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
+                if (WorkerUpdate != null)
+                {
+                    WorkerUpdate();
+                }
                 return;
             case "Iron Miner":
                 if (mWorkers[key].getCount() >= mWorkerCaps["Iron Mine"] ||
@@ -125,24 +141,27 @@ public class WorkerController : MonoBehaviour
                 {
                     return;
                 }
+                //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
+                if (WorkerUpdate != null)
+                {
+                    WorkerUpdate();
+                }
                 return;
 
             default:
                 break;
         }
-        Debug.Log(mWorkers["Miner"].getCount().ToString());
+        //No special case, we're just buying standard miners
         if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
         {
-            Debug.Log("We're buying stone workers!");
-            
             mWorkers[key].modifyCountCond(amount, -amount);
         }
         if (WorkerUpdate != null)
         {
             WorkerUpdate();
         }
-        
+
     }
 
     //used to accept count as an arg. Unity inspector no like. Fix

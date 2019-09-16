@@ -47,9 +47,9 @@ public class UIController : MonoBehaviour
     private Dictionary<int, Canvas> mCanvasDict;
     private int CurrentCanvasIdx = 1;       //This could cause problems in the future
 
-    void Start()
+    void Awake()
     {
-
+        mInstance = this;
 
         #region Event Subscribing
         WorkerController.WorkerUpdate += UpdateWorkerUI;
@@ -108,7 +108,6 @@ public class UIController : MonoBehaviour
         TinOreCountText.text = GameController.GetInstance().mResources["Tin Ore"].getCount().ToString();
         CoalCountText.text = GameController.GetInstance().mResources["Coal"].getCount().ToString();
         IronOreCountText.text = GameController.GetInstance().mResources["Iron Ore"].getCount().ToString();
-        Debug.Log(WorkerController.GetInstance().mWorkers["Miner"].getCount().ToString());
     }
     //Event driven
     void UpdateWorkerUI()
@@ -129,11 +128,6 @@ public class UIController : MonoBehaviour
         //IronCapCountText;
     }
 
-    //Testing purposes only. WHY ARE THESE NOT LOCATED OVER HERE
-    private void Update()
-    {
-        TinMinerCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCount().ToString();
-    }
 
 
     //0 = Mining, 1 = Farming, 2 = Forestry. 3 = Buildings. 4 = Market. 5= Smithing
