@@ -5,10 +5,9 @@ public class MiningController : MonoBehaviour
 {
 
 
-    #region Events
-    //This may belong in gamecontroller
-    public delegate void updateResourceUI();
-    public static event updateResourceUI ResourceUpdate;
+    #region Creating Events
+    public delegate void NotifyResourceUI();
+    public static event NotifyResourceUI NotifyResourceUpdate;
     #endregion
     
     private static MiningController mInstance;
@@ -47,9 +46,9 @@ public class MiningController : MonoBehaviour
         GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
 
         //Check to see if we have observers listening in
-        if (ResourceUpdate != null)
+        if (NotifyResourceUpdate != null)
         {
-            ResourceUpdate();
+            NotifyResourceUpdate();
         }
 
         //GameController.GetInstance().UpdateList();
@@ -61,9 +60,9 @@ public class MiningController : MonoBehaviour
 
         GameController.GetInstance().SellResource(resource_name, amount);
         //Check to see if we have observers listening in
-        if (ResourceUpdate != null)
+        if (NotifyResourceUpdate != null)
         {
-            ResourceUpdate();
+            NotifyResourceUpdate();
         }
     }
 

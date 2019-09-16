@@ -26,9 +26,13 @@ public class GameController : MonoBehaviour
 
     private int goldAmount = 100;
 
+    void Awake()
+    {
+        
+    }
     private GameController()
     {
-        mInstance = this;
+        mInstance = this;   //I dont think this is working right
         goldMutex = new Mutex();
         
         ItemsToSell = new List<string>();
@@ -68,7 +72,10 @@ public class GameController : MonoBehaviour
         
         if (mInstance == null)
         {
-            GameObject go = new GameObject("GameController");
+            //mInstance is set on Awake(), however a gameobject is still added to the scene
+            //even though this code *shouldnt* run
+            Debug.Log("Why are we making a 2nd game controller");
+            GameObject go = new GameObject("GameController");   
             mInstance = go.AddComponent<GameController>();
         }
         return mInstance;

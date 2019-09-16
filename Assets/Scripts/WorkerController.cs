@@ -8,9 +8,9 @@ using UnityEngine;
 public class WorkerController : MonoBehaviour
 {
 
-    #region Events
-    public delegate void updateWorkerUI();
-    public static event updateWorkerUI WorkerUpdate;
+    #region Creating our Events
+    public delegate void NotifyWorkerUI();
+    public static event NotifyWorkerUI NotifyWorkerUpdate;
     #endregion
 
 
@@ -103,9 +103,9 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (WorkerUpdate != null)
+                if (NotifyWorkerUpdate != null)
                 {
-                    WorkerUpdate();
+                    NotifyWorkerUpdate();
                 }
                 return;
 
@@ -117,9 +117,9 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (WorkerUpdate != null)
+                if (NotifyWorkerUpdate != null)
                 {
-                    WorkerUpdate();
+                    NotifyWorkerUpdate();
                 }
                 return;
             case "Coal Miner":
@@ -130,9 +130,9 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (WorkerUpdate != null)
+                if (NotifyWorkerUpdate != null)
                 {
-                    WorkerUpdate();
+                    NotifyWorkerUpdate();
                 }
                 return;
             case "Iron Miner":
@@ -143,9 +143,9 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (WorkerUpdate != null)
+                if (NotifyWorkerUpdate != null)
                 {
-                    WorkerUpdate();
+                    NotifyWorkerUpdate();
                 }
                 return;
 
@@ -157,9 +157,9 @@ public class WorkerController : MonoBehaviour
         {
             mWorkers[key].modifyCountCond(amount, -amount);
         }
-        if (WorkerUpdate != null)
+        if (NotifyWorkerUpdate != null)
         {
-            WorkerUpdate();
+            NotifyWorkerUpdate();
         }
 
     }
@@ -191,9 +191,9 @@ public class WorkerController : MonoBehaviour
         mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
 
         //Check to see if we have observers listening in
-        if (WorkerUpdate != null)
+        if (NotifyWorkerUpdate != null)
         {
-            WorkerUpdate();
+            NotifyWorkerUpdate();
         }
 
     }

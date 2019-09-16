@@ -47,18 +47,20 @@ public class UIController : MonoBehaviour
     private Dictionary<int, Canvas> mCanvasDict;
     private int CurrentCanvasIdx = 1;       //This could cause problems in the future
 
+
+    #region Events
+    //Senders
+    //aint got none
+    #endregion
+
+
     void Awake()
     {
         mInstance = this;
 
-        #region Event Subscribing
-        WorkerController.WorkerUpdate += UpdateWorkerUI;
-        MiningController.ResourceUpdate += UpdateResourceUI;
-        
-
-        //Running these once just to initialize the values on screen
-        //UpdateResourceUI();
-        //UpdateWorkerUI();
+        #region Listening for events
+        EventController.WorkerUpdateUI += UpdateWorkerUI;
+        EventController.ResourceUpdateUI += UpdateResourceUI;
         #endregion
 
         #region Canvas region
