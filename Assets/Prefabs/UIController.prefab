@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2998494239168044770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2998494239168044768}
+  - component: {fileID: 2998494239168044771}
+  m_Layer: 0
+  m_Name: UIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2998494239168044768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998494239168044770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 730.89856, y: 468.5748, z: -1728.951}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2998494239168044771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998494239168044770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b37c3cbd198e2a49a161dde6d8c31d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCanvas: {fileID: 0}
+  MiningCanvas: {fileID: 0}
+  FarmingCanvas: {fileID: 0}
+  ForestryCanvas: {fileID: 0}
+  BuildingCanvas: {fileID: 0}
+  MarketCanvas: {fileID: 0}
+  SmithingCanvas: {fileID: 0}
+  GoldCountText: {fileID: 0}
+  StoneCountText: {fileID: 0}
+  StoneMinerCountText: {fileID: 0}
+  CopperOreCountText: {fileID: 0}
+  CopperMinerCountText: {fileID: 0}
+  CopperCapCountText: {fileID: 0}
+  TinOreCountText: {fileID: 0}
+  TinMinerCountText: {fileID: 0}
+  TinCapCountText: {fileID: 0}
+  CoalCountText: {fileID: 0}
+  CoalMinerCountText: {fileID: 0}
+  CoalCapCountText: {fileID: 0}
+  IronOreCountText: {fileID: 0}
+  IronMinerCountText: {fileID: 0}
+  IronCapCountText: {fileID: 0}
