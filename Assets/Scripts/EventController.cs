@@ -18,9 +18,10 @@ public class EventController : MonoBehaviour
     void Awake()
     {
         mInstance = this;
-        //Listening in on notificatons
+        #region Listening for events
         MiningController.NotifyResourceUpdate += ResourceUpdate;
         WorkerController.NotifyWorkerUpdate += WorkerUpdate;
+        #endregion
     }
 
     public static EventController getInstance()
