@@ -17,7 +17,7 @@ public class MiningController : MonoBehaviour
 
     void Start()
     {
-        
+        Debug.Log("test");
     }
 
     public static MiningController GetInstance()
