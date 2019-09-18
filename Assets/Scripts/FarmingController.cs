@@ -44,7 +44,7 @@ class FarmingController : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
 
-            FarmPlot farmPlot = Instantiate(farmPlotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            //FarmPlot farmPlot = Instantiate(farmPlotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             //transform.SetParent(parent, false);
             //TODO set the parent as well
         }
