@@ -14,6 +14,13 @@ public class UIController : MonoBehaviour
     public Canvas BuildingCanvas;
     public Canvas MarketCanvas;
     public Canvas SmithingCanvas;
+
+    public GameObject MiningAesthetic;
+    public GameObject FarmingAesthetic;
+    public GameObject ForestryAesthetic;
+    public GameObject BuildingAesthetic;
+    public GameObject MarketAesthetic;
+    public GameObject SmithingAesthetic;
     
     //HUD text
     public Text GoldCountText;
@@ -48,6 +55,9 @@ public class UIController : MonoBehaviour
     private int CurrentCanvasIdx = 1;       //This could cause problems in the future
 
 
+    //Model Switching
+    private Dictionary<int, GameObject> mSpinningModelsDict;
+
     #region Events
     //Senders
     //aint got none
@@ -74,11 +84,22 @@ public class UIController : MonoBehaviour
         mCanvasDict[6] = SmithingCanvas;
         #endregion
 
+        #region Spinning Models
+        mSpinningModelsDict = new Dictionary<int, GameObject>();
+        mSpinningModelsDict[1] = MiningAesthetic;
+        mSpinningModelsDict[2] = FarmingAesthetic;
+        mSpinningModelsDict[3] = ForestryAesthetic;
+        mSpinningModelsDict[4] = BuildingAesthetic;
+        mSpinningModelsDict[5] = MarketAesthetic;
+        mSpinningModelsDict[6] = SmithingAesthetic;
+        #endregion
+
         //We skip ahead because MainCanvas and MiningCanvas are already where they are needed
         for (int i = 2; i < mCanvasDict.Count; i++)
         {
             mCanvasDict[i].transform.position = MiningCanvas.transform.position;
             mCanvasDict[i].gameObject.SetActive(false);
+            mSpinningModelsDict[i].gameObject.SetActive(false);
         }
 
     }
@@ -140,8 +161,10 @@ public class UIController : MonoBehaviour
             return;
         }
         mCanvasDict[CurrentCanvasIdx].gameObject.SetActive(false);
+        mSpinningModelsDict[CurrentCanvasIdx].gameObject.SetActive(false);
         CurrentCanvasIdx = idx;
         mCanvasDict[idx].gameObject.SetActive(true);
+        mSpinningModelsDict[idx].gameObject.SetActive(true);
 
     
         //Disable current zone @ zoneIndex
