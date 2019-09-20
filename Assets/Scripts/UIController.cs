@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using EventCallBacks;
 
 //So far, just updates ui text elements
 public class UIController : MonoBehaviour
@@ -59,8 +60,9 @@ public class UIController : MonoBehaviour
         mInstance = this;
 
         #region Listening for events
-        EventController.WorkerUpdateUI += UpdateWorkerUI;
-        EventController.ResourceUpdateUI += UpdateResourceUI;
+        EventController.getInstance().RegisterListener<ResourceUpdateEventInfo>(UpdateResourceUI);
+        EventController.getInstance().RegisterListener<WorkerUpdateEventInfo>(UpdateWorkerUI);
+        
         #endregion
 
         #region Canvas region
@@ -81,6 +83,8 @@ public class UIController : MonoBehaviour
             mCanvasDict[i].gameObject.SetActive(false);
         }
 
+
+
     }
     
     public static UIController GetInstance()
@@ -100,11 +104,10 @@ public class UIController : MonoBehaviour
 
     //Event driven
     //call this whenever a resource action is taken
-    void UpdateResourceUI()
+    void UpdateResourceUI(ResourceUpdateEventInfo eventInfo)
     {
         //HUD
-        GoldCountText.text = GameController.GetInstance().getGold();    //This probably shouldnt be in here
-
+        GoldCountText.text = GameController.GetInstance().getGold();    
         StoneCountText.text = GameController.GetInstance().mResources["Stone"].getCount().ToString();
         CopperOreCountText.text = GameController.GetInstance().mResources["Copper Ore"].getCount().ToString();
         TinOreCountText.text = GameController.GetInstance().mResources["Tin Ore"].getCount().ToString();
@@ -112,13 +115,12 @@ public class UIController : MonoBehaviour
         IronOreCountText.text = GameController.GetInstance().mResources["Iron Ore"].getCount().ToString();
     }
     //Event driven
-    void UpdateWorkerUI()
+    void UpdateWorkerUI(WorkerUpdateEventInfo eventInfo)
     {
-        GoldCountText.text = GameController.GetInstance().getGold();    //This probably shouldnt be in here
-        //MINING CONTROLLER
+        
         //TODO~
         //Caps need to be updated once buildings are implemented
-
+        GoldCountText.text = GameController.GetInstance().getGold();
         StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Miner"].getCount().ToString();
         CopperMinerCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
         //CopperCapCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();

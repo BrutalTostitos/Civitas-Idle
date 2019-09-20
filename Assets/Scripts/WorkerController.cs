@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using EventCallBacks;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -8,17 +9,14 @@ using UnityEngine;
 public class WorkerController : MonoBehaviour
 {
 
-    #region Creating our Events
-    public delegate void NotifyWorkerUI();
-    public static event NotifyWorkerUI NotifyWorkerUpdate;
-    #endregion
-
+    
 
     private static WorkerController mInstance;
     public Dictionary<string, Worker> mWorkers;
     public Dictionary<string, int> mWorkerCaps;
     private int popCap = 100;
-
+    //Creating our event
+    WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
 
     void Awake()
     {
@@ -27,6 +25,8 @@ public class WorkerController : MonoBehaviour
         mWorkers = new Dictionary<string, Worker>();
         //? mSeeds = new List<Seeds>();
 
+        //Event system setup
+        wuei.eventGO = gameObject;
 
         //initializing the types of workers
         mWorkers["Miner"] = new Worker(15, WorkerType.Miner);
@@ -48,11 +48,7 @@ public class WorkerController : MonoBehaviour
         mWorkerCaps["Iron Mine"] = 10;
 
     }
-    //private WorkerController()
-    //{
-        
-    //}
-
+    
 
     public static WorkerController GetInstance()
     {
@@ -103,10 +99,10 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (NotifyWorkerUpdate != null)
-                {
-                    NotifyWorkerUpdate();
-                }
+                //Firing off our event
+                //WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
+                //wuei.eventGO = gameObject;      //This feels overkill
+                EventController.getInstance().FireEvent(wuei);
                 return;
 
             case "Tin Miner":
@@ -117,10 +113,8 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (NotifyWorkerUpdate != null)
-                {
-                    NotifyWorkerUpdate();
-                }
+                //Firing off our event
+                EventController.getInstance().FireEvent(wuei);
                 return;
             case "Coal Miner":
                 if (mWorkers[key].getCount() >= mWorkerCaps["Coal Mine"] ||
@@ -130,10 +124,7 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (NotifyWorkerUpdate != null)
-                {
-                    NotifyWorkerUpdate();
-                }
+                EventController.getInstance().FireEvent(wuei);
                 return;
             case "Iron Miner":
                 if (mWorkers[key].getCount() >= mWorkerCaps["Iron Mine"] ||
@@ -143,10 +134,7 @@ public class WorkerController : MonoBehaviour
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                if (NotifyWorkerUpdate != null)
-                {
-                    NotifyWorkerUpdate();
-                }
+                EventController.getInstance().FireEvent(wuei);
                 return;
 
             default:
@@ -157,10 +145,7 @@ public class WorkerController : MonoBehaviour
         {
             mWorkers[key].modifyCountCond(amount, -amount);
         }
-        if (NotifyWorkerUpdate != null)
-        {
-            NotifyWorkerUpdate();
-        }
+        EventController.getInstance().FireEvent(wuei);
 
     }
 
@@ -191,10 +176,7 @@ public class WorkerController : MonoBehaviour
         mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
 
         //Check to see if we have observers listening in
-        if (NotifyWorkerUpdate != null)
-        {
-            NotifyWorkerUpdate();
-        }
+        EventController.getInstance().FireEvent(wuei);
 
     }
 

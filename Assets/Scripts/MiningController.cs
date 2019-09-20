@@ -1,22 +1,22 @@
-﻿using System;
+﻿using EventCallBacks;
+using System;
 using UnityEngine;
 
 public class MiningController : MonoBehaviour
 {
-
-
-    #region Creating Events
-    public delegate void NotifyResourceUI();
-    public static event NotifyResourceUI NotifyResourceUpdate;
-    #endregion
     
     private static MiningController mInstance;
     public System.Random mRandom = new System.Random();
+    //Creating our event
+    ResourceUpdateEventInfo ruei = new ResourceUpdateEventInfo();
+    
     int amount = 1;
 
     void Awake()
     {
         mInstance = this;
+        //Event system setup
+        ruei.eventGO = gameObject;
     }
 
     public static MiningController GetInstance()
@@ -45,25 +45,23 @@ public class MiningController : MonoBehaviour
         GameController.GetInstance().mResources[resource_name].modifyCountCond(modResult, 0);
         GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
 
-        //Check to see if we have observers listening in
-        if (NotifyResourceUpdate != null)
-        {
-            NotifyResourceUpdate();
-        }
+        
 
-        //GameController.GetInstance().UpdateList();
+        ResourceUpdateEventInfo ruei = new ResourceUpdateEventInfo();
+        ruei.EventDescription = "Mining Resource by hand";  //TODO remove this. useful for testing
+        ruei.eventGO = gameObject;      //This feels overkill
+        EventController.getInstance().FireEvent(ruei);
+
+        
     }
     //SELLING
     //Transfer item to GameController to handle the transaction
     public void SellMiningResource(string resource_name)
     {
-
         GameController.GetInstance().SellResource(resource_name, amount);
-        //Check to see if we have observers listening in
-        if (NotifyResourceUpdate != null)
-        {
-            NotifyResourceUpdate();
-        }
+
+        //Firing off our event
+        EventController.getInstance().FireEvent(ruei);
     }
 
 

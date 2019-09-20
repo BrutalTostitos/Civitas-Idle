@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using EventCallBacks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//maybe make this static and not a monobehaviour
 public class EventController : MonoBehaviour
 {
     private static EventController mInstance;
@@ -10,18 +12,18 @@ public class EventController : MonoBehaviour
     //public static event updateWorkerUI WorkerUpdate;
 
     //Setting up our own events to send out
-    public delegate void UpdateResourceUI();
-    public static event UpdateResourceUI ResourceUpdateUI;
+    //public delegate void UpdateResourceUI();
+    //public static event UpdateResourceUI ResourceUpdateUI;
     public delegate void UpdateWorkerUI();
     public static event UpdateWorkerUI WorkerUpdateUI;
+    //EVENTS
+    delegate void EventListener(EventInfo e);
+    Dictionary<System.Type, List<EventListener>> eventListeners; //maybe use set so we dont duplicate
 
     void Awake()
     {
         mInstance = this;
-        #region Listening for events
-        MiningController.NotifyResourceUpdate += ResourceUpdate;
-        WorkerController.NotifyWorkerUpdate += WorkerUpdate;
-        #endregion
+        
     }
 
     public static EventController getInstance()
@@ -33,16 +35,62 @@ public class EventController : MonoBehaviour
         }
         return mInstance;
     }
+
+
+
     
 
-    //Tells UIController to update resource info
-    public void ResourceUpdate()
+    public void RegisterListener<T>(System.Action<T> listener) where T : EventInfo
     {
-        if (ResourceUpdateUI != null)
+        System.Type eventType = typeof(T);
+        #region Error checking
+        if (eventListeners == null)
         {
-            ResourceUpdateUI();
+            eventListeners = new Dictionary<System.Type, List<EventListener>>();
         }
+        if (!eventListeners.ContainsKey(eventType) || eventListeners[eventType] == null)
+        {
+            eventListeners[eventType] = new List<EventListener>();
+        }
+        #endregion
+
+        EventListener wrapper = (e) => { listener((T)e); };
+
+        eventListeners[eventType].Add(wrapper);
+        
     }
+
+
+    public void UnregisterListener<T>(System.Action<T> listener) where T : EventInfo
+    {
+        //TODO remove ourselves
+    }
+
+    //This happens when other code launches an event
+    public void FireEvent(EventInfo eventInfo )
+    {
+        System.Type trueEventInfoClass = eventInfo.GetType();
+        if (eventListeners == null || eventListeners[trueEventInfoClass] == null)
+        {
+            //No one is listening
+            return;
+        }
+        foreach(EventListener e in eventListeners[trueEventInfoClass]) //TODO change to a standard forloop for garbage collection
+        {
+            e(eventInfo);
+        }
+
+    }
+
+    //DEPRICATED
+    //Tells UIController to update resource info
+    //public void ResourceUpdate()
+    //{
+    //    if (ResourceUpdateUI != null)
+    //    {
+    //        ResourceUpdateUI();
+    //    }
+    //}
     public void WorkerUpdate()
     {
         if (WorkerUpdateUI != null)
