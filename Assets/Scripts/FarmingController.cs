@@ -27,17 +27,14 @@ class FarmingController : MonoBehaviour
 
     #endregion
 
-    public FarmingController()
+    //Cant use constructor to instantiate objects. Using awake() instead
+    public void Awake()
     {
         int amount = 1;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
-        //SEEDS
-        mFarmingSeeds["Corn"] = new Seeds(5, SeedType.Corn);
-        mFarmingSeeds["Potato"] = new Seeds(5, SeedType.Potato);
-        mFarmingSeeds["Wheat"] = new Seeds(5, SeedType.Wheat);
-        mFarmingSeeds["Hops"] = new Seeds(5, SeedType.Hops);
+
 
         #region Init farm plots
 
@@ -48,11 +45,12 @@ class FarmingController : MonoBehaviour
             //transform.SetParent(parent, false);
             //TODO set the parent as well
         }
-
-
         #endregion
-
-
+        //SEEDS 
+        mFarmingSeeds["Corn"] = new Seeds(5, SeedType.Corn);
+        mFarmingSeeds["Potato"] = new Seeds(5, SeedType.Potato);
+        mFarmingSeeds["Wheat"] = new Seeds(5, SeedType.Wheat);
+        mFarmingSeeds["Hops"] = new Seeds(5, SeedType.Hops);
     }
 
     //TODO update for unity
