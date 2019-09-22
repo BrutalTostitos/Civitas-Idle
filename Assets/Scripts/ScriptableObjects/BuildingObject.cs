@@ -7,22 +7,54 @@ using UnityEngine.Events;
 public class BuildingObject : ScriptableObject
 {
     [SerializeField]
-    private string Name;
+    private string mName;
 
     [SerializeField]
-    private string Description;
+    private string description;
 
     [SerializeField]
     private string OnBuyFunction;
 
     [SerializeField]
-    private Sprite Icon;
+    private Sprite icon;
 
     [SerializeField]
-    private int PopulationIncrease;
+    private int populationIncrease;
 
     [SerializeField]
-    private int GoldCost;
+    private int goldCost;
+
+    public string Name
+    {
+        get
+        {
+            return mName;
+        }
+    }
+
+    public string Description
+    {
+        get
+        {
+            return Description;
+        }
+    }
+
+    public int PopulationIncrease
+    {
+        get 
+        {
+            return populationIncrease;
+        }
+    }
+
+    public int GoldCost
+    {
+        get
+        {
+            return goldCost;
+        }
+    }
 
     public void OnBuy()
     {
