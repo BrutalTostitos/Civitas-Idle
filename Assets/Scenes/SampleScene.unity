@@ -1698,6 +1698,51 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -1414
       objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 354
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 185
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016557424640075291, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512588560561093966, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_Name
+      value: FarmPlot
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 760d2cf7552c0374b9dd031fc5eb0ed9, type: 3}
 --- !u!1001 &4380213137836742885

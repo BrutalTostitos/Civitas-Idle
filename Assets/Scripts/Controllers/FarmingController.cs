@@ -16,7 +16,14 @@ class FarmingController : MonoBehaviour
     public Dictionary<string, Seeds> mFarmingSeeds; //why is this a thing
     //public List<Seeds> mSeeds;                  //May be depricated
 
-    
+    //Holds the current coords to spawn a new farm plot
+    private float plotSpawnX = 220;   //probably be 220
+    private float plotSpawnY = 500;   //500
+    private int plotWidth = 355;
+    private int plotHeight = 185;
+    Transform FarmPlotParent; 
+
+
     public System.Random mRandom = new System.Random();
 
     int amount;
@@ -34,16 +41,21 @@ class FarmingController : MonoBehaviour
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
-
+        //Assigning reference for the parent obejct for all the farm plots
+        FarmPlotParent = transform.Find("/MainCanvas/FarmingCanvas/FarmingBackgroundPanel");
 
         #region Init farm plots
 
         for (int i = 0; i < 8; i++)
         {
+            FarmPlot farmPlot = Instantiate(farmPlotPrefab, FarmPlotParent);
+            farmPlot.transform.position = new Vector3(plotSpawnX * i, plotSpawnY, 0);
 
-            //FarmPlot farmPlot = Instantiate(farmPlotPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            //transform.SetParent(parent, false);
-            //TODO set the parent as well
+
+        //    private float plotSpawnX = 220;   //probably be 220
+        //private float plotSpawnY = 500;   //500
+        //private int plotWidth = 355;
+        //private int plotHeight = 185;
         }
         #endregion
         //SEEDS 
