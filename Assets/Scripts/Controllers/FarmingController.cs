@@ -17,7 +17,7 @@ class FarmingController : MonoBehaviour
     //public List<Seeds> mSeeds;                  //May be depricated
 
     //Holds the current coords to spawn a new farm plot
-    private float plotSpawnX = -622;   //probably be 220
+    private float plotSpawnX = -605;   //probably be 220
     private float plotSpawnY = 84;   //500
     Transform FarmPlotParent; 
 
@@ -60,13 +60,15 @@ class FarmingController : MonoBehaviour
 
         #region Init farm plots
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 10; i++)
         {
             FarmPlot tmp = Instantiate(farmPlotPrefab);
             tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
             tmp.transform.localScale = new Vector3(1, 1, 1);    //resetting scale
             float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
-            tmp.transform.localPosition = new Vector3(plotSpawnX + width * i, plotSpawnY, 0);
+            float height = tmp.GetComponent<RectTransform>().sizeDelta.y;
+            tmp.transform.localPosition = new Vector3(plotSpawnX + ((width + 20) * (i%5)), //20 is our buffer
+                plotSpawnY + -(((height + 20) * (int)(i / 5))));                           //20 is our buffer
             
             
 
