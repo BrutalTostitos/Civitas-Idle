@@ -11,6 +11,8 @@ public class FarmPlot : MonoBehaviour
     public Button wheatButton;
     public Button potatoButton;
     public Button hopsButton;
+    public GameObject go;
+
     
     /*
 

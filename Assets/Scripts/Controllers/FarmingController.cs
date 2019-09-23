@@ -17,10 +17,8 @@ class FarmingController : MonoBehaviour
     //public List<Seeds> mSeeds;                  //May be depricated
 
     //Holds the current coords to spawn a new farm plot
-    private float plotSpawnX = 220;   //probably be 220
-    private float plotSpawnY = 500;   //500
-    private int plotWidth = 355;
-    private int plotHeight = 185;
+    private float plotSpawnX = -622;   //probably be 220
+    private float plotSpawnY = 84;   //500
     Transform FarmPlotParent; 
 
 
@@ -44,18 +42,36 @@ class FarmingController : MonoBehaviour
         //Assigning reference for the parent obejct for all the farm plots
         FarmPlotParent = transform.Find("/MainCanvas/FarmingCanvas/FarmingBackgroundPanel");
 
+
+
+
+        //220x -371
+        //354w 185h
+
+        //left 43
+        //top 279.21
+
+
+        //right 1178.5
+        //bottom 407.5
+
+
+
+
         #region Init farm plots
 
         for (int i = 0; i < 8; i++)
         {
-            FarmPlot farmPlot = Instantiate(farmPlotPrefab, FarmPlotParent);
-            farmPlot.transform.position = new Vector3(plotSpawnX * i, plotSpawnY, 0);
+            FarmPlot tmp = Instantiate(farmPlotPrefab);
+            tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
+            tmp.transform.localScale = new Vector3(1, 1, 1);    //resetting scale
+            float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
+            tmp.transform.localPosition = new Vector3(plotSpawnX + width * i, plotSpawnY, 0);
+            
+            
 
 
-        //    private float plotSpawnX = 220;   //probably be 220
-        //private float plotSpawnY = 500;   //500
-        //private int plotWidth = 355;
-        //private int plotHeight = 185;
+
         }
         #endregion
         //SEEDS 
