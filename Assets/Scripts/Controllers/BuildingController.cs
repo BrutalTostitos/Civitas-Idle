@@ -16,20 +16,51 @@ public class BuildingController : MonoBehaviour
     //The building currently selected.
     private BuildingObject mTagSelected = null;
 
+    private BuildingInformationScript InfoPanel;
+
+    private GameObject buildingsContentPanel;
+    public GameObject prefabGameIcon;
+
     void Awake()
     {
+        buildingsContentPanel = GameObject.Find("BuildingAvailablePanel");
+        
+        mAvailableBuildings = new List<BuildingObject>();
+
         BuildingObject[] buildingsFromResources = Resources.FindObjectsOfTypeAll<BuildingObject>();
         mAvailableBuildings.AddRange(buildingsFromResources);
+
+        int x = 0;
+        int y = 0;
+        foreach (BuildingObject building in mAvailableBuildings)
+        {
+            Debug.Log(building.name);
+            GameObject temp = Instantiate(prefabGameIcon, buildingsContentPanel.transform);
+            temp.transform.Translate(x*150, -y*150, 0);
+            temp.GetComponent<BuildingIconButton>().buildingObject = building;
+            x++;
+            if (x > 4)
+            {
+                x = 0;
+                y++;
+            }
+        }
+
+        BuildingController.SetInstance(this);
+    }
+
+    public static void SetInstance(BuildingController buildingController)
+    {
+        mInstance = buildingController;
     }
 
     //Singleton Constructor.
     public static BuildingController GetInstance()
     {
-
         if (mInstance == null)
         {
             GameObject tmp;
-            tmp = GameObject.Find("Building Controller");
+            tmp = GameObject.Find("BuildingController");
             if (tmp == null)
             {
                 GameObject go = new GameObject();
@@ -73,16 +104,6 @@ public class BuildingController : MonoBehaviour
         return temp;
     }
 
-    public int getWorkerPopCap()
-    {
-        int temp = 0;
-        foreach (BuildingObject building in mOwnedBuildings)
-        {
-            temp += building.PopulationIncrease;
-        }
-        return temp;
-    }
-    
     //Gets the available buildings, for the building selector UI.
     public List<BuildingObject> getBuildings()
     {
@@ -96,5 +117,13 @@ public class BuildingController : MonoBehaviour
         return mOwnedBuildings;
     }
 
-    
+    public void SelectBuilding(BuildingObject building)
+    {
+        InfoPanel.SetSelected(building);
+    }
+
+    public void SetInfoPanel(BuildingInformationScript buildingInformationScript)
+    {
+        InfoPanel = buildingInformationScript;
+    }
 }

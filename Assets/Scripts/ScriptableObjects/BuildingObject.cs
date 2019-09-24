@@ -36,7 +36,7 @@ public class BuildingObject : ScriptableObject
     {
         get
         {
-            return Description;
+            return description;
         }
     }
 
@@ -53,6 +53,14 @@ public class BuildingObject : ScriptableObject
         get
         {
             return goldCost;
+        }
+    }
+
+    public Sprite Icon
+    {
+        get
+        {
+            return icon;
         }
     }
 
