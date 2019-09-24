@@ -10,13 +10,14 @@ public class WorkerController : MonoBehaviour
 {
 
     
-
     private static WorkerController mInstance;
+    //Creating our event
+    WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
+
+
     public Dictionary<string, Worker> mWorkers;
     public Dictionary<string, int> mWorkerCaps;
     private int popCap = 100;
-    //Creating our event
-    WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
 
     void Awake()
     {

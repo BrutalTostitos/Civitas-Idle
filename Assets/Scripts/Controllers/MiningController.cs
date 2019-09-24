@@ -47,7 +47,7 @@ public class MiningController : MonoBehaviour
 
         
 
-        ResourceUpdateEventInfo ruei = new ResourceUpdateEventInfo();
+        
         ruei.EventDescription = "Mining Resource by hand";  //TODO remove this. useful for testing
         ruei.eventGO = gameObject;      //This feels overkill
         EventController.getInstance().FireEvent(ruei);

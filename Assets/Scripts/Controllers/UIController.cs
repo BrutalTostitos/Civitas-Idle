@@ -19,7 +19,7 @@ public class UIController : MonoBehaviour
     //HUD text
     public Text GoldCountText;
 
-    //text block
+    //Mining text block
     public Text StoneCountText;
     public Text StoneMinerCountText;
 
@@ -38,6 +38,12 @@ public class UIController : MonoBehaviour
     public Text IronOreCountText;
     public Text IronMinerCountText;
     public Text IronCapCountText;
+
+    //Farming text block
+    public Text CornCountText;
+    public Text WheatCountText;
+    public Text PotatoCountText;
+    public Text HopsCountText;
     //~~~~~~
 
     
@@ -62,6 +68,7 @@ public class UIController : MonoBehaviour
         #region Listening for events
         EventController.getInstance().RegisterListener<ResourceUpdateEventInfo>(UpdateResourceUI);
         EventController.getInstance().RegisterListener<WorkerUpdateEventInfo>(UpdateWorkerUI);
+        EventController.getInstance().RegisterListener<FarmingUpdateEventInfo>(UpdateFarmingUI);
         
         #endregion
 
@@ -131,7 +138,18 @@ public class UIController : MonoBehaviour
         IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
         //IronCapCountText;
     }
+    //Event driven
+    void UpdateFarmingUI(FarmingUpdateEventInfo eventInfo)
+    {
 
+        Debug.Log("UPDATING UI");
+        Debug.Log(FarmingController.GetInstance().mFarmingSeeds["Corn"].getCount().ToString());
+        CornCountText.text = FarmingController.GetInstance().mFarmingSeeds["Corn"].getCount().ToString();
+        WheatCountText.text = FarmingController.GetInstance().mFarmingSeeds["Wheat"].getCount().ToString();
+        PotatoCountText.text = FarmingController.GetInstance().mFarmingSeeds["Potato"].getCount().ToString();
+        HopsCountText.text = FarmingController.GetInstance().mFarmingSeeds["Hops"].getCount().ToString();
+        Debug.Log("Finished Updating");
+    }
 
 
     //0 = Mining, 1 = Farming, 2 = Forestry. 3 = Buildings. 4 = Market. 5= Smithing

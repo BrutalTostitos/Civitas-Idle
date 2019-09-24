@@ -7,39 +7,63 @@ public class FarmPlot : MonoBehaviour
 {
 
     public Button tillButton;
+    public ProgressBar tillProgressBar;     //horizontal bar
+    public ProgressBar harvestProgressBar;  //Radial bar
     public Button cornButton;
     public Button wheatButton;
     public Button potatoButton;
     public Button hopsButton;
-    public GameObject go;
+    public List<Button> mButtonList;
+    public GameObject go;   //maybe not needed
+
 
     
+    public float tillProgress = 0.0f;
+    public float tillProgressCap = 10.0f;
+
+    
+
+    private void Awake()
+    {
+        mButtonList.Add(cornButton);
+        mButtonList.Add(wheatButton);
+        mButtonList.Add(potatoButton);
+        mButtonList.Add(hopsButton);
+        cornButton.gameObject.SetActive(false);
+        wheatButton.gameObject.SetActive(false);
+        potatoButton.gameObject.SetActive(false);
+        hopsButton.gameObject.SetActive(false);
+        harvestProgressBar.gameObject.SetActive(false);
+        tillButton.onClick.AddListener(() => TillField());  //adding the click event
+
+    }
+
+    public void TillField(int amount = 1)
+    {
+        tillProgress += amount;
+        
+        if (tillProgress >= tillProgressCap)
+        {
+            tillProgress = 0.0f;
+            
+            ToggleButtons();
+        }
+        tillProgressBar.current = (int)tillProgress;
+    }
+
+    private void ToggleButtons()
+    {
+        foreach (Button tmp in mButtonList)
+        {
+            tmp.gameObject.SetActive(!tmp.gameObject.activeSelf);
+        }
+        tillButton.gameObject.SetActive(!tillButton.gameObject.activeSelf);
+        tillProgressBar.gameObject.SetActive(!tillProgressBar.gameObject.activeSelf);
+        harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
+    }
+
+
     /*
-
-    public int mCount;
-    public int mSeedCountCap;
-    public float harvestTime;
-    public int tillTime;
-    public int tillResetTime;
-    Mutex mMutex;
-
-    //UI Stuff
-    public int width;
-    public int height;
-    public Panel mPanel;
-    public Panel mButtPanel;
-    public Panel mPlotPanel;
-    public Label mCropsLabel;   //box size supports up to "0000 / 0000"
-    public static double incrementer = 0;
-    public ProgressBar tillProgress;
-    public Button plantSeedButt;
-    public Button mPlantAdditionalCropsButton;
-    public Label tillLabel;
-    public SeedType mCurrentSeed;
-    public List<Panel> mPlotSubList;
-
-    
-    
     public FarmPlot()
     {
 

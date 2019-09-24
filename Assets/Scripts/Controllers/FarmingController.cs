@@ -1,25 +1,35 @@
-﻿using System;
+﻿using EventCallBacks;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using static Seeds;
 
 class FarmingController : MonoBehaviour
 {
+    //PRIVATE
     private static FarmingController mInstance;
-    public List<FarmPlot> mFarmPlots;           //Holds a reference to all farm plots
-    public Dictionary<string, Seeds> mFarmingSeeds; //why is this a thing
-    //public List<Seeds> mSeeds;                  //May be depricated
+    FarmingUpdateEventInfo fuei = new FarmingUpdateEventInfo();
+    
+
+
+
+
+
 
     //Holds the current coords to spawn a new farm plot
+    Transform FarmPlotParent;
     private float plotSpawnX = -605;   //probably be 220
     private float plotSpawnY = 84;   //500
-    Transform FarmPlotParent; 
+
+
+
+
+    //PUBLIC
+    public List<FarmPlot> mFarmPlots;           //Holds a reference to all farm plots
+    public Dictionary<string, Seeds> mFarmingSeeds; //why is this a thing
+
 
 
     public System.Random mRandom = new System.Random();
@@ -35,6 +45,9 @@ class FarmingController : MonoBehaviour
     //Cant use constructor to instantiate objects. Using awake() instead
     public void Awake()
     {
+        mInstance = this;
+        //Event system setup
+        fuei.eventGo = gameObject;
         int amount = 1;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
@@ -44,16 +57,6 @@ class FarmingController : MonoBehaviour
 
 
 
-
-        //220x -371
-        //354w 185h
-
-        //left 43
-        //top 279.21
-
-
-        //right 1178.5
-        //bottom 407.5
 
 
 
@@ -70,10 +73,6 @@ class FarmingController : MonoBehaviour
             tmp.transform.localPosition = new Vector3(plotSpawnX + ((width + 20) * (i%5)), //20 is our buffer
                 plotSpawnY + -(((height + 20) * (int)(i / 5))));                           //20 is our buffer
             
-            
-
-
-
         }
         #endregion
         //SEEDS 
@@ -81,6 +80,11 @@ class FarmingController : MonoBehaviour
         mFarmingSeeds["Potato"] = new Seeds(5, SeedType.Potato);
         mFarmingSeeds["Wheat"] = new Seeds(5, SeedType.Wheat);
         mFarmingSeeds["Hops"] = new Seeds(5, SeedType.Hops);
+    }
+
+    private void Update()
+    {
+        Debug.Log(mFarmingSeeds["Corn"].getCount());
     }
 
     //TODO update for unity
@@ -94,25 +98,27 @@ class FarmingController : MonoBehaviour
     }
     public void Forage()
     {
-        switch (mRandom.Next(0, 4))
+        int test = UnityEngine.Random.Range(0, 4);
+        Debug.Log(test);
+        switch (test)
         {
-
             case 0:
-                GetInstance().mFarmingSeeds["Corn"].modifyCountCond(amount, 0);
+                mFarmingSeeds["Corn"].mCount++;// modifyCountCond(amount, 0);
                 break;
             case 1:
-                GetInstance().mFarmingSeeds["Potato"].modifyCountCond(amount, 0);
+                mFarmingSeeds["Wheat"].mCount++; //mFarmingSeeds["Potato"].modifyCountCond(amount, 0);
                 break;
             case 2:
-                GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(amount, 0);
+                mFarmingSeeds["Potato"].mCount++; //mFarmingSeeds["Wheat"].modifyCountCond(amount, 0);
                 break;
             case 3:
-                GetInstance().mFarmingSeeds["Hops"].modifyCountCond(amount, 0);
+                mFarmingSeeds["Hops"].mCount++; //mFarmingSeeds["Hops"].modifyCountCond(amount, 0);
                 break;
 
             default:
                 break;
         }
+        EventController.getInstance().FireEvent(fuei);
     }
 
     //Button crap

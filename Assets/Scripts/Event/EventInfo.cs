@@ -17,4 +17,9 @@ namespace EventCallBacks
     {
         public GameObject eventGO;
     }
+    
+    public class FarmingUpdateEventInfo : EventInfo
+    {
+        public GameObject eventGo;
+    }
 }

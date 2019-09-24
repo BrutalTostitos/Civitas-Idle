@@ -14,8 +14,8 @@ public class EventController : MonoBehaviour
     //Setting up our own events to send out
     //public delegate void UpdateResourceUI();
     //public static event UpdateResourceUI ResourceUpdateUI;
-    public delegate void UpdateWorkerUI();
-    public static event UpdateWorkerUI WorkerUpdateUI;
+    //public delegate void UpdateWorkerUI();
+    //public static event UpdateWorkerUI WorkerUpdateUI;
     //EVENTS
     delegate void EventListener(EventInfo e);
     Dictionary<System.Type, List<EventListener>> eventListeners; //maybe use set so we dont duplicate
@@ -91,12 +91,6 @@ public class EventController : MonoBehaviour
     //        ResourceUpdateUI();
     //    }
     //}
-    public void WorkerUpdate()
-    {
-        if (WorkerUpdateUI != null)
-        {
-            WorkerUpdateUI();
-        }
-    }
+    
 
 }
