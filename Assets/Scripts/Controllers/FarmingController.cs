@@ -11,8 +11,8 @@ class FarmingController : MonoBehaviour
     //PRIVATE
     private static FarmingController mInstance;
     FarmingUpdateEventInfo fuei = new FarmingUpdateEventInfo();
-    
 
+    public Transform FarmingBackgroundPanel;        //Assigning this through inspector because the .Find() broke
 
 
 
@@ -52,8 +52,7 @@ class FarmingController : MonoBehaviour
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
-        //Assigning reference for the parent obejct for all the farm plots
-        FarmPlotParent = transform.Find("/MainCanvas/FarmingCanvas/FarmingBackgroundPanel");
+        
 
 
 
@@ -65,8 +64,8 @@ class FarmingController : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            FarmPlot tmp = Instantiate(farmPlotPrefab);
-            tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
+            FarmPlot tmp = Instantiate(farmPlotPrefab, FarmingBackgroundPanel, true);
+            //tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
             tmp.transform.localScale = new Vector3(1, 1, 1);    //resetting scale
             float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
             float height = tmp.GetComponent<RectTransform>().sizeDelta.y;
