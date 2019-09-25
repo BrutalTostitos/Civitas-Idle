@@ -141,14 +141,10 @@ public class UIController : MonoBehaviour
     //Event driven
     void UpdateFarmingUI(FarmingUpdateEventInfo eventInfo)
     {
-
-        Debug.Log("UPDATING UI");
-        Debug.Log(FarmingController.GetInstance().mFarmingSeeds["Corn"].getCount().ToString());
         CornCountText.text = FarmingController.GetInstance().mFarmingSeeds["Corn"].getCount().ToString();
         WheatCountText.text = FarmingController.GetInstance().mFarmingSeeds["Wheat"].getCount().ToString();
         PotatoCountText.text = FarmingController.GetInstance().mFarmingSeeds["Potato"].getCount().ToString();
         HopsCountText.text = FarmingController.GetInstance().mFarmingSeeds["Hops"].getCount().ToString();
-        Debug.Log("Finished Updating");
     }
 
 

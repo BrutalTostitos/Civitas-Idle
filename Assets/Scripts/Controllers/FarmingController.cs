@@ -70,21 +70,23 @@ class FarmingController : MonoBehaviour
             float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
             float height = tmp.GetComponent<RectTransform>().sizeDelta.y;
             tmp.transform.localPosition = new Vector3(plotSpawnX + ((width + 20) * (i%5)), //20 is our buffer
-                plotSpawnY + -(((height + 20) * (int)(i / 5))));                           //20 is our buffer
-            
+                plotSpawnY + -((height + 80) * (int)(i / 5)));                           //20 is our buffer
+
+            //Setting up button click events
+            tmp.cornButton.onClick.AddListener(() => PlantSeed(tmp, "Corn"));
+            tmp.wheatButton.onClick.AddListener(() => PlantSeed(tmp, "Wheat"));
+            tmp.potatoButton.onClick.AddListener(() => PlantSeed(tmp, "Potato"));
+            tmp.hopsButton.onClick.AddListener(() => PlantSeed(tmp, "Hops"));
         }
         #endregion
         //SEEDS 
-        mFarmingSeeds["Corn"] = new Seeds(5, SeedType.Corn);
-        mFarmingSeeds["Potato"] = new Seeds(5, SeedType.Potato);
-        mFarmingSeeds["Wheat"] = new Seeds(5, SeedType.Wheat);
-        mFarmingSeeds["Hops"] = new Seeds(5, SeedType.Hops);
+        mFarmingSeeds["Corn"] = new Seeds(5, SEED_TYPE.Corn);
+        mFarmingSeeds["Potato"] = new Seeds(5, SEED_TYPE.Potato);
+        mFarmingSeeds["Wheat"] = new Seeds(5, SEED_TYPE.Wheat);
+        mFarmingSeeds["Hops"] = new Seeds(5, SEED_TYPE.Hops);
     }
 
-    private void Update()
-    {
-        Debug.Log(mFarmingSeeds["Corn"].getCount());
-    }
+    
 
     //TODO update for unity
     public static FarmingController GetInstance()
@@ -98,7 +100,6 @@ class FarmingController : MonoBehaviour
     public void Forage()
     {
         int test = UnityEngine.Random.Range(0, 4);
-        Debug.Log(test);
         switch (test)
         {
             case 0:
@@ -119,50 +120,30 @@ class FarmingController : MonoBehaviour
         }
         EventController.getInstance().FireEvent(fuei);
     }
-
-    //Button crap
-    private void WheatButtonClick(object sender, EventArgs e)
+    private void PlantSeed(FarmPlot plot, string seedName)
     {
-        int count = 1; //hard coded for now
-
-        if (mFarmingSeeds["Wheat"].modifyCountCond(-count, count)) //test if we have the resources
+        int count = 1;  //Hard coded for now
+        if (mFarmingSeeds[seedName].modifyCountCond(-count, count))
         {
-
-            //TODO fix PlantSeeds(SeedType.Wheat);
+            //Seed planted!
+            //Planting the appropriate seed on the farmplot
+            Debug.Log((mFarmingSeeds[seedName]));
+            plot.PlantSeedPlot(mFarmingSeeds[seedName]);   //This might mess with mseeds count
         }
-        //TODO send event to eventcontroller to update uicontroller
+        EventController.getInstance().FireEvent(fuei);
     }
-    private void PotatoButtonClick(object sender, EventArgs e)
+    public void UpdateMeDaddy()
     {
-        int count = 1; //hard coded for now
-
-        if (mFarmingSeeds["Potato"].modifyCountCond(-count, count)) //test if we have the resources
-        {
-            //TODO fix PlantSeeds(SeedType.Potato);
-        }
-        //TODO send event to eventcontroller to update uicontroller
+        EventController.getInstance().FireEvent(fuei);
     }
-
-    private void CornButtonClick(object sender, EventArgs e)
+    private void UpgradeCropYield(Seeds seedType)
     {
-        int count = 1; //hard coded for now
-
-        if (mFarmingSeeds["Corn"].modifyCountCond(-count, count)) //test if we have the resources
-        {
-            //TODO fix PlantSeeds(SeedType.Corn);
-        }
-        //TODO send event to eventcontroller to update uicontroller
+        //TODO
+        //Use this to upgrade the seeds script harvest yield for the 
+        //particular seed
     }
-    private void HopsButtonClick(object sender, EventArgs e)
-    {
-        int count = 1; //hard coded for now
 
-        if (mFarmingSeeds["Hops"].modifyCountCond(-count, count)) //test if we have the resources
-        {
-            //TODO fix PlantSeeds(SeedType.Hops);
-        }
-        //TODO send event to eventcontroller to update uicontroller
-    }
+    
 
 
 

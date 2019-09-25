@@ -15,7 +15,7 @@ public class FarmPlot : MonoBehaviour
     public Button hopsButton;
     public List<Button> mButtonList;
     public GameObject go;   //maybe not needed
-
+    public Seeds mSeed;
 
     
     public float tillProgress = 0.0f;
@@ -35,9 +35,22 @@ public class FarmPlot : MonoBehaviour
         hopsButton.gameObject.SetActive(false);
         harvestProgressBar.gameObject.SetActive(false);
         tillButton.onClick.AddListener(() => TillField());  //adding the click event
+        
 
     }
-
+    private void Update()
+    {
+        //mSeed has a type by now, why is it still null?
+        if (mSeed != null)
+        {
+            Debug.Log(mSeed.harvestTime);
+            mSeed.harvestTime -= Time.deltaTime;
+            if(mSeed.harvestTime <= 0)
+            {
+                HarvestCrops();
+            }
+        }
+    }
     public void TillField(int amount = 1)
     {
         tillProgress += amount;
@@ -50,7 +63,12 @@ public class FarmPlot : MonoBehaviour
         }
         tillProgressBar.current = (int)tillProgress;
     }
-
+    public void HarvestCrops()
+    {
+        FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.harvestYield, 0);
+        mSeed = null;
+        FarmingController.GetInstance().UpdateMeDaddy();
+    }
     private void ToggleButtons()
     {
         foreach (Button tmp in mButtonList)
@@ -62,6 +80,54 @@ public class FarmPlot : MonoBehaviour
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
     }
 
+
+    public void PlantSeedPlot(Seeds seedType)
+    {
+        
+        mSeed = seedType;
+        Debug.Log("Planted seed of type" + mSeed.mType);
+    }
+
+    //public void PlantSeeds(SeedType seed, int count = 1)
+    //{
+
+
+    //    mButtPanel.Visible = false;
+    //    plantSeedButt.Visible = false;
+    //    mCurrentSeed = seed;
+    //    switch (seed.ToString())
+    //    {
+
+    //        case "Corn":
+
+    //            mPlotSubList[mCount].BackgroundImage = Assets.corn;
+    //            mPlotSubList[mCount].BackgroundImageLayout = ImageLayout.Zoom;
+
+    //            mCount += 1;
+    //            break;
+    //        case "Potato":
+    //            mPlotPanel.BackgroundImage = Assets.potato;
+    //            mPlotPanel.BackgroundImageLayout = ImageLayout.Zoom;
+
+    //            mCount += 1;
+    //            break;
+    //        case "Wheat":
+    //            mPlotPanel.BackgroundImage = Assets.wheat;
+    //            mPlotPanel.BackgroundImageLayout = ImageLayout.Zoom;
+
+    //            mCount += 1;
+    //            break;
+    //        case "Hops":
+    //            mPlotPanel.BackgroundImage = Assets.hops;
+    //            mPlotPanel.BackgroundImageLayout = ImageLayout.Zoom;
+
+    //            mCount += 1;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //    mPlotPanel.Visible = true;
+    //}
 
     /*
     public FarmPlot()

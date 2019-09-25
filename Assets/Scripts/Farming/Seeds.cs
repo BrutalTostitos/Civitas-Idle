@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Seeds
+public class Seeds : MonoBehaviour
 {
-    public enum SeedType { Wheat, Corn, Potato, Hops }
+    public enum SEED_TYPE { Wheat, Corn, Potato, Hops }
     
-    public SeedType mType;
+    public SEED_TYPE mType;
     public float harvestTime;
+    public int harvestYield;
     public int mValue;
     public int mCount;
     public Mutex mMutex;
 
-    public Seeds(int value, SeedType seed)
+    public Seeds(int value, SEED_TYPE seed)
     {
         mType = seed;
         mValue = value;
@@ -21,17 +22,21 @@ public class Seeds
         mMutex = new Mutex();
         switch (mType)
         {
-            case SeedType.Corn:
+            case SEED_TYPE.Corn:
                 harvestTime = 60;
+                harvestYield = 100;
                 break;
-            case SeedType.Potato:
+            case SEED_TYPE.Potato:
                 harvestTime = 70;
+                harvestYield = 110;
                 break;
-            case SeedType.Wheat:
+            case SEED_TYPE.Wheat:
                 harvestTime = 150;
+                harvestYield = 200;
                 break;
-            case SeedType.Hops:
+            case SEED_TYPE.Hops:
                 harvestTime = 200;
+                harvestYield = 10;
                 break;
             default:
                 break;
@@ -52,5 +57,6 @@ public class Seeds
         mMutex.ReleaseMutex();
         return passed;
     }
+
 
 }
