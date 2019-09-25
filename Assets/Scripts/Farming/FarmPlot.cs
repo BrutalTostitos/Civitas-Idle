@@ -44,7 +44,6 @@ public class FarmPlot : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().ToString());
         //mSeed member variables can be accessed once planted & assigned, why is it still null?
         if (mSeed != null)
         {
@@ -87,11 +86,17 @@ public class FarmPlot : MonoBehaviour
                 break;
 
         }
-
+        //change this to take mSeed.harvestYield
+        //gameObject.GetComponent<Image>().sprite = cornSprite;
+        IconSpawner.GetInstance().SpawnIcons(1,
+            gameObject.GetComponent<Image>().sprite,
+            gameObject.transform.position);
         //Resetting the plot
         mSeed = null;
         gameObject.GetComponent<Image>().sprite = null;
         ToggleButtonsHarvested();
+
+
         //Sending notification to farmcontroller that we need an update
         FarmingController.GetInstance().UpdateMeDaddy();
 

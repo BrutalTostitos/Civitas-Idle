@@ -26,7 +26,7 @@ public class Seeds
         switch (mType)
         {
             case SEED_TYPE.Corn:
-                harvestTimeCap = 50f;
+                harvestTimeCap = 5;
                 harvestYield = 100;
                 break;
             case SEED_TYPE.Potato:

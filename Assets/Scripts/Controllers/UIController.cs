@@ -87,6 +87,7 @@ public class UIController : MonoBehaviour
         for (int i = 2; i < mCanvasDict.Count; i++)
         {
             mCanvasDict[i].transform.position = MiningCanvas.transform.position;
+
             mCanvasDict[i].gameObject.SetActive(false);
         }
 
