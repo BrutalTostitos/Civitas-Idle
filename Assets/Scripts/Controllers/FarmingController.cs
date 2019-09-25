@@ -97,6 +97,14 @@ class FarmingController : MonoBehaviour
         }
         return mInstance;
     }
+
+    private void Update()
+    {
+        foreach (KeyValuePair<string, Seeds> seed in mFarmingSeeds)
+        {
+            Debug.Log(seed.Value.harvestTime);
+        }
+    }
     public void Forage()
     {
         int test = UnityEngine.Random.Range(0, 4);

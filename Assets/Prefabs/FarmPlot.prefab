@@ -1342,8 +1342,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1372,8 +1372,10 @@ MonoBehaviour:
   potatoButton: {fileID: 2082151854202663995}
   hopsButton: {fileID: 754955072404503994}
   mButtonList: []
-  go: {fileID: 0}
-  mSeed: {fileID: 0}
+  cornSprite: {fileID: 21300000, guid: f3bcd2d0f0b040b44acda5dcf588267f, type: 3}
+  wheatSprite: {fileID: 21300000, guid: 5f10cb94b1c15aa4abe2bd47c983e430, type: 3}
+  potatoSprite: {fileID: 21300000, guid: 25d366da81852684787d99f5c9648fc2, type: 3}
+  hopsSprite: {fileID: 21300000, guid: 8dd0b53bdc6027549bfcf31f76ab4a1b, type: 3}
   tillProgress: 0
   tillProgressCap: 10
 --- !u!1 &8091208169995702842

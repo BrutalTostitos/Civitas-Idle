@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Seeds : MonoBehaviour
+public class Seeds
 {
     public enum SEED_TYPE { Wheat, Corn, Potato, Hops }
     
     public SEED_TYPE mType;
     public float harvestTime;
+    public float harvestTimeCap;
     public int harvestYield;
     public int mValue;
     public int mCount;
@@ -19,29 +21,31 @@ public class Seeds : MonoBehaviour
         mType = seed;
         mValue = value;
         mCount = 0;
+        harvestTime = 0f;
         mMutex = new Mutex();
         switch (mType)
         {
             case SEED_TYPE.Corn:
-                harvestTime = 60;
+                harvestTimeCap = 50f;
                 harvestYield = 100;
                 break;
             case SEED_TYPE.Potato:
-                harvestTime = 70;
+                harvestTimeCap = 60f;
                 harvestYield = 110;
                 break;
             case SEED_TYPE.Wheat:
-                harvestTime = 150;
+                harvestTimeCap = 70f;
                 harvestYield = 200;
                 break;
             case SEED_TYPE.Hops:
-                harvestTime = 200;
+                harvestTimeCap = 80f;
                 harvestYield = 10;
                 break;
             default:
                 break;
         }
     }
+    
     public int getCount()
     {
         return mCount;
@@ -58,5 +62,9 @@ public class Seeds : MonoBehaviour
         return passed;
     }
 
-
+    //Creates a shallow copy. May need to look into a deep copy
+    public Seeds ShallowCopy()
+    {
+        return (Seeds)this.MemberwiseClone();
+    }
 }

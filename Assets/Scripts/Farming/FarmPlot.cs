@@ -14,8 +14,12 @@ public class FarmPlot : MonoBehaviour
     public Button potatoButton;
     public Button hopsButton;
     public List<Button> mButtonList;
-    public GameObject go;   //maybe not needed
-    public Seeds mSeed;
+    //public GameObject go;   //maybe not needed
+    public Seeds mSeed = null;
+    public Sprite cornSprite;
+    public Sprite wheatSprite;
+    public Sprite potatoSprite;
+    public Sprite hopsSprite;
 
     
     public float tillProgress = 0.0f;
@@ -40,12 +44,14 @@ public class FarmPlot : MonoBehaviour
     }
     private void Update()
     {
-        //mSeed has a type by now, why is it still null?
+        Debug.Log(this.gameObject.GetComponent<SpriteRenderer>().ToString());
+        //mSeed member variables can be accessed once planted & assigned, why is it still null?
         if (mSeed != null)
         {
-            Debug.Log(mSeed.harvestTime);
-            mSeed.harvestTime -= Time.deltaTime;
-            if(mSeed.harvestTime <= 0)
+            //Debug.Log(mSeed.harvestTime);
+            mSeed.harvestTime += Time.deltaTime;
+            harvestProgressBar.current = (int)mSeed.harvestTime;
+            if(mSeed.harvestTime >= mSeed.harvestTimeCap)
             {
                 HarvestCrops();
             }
@@ -58,34 +64,98 @@ public class FarmPlot : MonoBehaviour
         if (tillProgress >= tillProgressCap)
         {
             tillProgress = 0.0f;
-            
-            ToggleButtons();
+            ToggleButtonsTilled();
         }
         tillProgressBar.current = (int)tillProgress;
     }
     public void HarvestCrops()
     {
-        FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.harvestYield, 0);
+        //Determining our harvest and updating farmingcontrollers seed count
+        switch(mSeed.mType)
+        {
+            case Seeds.SEED_TYPE.Corn:
+                FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.harvestYield, 0);
+                break;
+            case Seeds.SEED_TYPE.Wheat:
+                FarmingController.GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(mSeed.harvestYield, 0);
+                break;
+            case Seeds.SEED_TYPE.Potato:
+                FarmingController.GetInstance().mFarmingSeeds["Potato"].modifyCountCond(mSeed.harvestYield, 0);
+                break;
+            case Seeds.SEED_TYPE.Hops:
+                FarmingController.GetInstance().mFarmingSeeds["Hops"].modifyCountCond(mSeed.harvestYield, 0);
+                break;
+
+        }
+
+        //Resetting the plot
         mSeed = null;
+        gameObject.GetComponent<Image>().sprite = null;
+        ToggleButtonsHarvested();
+        //Sending notification to farmcontroller that we need an update
         FarmingController.GetInstance().UpdateMeDaddy();
+
     }
-    private void ToggleButtons()
+    
+
+    public void PlantSeedPlot(Seeds seedType)
+    {
+        if (mSeed != null)
+        {
+            return;
+        }
+        mSeed = seedType.ShallowCopy();
+        switch (seedType.mType)
+        {
+            //Updating UI
+            case Seeds.SEED_TYPE.Corn:
+                //gameObject.sprite = cornSprite;
+                gameObject.GetComponent<Image>().sprite = cornSprite;
+                //gameObject.GetComponent<Image>().transform.localScale = new Vector3(.5f, .5f);
+                break;
+            case Seeds.SEED_TYPE.Wheat:
+                gameObject.GetComponent<Image>().sprite = wheatSprite;
+                break;
+            case Seeds.SEED_TYPE.Potato:
+                gameObject.GetComponent<Image>().sprite = potatoSprite;
+                break;
+            case Seeds.SEED_TYPE.Hops:
+                gameObject.GetComponent<Image>().sprite = hopsSprite;
+                break;
+        }
+        harvestProgressBar.maximum = (int)mSeed.harvestTimeCap;
+        ToggleButtonsPlanted();
+        Debug.Log("Planted seed of type" + mSeed.mType);
+    }
+    //BUTTON TOGGLING STUFF. THERE IS A SMARTER WAY OF DOING THIS
+    //TODO - cleanup and optimization
+
+    //Toggles all buttons to their appropriate active state on tilled
+    private void ToggleButtonsTilled()
+    {
+        foreach (Button tmp in mButtonList)
+        {
+            tmp.gameObject.SetActive(!tmp.gameObject.activeSelf);                           //Toggles plant
+        }
+        tillButton.gameObject.SetActive(!tillButton.gameObject.activeSelf);                 //Toggles till button
+        tillProgressBar.gameObject.SetActive(!tillProgressBar.gameObject.activeSelf);       //toggles till progress bar
+    }
+
+    private void ToggleButtonsPlanted()
     {
         foreach (Button tmp in mButtonList)
         {
             tmp.gameObject.SetActive(!tmp.gameObject.activeSelf);
         }
+
+        harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
+    }
+    private void ToggleButtonsHarvested()
+    {
+
         tillButton.gameObject.SetActive(!tillButton.gameObject.activeSelf);
         tillProgressBar.gameObject.SetActive(!tillProgressBar.gameObject.activeSelf);
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
-    }
-
-
-    public void PlantSeedPlot(Seeds seedType)
-    {
-        
-        mSeed = seedType;
-        Debug.Log("Planted seed of type" + mSeed.mType);
     }
 
     //public void PlantSeeds(SeedType seed, int count = 1)
