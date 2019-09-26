@@ -15,6 +15,13 @@ public class UIController : MonoBehaviour
     public Canvas BuildingCanvas;
     public Canvas MarketCanvas;
     public Canvas SmithingCanvas;
+
+    public GameObject MiningDetail;
+    public GameObject FarmingDetail;
+    public GameObject ForestryDetail;
+    public GameObject BuildingDetail;
+    public GameObject MarketDetail;
+    public GameObject SmithingDetail;
     
     //HUD text
     public Text GoldCountText;
@@ -52,6 +59,7 @@ public class UIController : MonoBehaviour
 
     //Canvas switching
     private Dictionary<int, Canvas> mCanvasDict;
+    private Dictionary<int, GameObject> mDetailDict;
     private int CurrentCanvasIdx = 1;       //This could cause problems in the future
 
 
@@ -83,12 +91,25 @@ public class UIController : MonoBehaviour
         mCanvasDict[6] = SmithingCanvas;
         #endregion
 
+        #region Detail region
+        mDetailDict = new Dictionary<int, GameObject>();
+        mDetailDict[0] = null;
+        mDetailDict[1] = MiningDetail;
+        mDetailDict[2] = FarmingDetail;
+        mDetailDict[3] = ForestryDetail;
+        mDetailDict[4] = BuildingDetail;
+        mDetailDict[5] = MarketDetail;
+        mDetailDict[6] = SmithingDetail;
+        #endregion
+
         //We skip ahead because MainCanvas and MiningCanvas are already where they are needed
         for (int i = 2; i < mCanvasDict.Count; i++)
         {
             mCanvasDict[i].transform.position = MiningCanvas.transform.position;
 
             mCanvasDict[i].gameObject.SetActive(false);
+
+            mDetailDict[i].SetActive(false);
         }
 
 
@@ -156,9 +177,11 @@ public class UIController : MonoBehaviour
         {
             return;
         }
+        mDetailDict[CurrentCanvasIdx].SetActive(false);
         mCanvasDict[CurrentCanvasIdx].gameObject.SetActive(false);
         CurrentCanvasIdx = idx;
         mCanvasDict[idx].gameObject.SetActive(true);
+        mDetailDict[idx].SetActive(true);
 
     
         //Disable current zone @ zoneIndex

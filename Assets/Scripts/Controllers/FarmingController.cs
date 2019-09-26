@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Seeds;
 
-class FarmingController : MonoBehaviour
+public class FarmingController : MonoBehaviour
 {
     //PRIVATE
     private static FarmingController mInstance;
@@ -14,7 +14,8 @@ class FarmingController : MonoBehaviour
 
     public Transform FarmingBackgroundPanel;        //Assigning this through inspector because the .Find() broke
 
-
+    // For Visuals
+    public FarmingDetailScript farmingDetailScript;
 
 
 
@@ -48,7 +49,7 @@ class FarmingController : MonoBehaviour
         mInstance = this;
         //Event system setup
         fuei.eventGo = gameObject;
-        int amount = 1;
+        //int amount = 1;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
@@ -77,6 +78,10 @@ class FarmingController : MonoBehaviour
             tmp.wheatButton.onClick.AddListener(() => PlantSeed(tmp, "Wheat"));
             tmp.potatoButton.onClick.AddListener(() => PlantSeed(tmp, "Potato"));
             tmp.hopsButton.onClick.AddListener(() => PlantSeed(tmp, "Hops"));
+
+            tmp.ID = i;
+
+            mFarmPlots.Add(tmp);
         }
         #endregion
         //SEEDS 
@@ -131,6 +136,21 @@ class FarmingController : MonoBehaviour
             //Planting the appropriate seed on the farmplot
             Debug.Log((mFarmingSeeds[seedName]));
             plot.PlantSeedPlot(mFarmingSeeds[seedName]);   //This might mess with mseeds count
+            switch (seedName)
+            {
+                case "Corn":
+                farmingDetailScript.SetPlant(plot.ID, 1);
+                break;
+                case "Wheat":
+                farmingDetailScript.SetPlant(plot.ID, 0);
+                break;
+                case "Potato":
+                farmingDetailScript.SetPlant(plot.ID, 2);
+                break;
+                case "Hops":
+                farmingDetailScript.SetPlant(plot.ID, 3);
+                break;
+            }
         }
         EventController.getInstance().FireEvent(fuei);
     }

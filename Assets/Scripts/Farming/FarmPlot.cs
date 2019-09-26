@@ -25,7 +25,7 @@ public class FarmPlot : MonoBehaviour
     public float tillProgress = 0.0f;
     public float tillProgressCap = 10.0f;
 
-    
+    public int ID = -1;
 
     private void Awake()
     {
@@ -96,7 +96,7 @@ public class FarmPlot : MonoBehaviour
 
         //Sending notification to farmcontroller that we need an update
         FarmingController.GetInstance().UpdateMeDaddy();
-
+        FarmingController.GetInstance().farmingDetailScript.ClearPlot(ID);
     }
     
 
