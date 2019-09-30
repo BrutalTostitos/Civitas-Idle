@@ -50,21 +50,7 @@ public class GameController : MonoBehaviour
         //PROCESSED
         mResources["Stone Slab"] = new Resource("Stone Slab", 4, ResourceType.Processed);
 
-        //TODO!
-        /*
-        //SEEDS
-        Farming.GetInstance().mFarmingSeeds["Corn"] = new Seeds(5, SeedType.Corn);
-        Farming.GetInstance().mFarmingSeeds["Potato"] = new Seeds(5, SeedType.Potato);
-        Farming.GetInstance().mFarmingSeeds["Wheat"] = new Seeds(5, SeedType.Wheat);
-        Farming.GetInstance().mFarmingSeeds["Hops"] = new Seeds(5, SeedType.Hops);
-        */
-
-        /*
-        for (int i = 0; i < 18; i++)
-        {
-            Farming.GetInstance().mFarmPlots.Add(new FarmPlot());
-        }
-        */
+        
     }
 
     public static GameController GetInstance()
@@ -74,7 +60,6 @@ public class GameController : MonoBehaviour
         {
             //mInstance is set on Awake(), however a gameobject is still added to the scene
             //even though this code *shouldnt* run
-            Debug.Log("Why are we making a 2nd game controller");
             GameObject go = new GameObject("GameController");   
             mInstance = go.AddComponent<GameController>();
         }

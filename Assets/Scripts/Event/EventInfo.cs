@@ -22,4 +22,9 @@ namespace EventCallBacks
     {
         public GameObject eventGo;
     }
+
+    public class BuildingUpdateEventInfo : EventInfo
+    {
+        public GameObject eventGo;
+    }
 }

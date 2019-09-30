@@ -81,16 +81,5 @@ public class EventController : MonoBehaviour
         }
 
     }
-
-    //DEPRICATED
-    //Tells UIController to update resource info
-    //public void ResourceUpdate()
-    //{
-    //    if (ResourceUpdateUI != null)
-    //    {
-    //        ResourceUpdateUI();
-    //    }
-    //}
     
-
 }

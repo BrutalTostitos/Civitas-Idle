@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class BuildingController : MonoBehaviour
 
     public GameObject buildingsContentPanel;
     public GameObject prefabGameIcon;
+    
+    public Button buildButton;      //--added by josh, assigned in inspector
 
     void Awake()
     {
@@ -35,17 +38,26 @@ public class BuildingController : MonoBehaviour
         int y = 0;
         foreach (BuildingObject building in mAvailableBuildings)
         {
+            Debug.Log("this running yet");
+            //the world building looks weird if you stare at it too much
+            //For all the available buildings, we instantiate the icon on the left side
             Debug.Log(building.name);
             GameObject temp = Instantiate(prefabGameIcon, buildingsContentPanel.transform);
             temp.transform.Translate(x*150*0.016f, -y*150*0.016f, 0);
+
+            //Attaching the corresponding building object with its icon
             temp.GetComponent<BuildingIconButton>().buildingObject = building;
             x++;
+            //The smart way to lay out a grid
             if (x > 4)
             {
                 x = 0;
                 y++;
             }
         }
+        //Added by josh
+        buildButton.onClick.AddListener(() => PurchaseBuilding());  //adding the click event
+
 
         BuildingController.SetInstance(this);
     }
@@ -127,4 +139,19 @@ public class BuildingController : MonoBehaviour
     {
         InfoPanel = buildingInformationScript;
     }
+
+    //Function added by josh
+    public void PurchaseBuilding()
+    {
+        Debug.Log(mTagSelected);
+        if (mTagSelected != null)
+        {
+            if (GameController.GetInstance().changeGold(mTagSelected.GoldCost, -mTagSelected.GoldCost))
+            {
+                mTagSelected.OnBuy();
+            }
+        }
+        
+    }
+
 }

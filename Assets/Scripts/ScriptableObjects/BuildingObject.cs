@@ -66,6 +66,7 @@ public class BuildingObject : ScriptableObject
 
     public void OnBuy()
     {
+        Debug.Log("Heyo!");
         GameObject.Find("EventController").SendMessage(OnBuyFunction);
     }
 }

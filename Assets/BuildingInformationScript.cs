@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class BuildingInformationScript : MonoBehaviour
 {
+    //This script is used by the InfoPanel to display the building details
+    
+
     public Text Name;
     public Text Description;
     public Image Icon;

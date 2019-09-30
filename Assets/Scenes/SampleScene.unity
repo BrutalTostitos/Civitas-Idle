@@ -15353,6 +15353,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2961802565348740428, guid: ace49f32576d5c540a6a4689aee1c610,
+        type: 3}
+      propertyPath: m_Name
+      value: InfoPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 337673809108656940, guid: ace49f32576d5c540a6a4689aee1c610,
+        type: 3}
+      propertyPath: m_Name
+      value: BuildButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ace49f32576d5c540a6a4689aee1c610, type: 3}
 --- !u!114 &740954849 stripped
@@ -20623,6 +20633,11 @@ PrefabInstance:
       propertyPath: InfoPanel
       value: 
       objectReference: {fileID: 1535834394}
+    - target: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
+        type: 3}
+      propertyPath: buildButton
+      value: 
+      objectReference: {fileID: 1709643381}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d7e6c94f38f8a64c966cdf8658458fc, type: 3}
 --- !u!1 &1620651095
@@ -20813,6 +20828,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4342377950073190466}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1709643381 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 337673809108656938, guid: ace49f32576d5c540a6a4689aee1c610,
+    type: 3}
+  m_PrefabInstance: {fileID: 740918487}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1761152112 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1777186345894254039, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
@@ -22590,6 +22617,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_MinSize
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4342377950871412887, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_Text
+      value: Discovery
+      objectReference: {fileID: 0}
     - target: {fileID: 4342377951519960990, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
         type: 3}
       propertyPath: m_FontData.m_FontStyle
@@ -22619,6 +22651,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342377951341866302, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_Name
+      value: DiscoveryCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342377951103759270, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_Name
+      value: DiscoveryButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 760d2cf7552c0374b9dd031fc5eb0ed9, type: 3}
