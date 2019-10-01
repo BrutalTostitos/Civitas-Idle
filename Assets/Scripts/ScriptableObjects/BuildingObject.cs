@@ -24,6 +24,15 @@ public class BuildingObject : ScriptableObject
     [SerializeField]
     private int goldCost;
 
+    [SerializeField]
+    private int stoneCost;
+
+    [SerializeField]
+    private int brickCost;
+
+    [SerializeField]
+    private int lumberCost;
+
     public string Name
     {
         get
@@ -53,6 +62,30 @@ public class BuildingObject : ScriptableObject
         get
         {
             return goldCost;
+        }
+    }
+
+    public int StoneCost
+    {
+        get
+        {
+            return lumberCost;
+        }
+    }
+
+    public int BrickCost
+    {
+        get
+        {
+            return brickCost;
+        }
+    }
+
+    public int LumberCost
+    {
+        get
+        {
+            return lumberCost;
         }
     }
 

@@ -11,6 +11,11 @@ public class BuildingInformationScript : MonoBehaviour
     public Text Name;
     public Text Description;
     public Image Icon;
+
+    public Text GoldCost;
+    public Text StoneCost;
+    public Text BrickCost;
+    public Text LumberCost;
     
 
     void Start()
@@ -26,11 +31,20 @@ public class BuildingInformationScript : MonoBehaviour
             Description.text = "";
             Icon.sprite = null;
             Icon.enabled = false;
+            GoldCost.text = "0";
+            StoneCost.text = "0";
+            BrickCost.text = "0";
+            LumberCost.text = "0";
             return;
         }
         Name.text = buildingObject.name;
         Description.text = buildingObject.Description;
         Icon.sprite = buildingObject.Icon;
         Icon.enabled = true;
+
+        GoldCost.text = buildingObject.GoldCost.ToString();
+        StoneCost.text = buildingObject.StoneCost.ToString();
+        BrickCost.text = buildingObject.BrickCost.ToString();
+        LumberCost.text = buildingObject.LumberCost.ToString();
     }
 }

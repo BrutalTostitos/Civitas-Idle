@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Farm
   m_EditorClassIdentifier: 
   mName: Farm
-  description: This is a farm that is disapointed in Josh.
+  description: This farm is still disapointed in Josho.
   OnBuyFunction: 
-  icon: {fileID: 21300000, guid: 5f10cb94b1c15aa4abe2bd47c983e430, type: 3}
+  icon: {fileID: 21300000, guid: f3bcd2d0f0b040b44acda5dcf588267f, type: 3}
   populationIncrease: 0
   goldCost: 0
