@@ -51,9 +51,7 @@ public class WorkerController : MonoBehaviour
     {
         foreach (KeyValuePair<string, Worker> worker in mWorkers)
         {
-            worker.Value.UpdateWorker();
-            //mwei.workerCount = worker.Value.getCount();
-            //EventController.getInstance().FireEvent(mwei);
+            worker.Value.UpdateTick();
         }
 
 

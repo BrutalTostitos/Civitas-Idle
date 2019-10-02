@@ -13,7 +13,10 @@ public abstract class Worker : MonoBehaviour
     public int mValue;
     public int mCount;
     public int mCapCount;       //Assign this in subclass
-    public int mPower;
+    public int mPower;          //potentially useful to determine how effective a worker is at their job
+    public float mCurTime;       //Assign this in subclass - used for updateticks
+    public float mMaxTime;       //Assign this in subclass
+
     public WORKER_TYPE mType;
 
     public Worker(int value, WORKER_TYPE workerType)
@@ -51,6 +54,15 @@ public abstract class Worker : MonoBehaviour
     public void increaseCapCount(int amount)
     {
         mCapCount += amount;
+    }
+    public void UpdateTick()
+    {
+        mCurTime += Time.deltaTime;
+        if (mCurTime >= mMaxTime)
+        {
+            mCurTime = 0.0f;
+            UpdateWorker();
+        }
     }
 
     public abstract void UpdateWorker();

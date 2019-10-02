@@ -33,6 +33,10 @@ public class MiningWorker : Worker
                 break;
                 
         }
+        //TODO actually custom-tailor these to the worker types
+        mCurTime = 0.0f;
+        mMaxTime = 1.0f;
+
         mCapCount = 10; //TODO start this at zero, increase it with new building unlocks & upgrades
         //Debug.Log(gameObject);
 
