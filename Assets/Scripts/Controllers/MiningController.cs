@@ -66,18 +66,22 @@ public class MiningController : MonoBehaviour
     //Event driven
     void MiningWorkerUpdate(MiningWorkerEventInfo eventInfo)
     {
+        
         Debug.Log(eventInfo.workerCount);
         int amount = eventInfo.workerCount;
+        string target = eventInfo.eventTargetResource;
 
 
-        if (!GameController.GetInstance().mResources.ContainsKey("Stone"))
+
+
+        if (!GameController.GetInstance().mResources.ContainsKey(target))
         {
             return; //should not be accessible, thus performs no action
         }
         int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
 
         GameController.GetInstance().mResources["Stone"].modifyCountCond(modResult, 0);
-        GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
+        GameController.GetInstance().mResources[target].modifyCountCond(amount - modResult, 0);
 
         ruei.EventDescription = "Mining Stone with worker";  //TODO remove this. useful for testing
         ruei.eventGO = gameObject;      

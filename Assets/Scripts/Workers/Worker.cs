@@ -2,7 +2,7 @@
 using System.Threading;
 using UnityEngine;
 
-public enum WorkerType
+public enum WORKER_TYPE
 {
     Miner, CopperMiner, TinMiner, CoalMiner, IronMiner,
     StoneMason, Forgeworker, Smith, Merchant
@@ -13,10 +13,9 @@ public abstract class Worker : MonoBehaviour
     public int mValue;
     public int mCount;
     public int mPower;
-    public WorkerType mType;
-    //private GameObject go;
+    public WORKER_TYPE mType;
 
-    public Worker(int value, WorkerType workerType)
+    public Worker(int value, WORKER_TYPE workerType)
     {
         
         mValue = value;

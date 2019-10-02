@@ -32,5 +32,12 @@ namespace EventCallBacks
     public class MiningWorkerEventInfo : EventInfo
     {
         public GameObject eventGO;
+        public string eventTargetResource;
+        public WORKER_TYPE mType;
+        public MiningWorkerEventInfo(string target)
+        {
+            eventTargetResource = target;
+        }
+        
     }
 }

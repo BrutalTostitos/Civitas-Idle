@@ -153,11 +153,11 @@ public class UIController : MonoBehaviour
         StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Miner"].getCount().ToString();
         CopperMinerCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
         //CopperCapCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
-        TinMinerCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCount().ToString();
+        //TinMinerCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCount().ToString();
         //TinCapCountText;
-        CoalMinerCountText.text = WorkerController.GetInstance().mWorkers["Coal Miner"].getCount().ToString();
+        //CoalMinerCountText.text = WorkerController.GetInstance().mWorkers["Coal Miner"].getCount().ToString();
         //CoalCapCountText;
-        IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
+        //IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
         //IronCapCountText;
     }
     //Event driven
