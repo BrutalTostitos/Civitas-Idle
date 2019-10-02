@@ -69,7 +69,7 @@ public class BuildingObject : ScriptableObject
     {
         get
         {
-            return lumberCost;
+            return stoneCost;
         }
     }
 
