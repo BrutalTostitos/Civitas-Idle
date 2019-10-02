@@ -11,9 +11,9 @@ public class WorkerController : MonoBehaviour
 
     
     private static WorkerController mInstance;
-    //Creating our event
+    //Creating our events
     WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
-
+    MiningWorkerEventInfo mwei = new MiningWorkerEventInfo();   //worker->event->mining
 
     public Dictionary<string, Worker> mWorkers;
     public Dictionary<string, int> mWorkerCaps;
@@ -24,21 +24,21 @@ public class WorkerController : MonoBehaviour
         mInstance = this;
         mWorkerCaps = new Dictionary<string, int>();
         mWorkers = new Dictionary<string, Worker>();
-        //? mSeeds = new List<Seeds>();
 
         //Event system setup
         wuei.eventGO = gameObject;
+        mwei.eventGO = gameObject;
 
         //initializing the types of workers
-        mWorkers["Miner"] = new Worker(15, WorkerType.Miner);
-        mWorkers["Copper Miner"] = new Worker(15, WorkerType.CopperMiner);
-        mWorkers["Tin Miner"] = new Worker(15, WorkerType.TinMiner);
-        mWorkers["Coal Miner"] = new Worker(15, WorkerType.CoalMiner);
-        mWorkers["Iron Miner"] = new Worker(15, WorkerType.IronMiner);
-        mWorkers["Stone Mason"] = new Worker(15, WorkerType.StoneMason);
-        mWorkers["Forge Worker"] = new Worker(15, WorkerType.Forgeworker);
-        mWorkers["Merchant"] = new Worker(15, WorkerType.Merchant);
-
+        //TODO these arent all mining workers you dummy
+        mWorkers["Miner"] = new MiningWorker(15, WorkerType.Miner);
+        mWorkers["Copper Miner"] = new MiningWorker(15, WorkerType.CopperMiner);
+        mWorkers["Tin Miner"] = new MiningWorker(15, WorkerType.TinMiner);
+        mWorkers["Coal Miner"] = new MiningWorker(15, WorkerType.CoalMiner);
+        mWorkers["Iron Miner"] = new MiningWorker(15, WorkerType.IronMiner);
+        mWorkers["Stone Mason"] = new MiningWorker(15, WorkerType.StoneMason);
+        mWorkers["Forge Worker"] = new MiningWorker(15, WorkerType.Forgeworker);
+        mWorkers["Merchant"] = new MiningWorker(15, WorkerType.Merchant);
 
         //TODO
         //Initializing WorkerCaps. All are set to 10 for testing purposes
@@ -49,7 +49,19 @@ public class WorkerController : MonoBehaviour
         mWorkerCaps["Iron Mine"] = 10;
 
     }
-    
+    private void Update()
+    {
+        foreach (KeyValuePair<string, Worker> worker in mWorkers)
+        {
+            mwei.workerCount = worker.Value.getCount();
+            EventController.getInstance().FireEvent(mwei);
+            //worker.Value.UpdateWorker(); //This should call something in mining controller
+        }
+
+
+    }
+
+
 
     public static WorkerController GetInstance()
     {
@@ -183,42 +195,6 @@ public class WorkerController : MonoBehaviour
 
     
 
-    public enum WorkerType
-    {
-        Miner, CopperMiner, TinMiner, CoalMiner, IronMiner,
-        StoneMason, Forgeworker, Smith, Merchant
-    }
-    public class Worker
-    {
-        Mutex mMutex;
-        public int mValue;
-        private int mCount;
-        public int mPower;
-        public WorkerType mType;
-
-        public Worker(int value, WorkerType workerType)
-        {
-            mValue = value;
-            mCount = 0;
-            mPower = 1;
-            mType = workerType;
-            mMutex = new Mutex();
-        }
-        public int getCount()
-        {
-            return mCount;
-        }
-        public bool modifyCountCond(int amountToAddToCount, int conditionAmount)
-        {
-            bool passed = true;
-            mMutex.WaitOne();
-            if (mCount >= conditionAmount)
-                mCount += amountToAddToCount;
-            else
-                passed = false;
-            mMutex.ReleaseMutex();
-            return passed;
-        }
-    }
+    
 
 }
