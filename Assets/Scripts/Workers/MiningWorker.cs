@@ -22,10 +22,18 @@ public class MiningWorker : Worker
             case WORKER_TYPE.CopperMiner:
                 targetResource = "Copper Ore";
                 break;
-                //todo - fill this out
-
+            case WORKER_TYPE.TinMiner:
+                targetResource = "Tin Ore";
+                break;
+            case WORKER_TYPE.CoalMiner:
+                targetResource = "Coal";
+                break;
+            case WORKER_TYPE.IronMiner:
+                targetResource = "Iron Ore";
+                break;
+                
         }
-
+        mCapCount = 10; //TODO start this at zero, increase it with new building unlocks & upgrades
         //Debug.Log(gameObject);
 
         mwei = new MiningWorkerEventInfo(targetResource);

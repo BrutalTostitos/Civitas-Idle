@@ -12,6 +12,7 @@ public abstract class Worker : MonoBehaviour
     Mutex mMutex;
     public int mValue;
     public int mCount;
+    public int mCapCount;       //Assign this in subclass
     public int mPower;
     public WORKER_TYPE mType;
 
@@ -29,6 +30,10 @@ public abstract class Worker : MonoBehaviour
     {
         return mCount;
     }
+    public int getCapCount()
+    {
+        return mCapCount;
+    }
     public bool modifyCountCond(int amountToAddToCount, int conditionAmount)
     {
         bool passed = true;
@@ -40,6 +45,16 @@ public abstract class Worker : MonoBehaviour
         mMutex.ReleaseMutex();
         return passed;
     }
+
+    //Will be used for increasing the cap on this worker type through buildings & upgrades
+    //this is just a generic function. we may want something that is event driven
+    public void increaseCapCount(int amount)
+    {
+        mCapCount += amount;
+    }
+
     public abstract void UpdateWorker();
+
+    
 
 }
