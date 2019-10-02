@@ -183,6 +183,8 @@ public class BuildingController : MonoBehaviour
 
                 mOwnedBuildings.Add(InfoPanel.building);
 
+                InfoPanel.building.OnBuy();
+
                 RebuildOptions();
                 
                 InfoPanel.building = null;
