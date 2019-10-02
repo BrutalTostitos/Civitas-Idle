@@ -250,5 +250,40 @@ public class GameController : MonoBehaviour
     }
 
 
+    //Done in a not great way at the moment, but should work.
+    public bool canBuy(BuildingObject building)
+    {
+        bool canBuy = true;
+        if (building.GoldCost > int.Parse(getGold()))
+        {
+            canBuy = false;
+        }
+        if (building.LumberCost > getResourceCount("Lumber"))
+        {
+            canBuy = false;
+        }
+        if (building.BrickCost > getResourceCount("Stone Slab"))
+        {
+            canBuy = false;
+        }
+        if (building.StoneCost > getResourceCount("Stone"))
+        {
+            canBuy = false;
+        }
+        return canBuy;
+    }
 
+    public void useResourcesToBuyBuilding(BuildingObject building)
+    {
+        if (canBuy(building))
+        {
+            if (mResources.ContainsKey("Lumber"))
+                mResources["Lumber"].modifyCountCond(-building.LumberCost, building.LumberCost);
+            if (mResources.ContainsKey("Stone"))
+                mResources["Stone"].modifyCountCond(-building.StoneCost, building.StoneCost);
+            if (mResources.ContainsKey("Stone Slab"))
+                mResources["Stone Slab"].modifyCountCond(-building.BrickCost, building.BrickCost);
+            changeGold(-building.GoldCost, building.GoldCost);
+        }
+    }
 }

@@ -17,6 +17,7 @@ public class BuildingInformationScript : MonoBehaviour
     public Text BrickCost;
     public Text LumberCost;
     
+    public BuildingObject building;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class BuildingInformationScript : MonoBehaviour
 
     public void SetSelected(BuildingObject buildingObject)
     {
+        building = buildingObject;
         if (buildingObject == null)
         {
             Name.text = "";

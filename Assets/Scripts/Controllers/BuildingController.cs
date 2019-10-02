@@ -10,6 +10,7 @@ public class BuildingController : MonoBehaviour
 
     //What buildings you can build.
     private List<BuildingObject> mAvailableBuildings;
+    private Dictionary<BuildingObject, GameObject> mBuidlingIcons;
 
     //What buildings you own.
     private List<BuildingObject> mOwnedBuildings;
@@ -22,7 +23,6 @@ public class BuildingController : MonoBehaviour
     public GameObject buildingsContentPanel;
     public GameObject prefabGameIcon;
     
-    public Button buildButton;      //--added by josh, assigned in inspector
 
     void Awake()
     {
@@ -30,6 +30,7 @@ public class BuildingController : MonoBehaviour
             buildingsContentPanel = GameObject.Find("BuildingAvailablePanel");
         
         mAvailableBuildings = new List<BuildingObject>();
+        mBuidlingIcons = new Dictionary<BuildingObject, GameObject>();
 
         BuildingObject[] buildingsFromResources = Resources.FindObjectsOfTypeAll<BuildingObject>();
         mAvailableBuildings.AddRange(buildingsFromResources);
@@ -54,12 +55,40 @@ public class BuildingController : MonoBehaviour
                 x = 0;
                 y++;
             }
-        }
-        //Added by josh
-        buildButton.onClick.AddListener(() => PurchaseBuilding());  //adding the click event
 
+            mBuidlingIcons[building] = temp;
+        }
 
         BuildingController.SetInstance(this);
+    }
+
+    public void RebuildOptions()
+    {
+        foreach (KeyValuePair<BuildingObject,GameObject> go in mBuidlingIcons)
+        {
+            GameObject.Destroy(go.Value);
+        }
+        mBuidlingIcons = new Dictionary<BuildingObject, GameObject>();
+
+        int x = 0;
+        int y = 0;
+        foreach (BuildingObject building in mAvailableBuildings)
+        {
+            //For all the available buildings, we instantiate the icon on the left side
+            GameObject temp = Instantiate(prefabGameIcon, buildingsContentPanel.transform);
+            temp.transform.Translate(x*150*0.016f, -y*150*0.016f, 0);
+
+            //Attaching the corresponding building object with its icon
+            temp.GetComponent<BuildingIconButton>().buildingObject = building;
+            x++;
+            //The smart way to lay out a grid
+            if (x > 4)
+            {
+                x = 0;
+                y++;
+            }
+            mBuidlingIcons[building] = temp;
+        }
     }
 
     public static void SetInstance(BuildingController buildingController)
@@ -140,18 +169,29 @@ public class BuildingController : MonoBehaviour
         InfoPanel = buildingInformationScript;
     }
 
-    //Function added by josh
+    //Function added by josh //Thanks dad
     public void PurchaseBuilding()
     {
-        Debug.Log(mTagSelected);
-        if (mTagSelected != null)
+
+        if (InfoPanel.building != null)
         {
-            if (GameController.GetInstance().changeGold(mTagSelected.GoldCost, -mTagSelected.GoldCost))
+            if (GameController.GetInstance().canBuy(InfoPanel.building))
             {
-                mTagSelected.OnBuy();
+                GameController.GetInstance().useResourcesToBuyBuilding(InfoPanel.building);
+                mAvailableBuildings.Remove(InfoPanel.building);
+                
+
+                mOwnedBuildings.Add(InfoPanel.building);
+
+                RebuildOptions();
+
+                if (GameController.GetInstance().changeGold(InfoPanel.building.GoldCost, -InfoPanel.building.GoldCost))
+                {
+                    InfoPanel.building.OnBuy();
+                }
+                
+                InfoPanel.building = null;
             }
         }
-        
     }
-
 }
