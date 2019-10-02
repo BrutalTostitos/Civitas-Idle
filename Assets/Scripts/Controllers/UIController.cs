@@ -107,7 +107,8 @@ public class UIController : MonoBehaviour
         {
             mCanvasDict[i].transform.position = MiningCanvas.transform.position;
 
-            mCanvasDict[i].gameObject.SetActive(false);
+            mCanvasDict[i].gameObject.GetComponent<Canvas>().enabled = false;
+            //mCanvasDict[i].gameObject.SetActive(false);
 
             mDetailDict[i].SetActive(false);
         }
@@ -181,9 +182,9 @@ public class UIController : MonoBehaviour
             return;
         }
         mDetailDict[CurrentCanvasIdx].SetActive(false);
-        mCanvasDict[CurrentCanvasIdx].gameObject.SetActive(false);
+        mCanvasDict[CurrentCanvasIdx].gameObject.GetComponent<Canvas>().enabled = false;
         CurrentCanvasIdx = idx;
-        mCanvasDict[idx].gameObject.SetActive(true);
+        mCanvasDict[idx].gameObject.GetComponent<Canvas>().enabled = true;
         mDetailDict[idx].SetActive(true);
 
     
