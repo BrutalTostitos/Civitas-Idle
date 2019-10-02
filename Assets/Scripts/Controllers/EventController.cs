@@ -82,4 +82,9 @@ public class EventController : MonoBehaviour
 
     }
     
+    public void OnBuyCopperMine()
+    {
+        Debug.Log("AYYYYYY");
+        Debug.Log("LMaO");
+    }
 }

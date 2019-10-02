@@ -17,4 +17,7 @@ MonoBehaviour:
   OnBuyFunction: 
   icon: {fileID: 21300000, guid: eea3a8968f9b05a4583fb740f71e420c, type: 3}
   populationIncrease: 0
-  goldCost: 0
+  goldCost: 100
+  stoneCost: 0
+  brickCost: 0
+  lumberCost: 0
