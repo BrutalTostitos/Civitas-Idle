@@ -48,7 +48,7 @@ public class FarmingController : MonoBehaviour
     {
         mInstance = this;
         //Event system setup
-        fuei.eventGo = gameObject;
+        fuei.eventGO = gameObject;
         //int amount = 1;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();

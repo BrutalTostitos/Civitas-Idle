@@ -6,6 +6,7 @@ namespace EventCallBacks
 
         //Useful for Debug.Log
         public string EventDescription;
+        public int workerCount;
 
 
     }
@@ -20,11 +21,23 @@ namespace EventCallBacks
     
     public class FarmingUpdateEventInfo : EventInfo
     {
-        public GameObject eventGo;
+        public GameObject eventGO;
     }
+
 
     public class BuildingUpdateEventInfo : EventInfo
     {
-        public GameObject eventGo;
+        public GameObject eventGO;
+    }
+    public class MiningWorkerEventInfo : EventInfo
+    {
+        public GameObject eventGO;
+        public string eventTargetResource;
+        public WORKER_TYPE mType;
+        public MiningWorkerEventInfo(string target)
+        {
+            eventTargetResource = target;
+        }
+        
     }
 }

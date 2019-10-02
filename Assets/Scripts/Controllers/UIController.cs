@@ -152,13 +152,16 @@ public class UIController : MonoBehaviour
         GoldCountText.text = GameController.GetInstance().getGold();
         StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Miner"].getCount().ToString();
         CopperMinerCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
-        //CopperCapCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
+        CopperCapCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCapCount().ToString();
         TinMinerCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCount().ToString();
-        //TinCapCountText;
+        TinCapCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCapCount().ToString();
+        
         CoalMinerCountText.text = WorkerController.GetInstance().mWorkers["Coal Miner"].getCount().ToString();
-        //CoalCapCountText;
+        CoalCapCountText.text = WorkerController.GetInstance().mWorkers["Coal Miner"].getCapCount().ToString();
+        
         IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
-        //IronCapCountText;
+        IronCapCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCapCount().ToString();
+        
     }
     //Event driven
     void UpdateFarmingUI(FarmingUpdateEventInfo eventInfo)

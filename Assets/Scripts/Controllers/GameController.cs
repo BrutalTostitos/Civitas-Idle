@@ -50,6 +50,9 @@ public class GameController : MonoBehaviour
         //PROCESSED
         mResources["Stone Slab"] = new Resource("Stone Slab", 4, ResourceType.Processed);
 
+        //TODO need some variable to control tick update.
+        //the other controllers will likely need a customized update function
+        //gamecontroller -> eventcontroller -> othercontrollers.UpdateTick()
         
     }
 

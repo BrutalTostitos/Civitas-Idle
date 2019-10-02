@@ -11,45 +11,55 @@ public class WorkerController : MonoBehaviour
 
     
     private static WorkerController mInstance;
-    //Creating our event
+    //Creating our events
     WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
-
+    //MiningWorkerEventInfo mwei = new MiningWorkerEventInfo();   //worker->event->mining
 
     public Dictionary<string, Worker> mWorkers;
-    public Dictionary<string, int> mWorkerCaps;
     private int popCap = 100;
 
     void Awake()
     {
         mInstance = this;
-        mWorkerCaps = new Dictionary<string, int>();
         mWorkers = new Dictionary<string, Worker>();
-        //? mSeeds = new List<Seeds>();
 
         //Event system setup
         wuei.eventGO = gameObject;
+        //mwei.eventGO = gameObject;
 
         //initializing the types of workers
-        mWorkers["Miner"] = new Worker(15, WorkerType.Miner);
-        mWorkers["Copper Miner"] = new Worker(15, WorkerType.CopperMiner);
-        mWorkers["Tin Miner"] = new Worker(15, WorkerType.TinMiner);
-        mWorkers["Coal Miner"] = new Worker(15, WorkerType.CoalMiner);
-        mWorkers["Iron Miner"] = new Worker(15, WorkerType.IronMiner);
-        mWorkers["Stone Mason"] = new Worker(15, WorkerType.StoneMason);
-        mWorkers["Forge Worker"] = new Worker(15, WorkerType.Forgeworker);
-        mWorkers["Merchant"] = new Worker(15, WorkerType.Merchant);
-
+        //TODO these arent all mining workers you dummy
+        mWorkers["Miner"] = new MiningWorker(15, WORKER_TYPE.Miner);
+        mWorkers["Copper Miner"] = new MiningWorker(15, WORKER_TYPE.CopperMiner);
+        mWorkers["Tin Miner"] = new MiningWorker(15, WORKER_TYPE.TinMiner);
+        mWorkers["Coal Miner"] = new MiningWorker(15, WORKER_TYPE.CoalMiner);
+        mWorkers["Iron Miner"] = new MiningWorker(15, WORKER_TYPE.IronMiner);
+        //mWorkers["Stone Mason"] = new MiningWorker(15, WORKER_TYPE.StoneMason);
+        //mWorkers["Forge Worker"] = new MiningWorker(15, WORKER_TYPE.Forgeworker);
+        //mWorkers["Merchant"] = new MiningWorker(15, WORKER_TYPE.Merchant);
 
         //TODO
         //Initializing WorkerCaps. All are set to 10 for testing purposes
         //Should init to 0. Will need to adjust for unlocking buildings. 
-        mWorkerCaps["Copper Mine"] = 10;
-        mWorkerCaps["Tin Mine"] = 10;
-        mWorkerCaps["Coal Mine"] = 10;
-        mWorkerCaps["Iron Mine"] = 10;
+        //mWorkerCaps["Copper Mine"] = 10;
+        //mWorkerCaps["Tin Mine"] = 10;
+        //mWorkerCaps["Coal Mine"] = 10;
+        //mWorkerCaps["Iron Mine"] = 10;
 
     }
-    
+    private void Update()
+    {
+        foreach (KeyValuePair<string, Worker> worker in mWorkers)
+        {
+            worker.Value.UpdateWorker();
+            //mwei.workerCount = worker.Value.getCount();
+            //EventController.getInstance().FireEvent(mwei);
+        }
+
+
+    }
+
+
 
     public static WorkerController GetInstance()
     {
@@ -92,7 +102,7 @@ public class WorkerController : MonoBehaviour
             //special cases for miner specialties
 
             case "Copper Miner":
-                if (mWorkers[key].getCount() >= mWorkerCaps["Copper Mine"] ||
+                if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
                     !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     //No purchase made
@@ -101,13 +111,12 @@ public class WorkerController : MonoBehaviour
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
                 //Firing off our event
-                //WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
-                //wuei.eventGO = gameObject;      //This feels overkill
+                    
                 EventController.getInstance().FireEvent(wuei);
                 return;
-
+            //TODO implement this. You will then need to re-add them to mWorkers up in awake
             case "Tin Miner":
-                if (mWorkers[key].getCount() >= mWorkerCaps["Tin Mine"] ||
+                if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
                     !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
@@ -118,7 +127,7 @@ public class WorkerController : MonoBehaviour
                 EventController.getInstance().FireEvent(wuei);
                 return;
             case "Coal Miner":
-                if (mWorkers[key].getCount() >= mWorkerCaps["Coal Mine"] ||
+                if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
                     !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
@@ -128,7 +137,7 @@ public class WorkerController : MonoBehaviour
                 EventController.getInstance().FireEvent(wuei);
                 return;
             case "Iron Miner":
-                if (mWorkers[key].getCount() >= mWorkerCaps["Iron Mine"] ||
+                if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
                     !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
@@ -144,7 +153,7 @@ public class WorkerController : MonoBehaviour
         //No special case, we're just buying standard miners
         if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
         {
-            mWorkers[key].modifyCountCond(amount, -amount);
+            mWorkers["Miner"].modifyCountCond(amount, -amount);
         }
         EventController.getInstance().FireEvent(wuei);
 
@@ -183,42 +192,6 @@ public class WorkerController : MonoBehaviour
 
     
 
-    public enum WorkerType
-    {
-        Miner, CopperMiner, TinMiner, CoalMiner, IronMiner,
-        StoneMason, Forgeworker, Smith, Merchant
-    }
-    public class Worker
-    {
-        Mutex mMutex;
-        public int mValue;
-        private int mCount;
-        public int mPower;
-        public WorkerType mType;
-
-        public Worker(int value, WorkerType workerType)
-        {
-            mValue = value;
-            mCount = 0;
-            mPower = 1;
-            mType = workerType;
-            mMutex = new Mutex();
-        }
-        public int getCount()
-        {
-            return mCount;
-        }
-        public bool modifyCountCond(int amountToAddToCount, int conditionAmount)
-        {
-            bool passed = true;
-            mMutex.WaitOne();
-            if (mCount >= conditionAmount)
-                mCount += amountToAddToCount;
-            else
-                passed = false;
-            mMutex.ReleaseMutex();
-            return passed;
-        }
-    }
+    
 
 }
