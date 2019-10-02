@@ -184,11 +184,6 @@ public class BuildingController : MonoBehaviour
                 mOwnedBuildings.Add(InfoPanel.building);
 
                 RebuildOptions();
-
-                if (GameController.GetInstance().changeGold(InfoPanel.building.GoldCost, -InfoPanel.building.GoldCost))
-                {
-                    InfoPanel.building.OnBuy();
-                }
                 
                 InfoPanel.building = null;
             }

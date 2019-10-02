@@ -22,9 +22,9 @@ public class GameController : MonoBehaviour
 
     public System.Random mRandom = new System.Random();
 
-    Mutex goldMutex;
+    //Mutex goldMutex;
 
-    private int goldAmount = 100;
+    public int goldAmount = 1000;
 
     void Awake()
     {
@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
     private GameController()
     {
         mInstance = this;   //I dont think this is working right
-        goldMutex = new Mutex();
+        //goldMutex = new Mutex();
         
         ItemsToSell = new List<string>();
         mResources = new Dictionary<string, Resource>();
@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour
     public bool changeGold(int amountToAddToCount, int conditionAmount)
     {
         bool passed = true;
-        goldMutex.WaitOne();
+        //goldMutex.WaitOne();
         if (goldAmount >= conditionAmount)
         {
             goldAmount += amountToAddToCount;
@@ -109,7 +109,7 @@ public class GameController : MonoBehaviour
         {
             passed = false;
         }
-        goldMutex.ReleaseMutex();
+        //goldMutex.ReleaseMutex();
         return passed;
     }
     
@@ -143,9 +143,9 @@ public class GameController : MonoBehaviour
 
         if (mResources[key].modifyCountCond(-count, count))
         {
-            goldMutex.WaitOne();
+            //goldMutex.WaitOne();
             goldAmount += mResources[key].mValue * count;
-            goldMutex.ReleaseMutex();
+            //goldMutex.ReleaseMutex();
         }
     }
     
@@ -257,7 +257,7 @@ public class GameController : MonoBehaviour
     public bool canBuy(BuildingObject building)
     {
         bool canBuy = true;
-        if (building.GoldCost > int.Parse(getGold()))
+        if (building.GoldCost > goldAmount)
         {
             canBuy = false;
         }
@@ -286,7 +286,11 @@ public class GameController : MonoBehaviour
                 mResources["Stone"].modifyCountCond(-building.StoneCost, building.StoneCost);
             if (mResources.ContainsKey("Stone Slab"))
                 mResources["Stone Slab"].modifyCountCond(-building.BrickCost, building.BrickCost);
-            changeGold(-building.GoldCost, building.GoldCost);
+            
+            if (goldAmount >= building.GoldCost)
+            {
+                goldAmount -= building.GoldCost;
+            }
         }
     }
 }
