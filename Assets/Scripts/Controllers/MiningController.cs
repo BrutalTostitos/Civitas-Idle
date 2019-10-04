@@ -8,7 +8,7 @@ public class MiningController : MonoBehaviour
     private static MiningController mInstance;
     public System.Random mRandom = new System.Random();
     //Creating our event
-    ResourceUpdateEventInfo ruei = new ResourceUpdateEventInfo();
+    UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();
     
     int amount = 1;
 

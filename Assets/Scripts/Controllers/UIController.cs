@@ -25,10 +25,15 @@ public class UIController : MonoBehaviour
     
     //HUD text
     public Text GoldCountText;
+    //Resource Panel things
+    public Button BuyWorkerButton;
+
+    //Inventory Panel things
 
     //Mining text block
     public Text StoneCountText;
     public Text StoneMinerCountText;
+    public Text StoneCapCountText;
 
     public Text CopperOreCountText;
     public Text CopperMinerCountText;
@@ -64,20 +69,22 @@ public class UIController : MonoBehaviour
 
 
     #region Events
-    //Senders
-    //aint got none
+    //This event is used to inform the workercontroller that we are attempting to purchase a worker
+    BuyWorkerUpdateEventInfo bwuei = new BuyWorkerUpdateEventInfo();
     #endregion
-
+    
 
     void Awake()
     {
         mInstance = this;
 
-        #region Listening for events
-        EventController.getInstance().RegisterListener<ResourceUpdateEventInfo>(UpdateResourceUI);
-        EventController.getInstance().RegisterListener<WorkerUpdateEventInfo>(UpdateWorkerUI);
-        EventController.getInstance().RegisterListener<FarmingUpdateEventInfo>(UpdateFarmingUI);
-        
+        #region Events
+        //Listeners
+        EventController.getInstance().RegisterListener<UIResourceUpdateEventInfo>(UpdateResourceUI);
+        EventController.getInstance().RegisterListener<UIWorkerUpdateEventInfo>(UpdateWorkerUI);
+        EventController.getInstance().RegisterListener<UIFarmingUpdateEventInfo>(UpdateFarmingUI);
+        //Senders
+        bwuei.eventGO = gameObject;
         #endregion
 
         #region Canvas region
@@ -129,12 +136,17 @@ public class UIController : MonoBehaviour
     }
 
     
+    //~~SENDING EVENTS
+    //Notifies the workercontroller that we are attempting to purchase a worker
+    public void PurchaseWorker()
+    {
+        EventController.getInstance().FireEvent(bwuei);
+    }
 
-
-
+    //~~RECEIVING EVENTS
     //Event driven
-    //call this whenever a resource action is taken
-    void UpdateResourceUI(ResourceUpdateEventInfo eventInfo)
+    //called whenever a resource action is taken
+    void UpdateResourceUI(UIResourceUpdateEventInfo eventInfo)
     {
         //HUD
         GoldCountText.text = GameController.GetInstance().getGold();    
@@ -145,13 +157,15 @@ public class UIController : MonoBehaviour
         IronOreCountText.text = GameController.GetInstance().mResources["Iron Ore"].getCount().ToString();
     }
     //Event driven
-    void UpdateWorkerUI(WorkerUpdateEventInfo eventInfo)
+    //called whenever a worker is purchased
+    void UpdateWorkerUI(UIWorkerUpdateEventInfo eventInfo)
     {
         
         //TODO~
         //Caps need to be updated once buildings are implemented
         GoldCountText.text = GameController.GetInstance().getGold();
-        StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Miner"].getCount().ToString();
+        StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Stone Miner"].getCount().ToString();
+        StoneCapCountText.text = WorkerController.GetInstance().mWorkers["Stone Miner"].getCapCount().ToString();
         CopperMinerCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
         CopperCapCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCapCount().ToString();
         TinMinerCountText.text = WorkerController.GetInstance().mWorkers["Tin Miner"].getCount().ToString();
@@ -165,7 +179,7 @@ public class UIController : MonoBehaviour
         
     }
     //Event driven
-    void UpdateFarmingUI(FarmingUpdateEventInfo eventInfo)
+    void UpdateFarmingUI(UIFarmingUpdateEventInfo eventInfo)
     {
         CornCountText.text = FarmingController.GetInstance().mFarmingSeeds["Corn"].getCount().ToString();
         WheatCountText.text = FarmingController.GetInstance().mFarmingSeeds["Wheat"].getCount().ToString();

@@ -16,7 +16,7 @@ public class MiningWorker : Worker
         
         switch (workerType)
         {
-            case WORKER_TYPE.Miner:
+            case WORKER_TYPE.StoneMiner:
                 targetResource = "Stone";
                 break;
             case WORKER_TYPE.CopperMiner:

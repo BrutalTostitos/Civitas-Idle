@@ -12,9 +12,9 @@ public class WorkerController : MonoBehaviour
     
     private static WorkerController mInstance;
     //Creating our events
-    WorkerUpdateEventInfo wuei = new WorkerUpdateEventInfo();
+    UIWorkerUpdateEventInfo uwuei = new UIWorkerUpdateEventInfo();
     //MiningWorkerEventInfo mwei = new MiningWorkerEventInfo();   //worker->event->mining
-
+    
     public Dictionary<string, Worker> mWorkers;
     private int popCap = 100;
 
@@ -23,13 +23,19 @@ public class WorkerController : MonoBehaviour
         mInstance = this;
         mWorkers = new Dictionary<string, Worker>();
 
-        //Event system setup
-        wuei.eventGO = gameObject;
-        //mwei.eventGO = gameObject;
+        #region Events
+        //LISTENERS
+        EventController.getInstance().RegisterListener<BuyWorkerUpdateEventInfo>(BuyStandardWorker);
+        //SENDERS
+        uwuei.eventGO = gameObject;
+        #endregion
+        
+
 
         //initializing the types of workers
         //TODO these arent all mining workers you dummy
-        mWorkers["Miner"] = new MiningWorker(15, WORKER_TYPE.Miner);
+        mWorkers["Unemployed"] = new UnemployedWorker(15, WORKER_TYPE.Unemployed);
+        mWorkers["Stone Miner"] = new MiningWorker(15, WORKER_TYPE.StoneMiner);
         mWorkers["Copper Miner"] = new MiningWorker(15, WORKER_TYPE.CopperMiner);
         mWorkers["Tin Miner"] = new MiningWorker(15, WORKER_TYPE.TinMiner);
         mWorkers["Coal Miner"] = new MiningWorker(15, WORKER_TYPE.CoalMiner);
@@ -49,6 +55,11 @@ public class WorkerController : MonoBehaviour
     }
     private void Update()
     {
+
+        Debug.Log(mWorkers["Unemployed"].mCount);
+
+
+        //For worker automation
         foreach (KeyValuePair<string, Worker> worker in mWorkers)
         {
             worker.Value.UpdateTick();
@@ -87,11 +98,36 @@ public class WorkerController : MonoBehaviour
         return popCap; //+ Buildings.GetInstance().getPopulationCapIncrease();
     }
 
-    //Legacy: used to take string key, int amount = 1. Amount hard coded in the function
-    //Due to the inspector not liking multiple args
-    //Make a work around
-    //This is obnoxious and maybe unecessary in Unity. More research needed
-    public void BuyWorker(string key)
+    
+
+
+    //Event Driven. rcvd from UIController
+    public void BuyStandardWorker(BuyWorkerUpdateEventInfo eventInfo)
+    {
+        int cost = mWorkers["Unemployed"].mValue;
+        int amount = 1;
+
+
+        if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
+        {
+            mWorkers["Unemployed"].modifyCountCond(amount, -amount);
+        }
+
+
+        //if (mWorkers["Unemployed"].getCount() >= mWorkers["Unemployed"].getCapCount())
+        //{
+        //    return;
+        //}
+        //mWorkers["Unemployed"].modifyCountCond(amount, -amount);
+        //Firing off our event
+        EventController.getInstance().FireEvent(uwuei);
+
+    }
+  
+
+
+
+    public void BuySpecializedWorker(string key)
     {
         int amount = 1;
         int cost = mWorkers[key].mValue;
@@ -99,9 +135,25 @@ public class WorkerController : MonoBehaviour
         {
             //special cases for miner specialties
 
+            case "Stone Miner":
+                Debug.Log("Attempting to buy stone miner");
+                if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
+                    !mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+                {
+                    Debug.Log("No purchase made");
+                    //No purchase made
+                    return;
+                }
+                Debug.Log("Purchase success!?");
+                //Purchase success! Adjusting counts and notifying UI
+                Debug.Log(mWorkers[key].modifyCountCond(amount, -amount));
+                //Firing off our event
+
+                EventController.getInstance().FireEvent(uwuei);
+                return;
             case "Copper Miner":
                 if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
-                    !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+                    !mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     //No purchase made
                     return;
@@ -110,50 +162,52 @@ public class WorkerController : MonoBehaviour
                 mWorkers[key].modifyCountCond(amount, -amount);
                 //Firing off our event
                     
-                EventController.getInstance().FireEvent(wuei);
+                EventController.getInstance().FireEvent(uwuei);
                 return;
             //TODO implement this. You will then need to re-add them to mWorkers up in awake
             case "Tin Miner":
                 if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
-                    !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+                    !mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
                 //Firing off our event
-                EventController.getInstance().FireEvent(wuei);
+                EventController.getInstance().FireEvent(uwuei);
                 return;
             case "Coal Miner":
                 if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
-                    !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+                    !mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                EventController.getInstance().FireEvent(wuei);
+                EventController.getInstance().FireEvent(uwuei);
                 return;
             case "Iron Miner":
                 if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
-                    !mWorkers["Miner"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+                    !mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
                 {
                     return;
                 }
                 //Purchase success! Adjusting counts and notifying UI
                 mWorkers[key].modifyCountCond(amount, -amount);
-                EventController.getInstance().FireEvent(wuei);
+                EventController.getInstance().FireEvent(uwuei);
                 return;
 
             default:
                 break;
         }
-        //No special case, we're just buying standard miners
-        if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
-        {
-            mWorkers["Miner"].modifyCountCond(amount, -amount);
-        }
-        EventController.getInstance().FireEvent(wuei);
+
+        //TODO
+        //No special case, we're just buying Unemplyed workers
+        //if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
+        //{
+        //    mWorkers["Miner"].modifyCountCond(amount, -amount);
+        //}
+        //EventController.getInstance().FireEvent(uwuei);
 
     }
 
@@ -168,12 +222,13 @@ public class WorkerController : MonoBehaviour
         switch (key)
         {
             //this is akin to having OR statements
+            case "Stone Miner":
             case "Copper Miner":
             case "Tin Miner":
             case "Coal Miner":
             case "Iron Miner":
                 //mWorkerCaps["Quarry"] 
-                mWorkers["Miner"].modifyCountCond(count, -count);
+                mWorkers["Unemployed"].modifyCountCond(count, -count);
 
 
                 break;
@@ -184,7 +239,7 @@ public class WorkerController : MonoBehaviour
         mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
 
         //Check to see if we have observers listening in
-        EventController.getInstance().FireEvent(wuei);
+        EventController.getInstance().FireEvent(uwuei);
 
     }
 

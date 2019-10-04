@@ -10,7 +10,7 @@ public class FarmingController : MonoBehaviour
 {
     //PRIVATE
     private static FarmingController mInstance;
-    FarmingUpdateEventInfo fuei = new FarmingUpdateEventInfo();
+    UIFarmingUpdateEventInfo fuei = new UIFarmingUpdateEventInfo();
 
     public Transform FarmingBackgroundPanel;        //Assigning this through inspector because the .Find() broke
 
