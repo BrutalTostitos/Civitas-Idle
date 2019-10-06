@@ -8,7 +8,9 @@ public class FarmPlot : MonoBehaviour
 
     public Button tillButton;
     public ProgressBar tillProgressBar;     //horizontal bar
-    public ProgressBar harvestProgressBar;  //Radial bar
+	public ProgressBar overgrowthProgressBar;
+	public Button overGrowthButton;
+	public ProgressBar harvestProgressBar;  //Radial bar
     public Button cornButton;
     public Button wheatButton;
     public Button potatoButton;
@@ -21,17 +23,31 @@ public class FarmPlot : MonoBehaviour
     public Sprite potatoSprite;
     public Sprite hopsSprite;
 
-    
-    public float tillProgress = 0.0f;
-    public float tillProgressCap = 10.0f;
 
-	//public float overGrownProgress = 
+	public float tillProgress;// = 0.0f;
+	public float tillProgressCap;// = 5.0f;
+
+	public float overGrownProgress;	//Monitors the current state of the field being over grown
+	public float overGrownCap;		//The assigned value to signify the field is completely overgrown
+	
 
     public int ID = -1;
 
     private void Awake()
     {
-        mButtonList.Add(cornButton);
+		#region Progress Bar init
+		tillProgress = 0.0f;
+		tillProgressCap = 5.0f;
+		overGrownProgress = 0.0f;
+		overGrownCap = 5.0f;
+
+		tillProgressBar.current = tillProgress;
+		tillProgressBar.maximum = tillProgressCap;
+		overgrowthProgressBar.current = overGrownProgress;          
+		overgrowthProgressBar.maximum = overGrownCap;
+		#endregion
+
+		mButtonList.Add(cornButton);
         mButtonList.Add(wheatButton);
         mButtonList.Add(potatoButton);
         mButtonList.Add(hopsButton);
@@ -40,24 +56,41 @@ public class FarmPlot : MonoBehaviour
         potatoButton.gameObject.SetActive(false);
         hopsButton.gameObject.SetActive(false);
         harvestProgressBar.gameObject.SetActive(false);
-        tillButton.onClick.AddListener(() => TillField());  //adding the click event
-        
+		overgrowthProgressBar.gameObject.SetActive(false);
+		
+		//adding click events
+        tillButton.onClick.AddListener(() => TillField());			
+		overGrowthButton.onClick.AddListener(() => WeedField());	
 
     }
     private void Update()
     {
-        //mSeed member variables can be accessed once planted & assigned, why is it still null?
-        if (mSeed != null)
-        {
-            //Debug.Log(mSeed.harvestTime);
-            mSeed.harvestTime += Time.deltaTime;
-            harvestProgressBar.current = (int)mSeed.harvestTime;
-            if(mSeed.harvestTime >= mSeed.harvestTimeCap)
-            {
-                HarvestCrops();
-            }
-        }
+		UpdateFieldStatus();
+        
     }
+	public void UpdateFieldStatus()
+	{
+		if (mSeed != null)
+		{
+			//Checking to see if our field is overgrown. If not, the seeds will continue to grow
+			if (overGrownProgress < overGrownCap)
+			{
+				//Plot specific
+				overGrownProgress += Time.deltaTime;
+				overgrowthProgressBar.current = overGrownProgress;
+				//Seed specific
+				mSeed.harvestTime += Time.deltaTime;
+				harvestProgressBar.current = mSeed.harvestTime;
+			}
+
+
+
+			if (mSeed.harvestTime >= mSeed.harvestTimeCap)
+			{
+				HarvestCrops();
+			}
+		}
+	}
     public void TillField(int amount = 1)
     {
         tillProgress += amount;
@@ -67,9 +100,17 @@ public class FarmPlot : MonoBehaviour
             tillProgress = 0.0f;
             ToggleButtonsTilled();
         }
-        tillProgressBar.current = (int)tillProgress;
+        tillProgressBar.current = tillProgress;
     }
-    public void HarvestCrops()
+	public void WeedField(int amount = 1)
+	{
+		overGrownProgress -= amount;
+		if (overGrownProgress < 0)
+		{
+			overGrownProgress = 0.0f;
+		}
+	}
+	public void HarvestCrops()
     {
         //Determining our harvest and updating farmingcontrollers seed count
         switch(mSeed.mType)
@@ -92,7 +133,8 @@ public class FarmPlot : MonoBehaviour
         
         //Resetting the plot
         mSeed = null;
-        gameObject.GetComponent<Image>().sprite = null;
+		overGrownProgress = 0.0f;
+		gameObject.GetComponent<Image>().sprite = null;
         ToggleButtonsHarvested();
 
 
@@ -127,7 +169,7 @@ public class FarmPlot : MonoBehaviour
                 gameObject.GetComponent<Image>().sprite = hopsSprite;
                 break;
         }
-        harvestProgressBar.maximum = (int)mSeed.harvestTimeCap;
+        harvestProgressBar.maximum = mSeed.harvestTimeCap;
         ToggleButtonsPlanted();
         Debug.Log("Planted seed of type" + mSeed.mType);
     }
@@ -153,13 +195,15 @@ public class FarmPlot : MonoBehaviour
         }
 
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
-    }
+		overgrowthProgressBar.gameObject.SetActive(!overgrowthProgressBar.gameObject.activeSelf);
+	}
     private void ToggleButtonsHarvested()
     {
 
         tillButton.gameObject.SetActive(!tillButton.gameObject.activeSelf);
         tillProgressBar.gameObject.SetActive(!tillProgressBar.gameObject.activeSelf);
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
+		overgrowthProgressBar.gameObject.SetActive(!overgrowthProgressBar.gameObject.activeSelf);
     }
     
 }
