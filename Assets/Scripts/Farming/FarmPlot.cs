@@ -25,6 +25,8 @@ public class FarmPlot : MonoBehaviour
     public float tillProgress = 0.0f;
     public float tillProgressCap = 10.0f;
 
+	//public float overGrownProgress = 
+
     public int ID = -1;
 
     private void Awake()

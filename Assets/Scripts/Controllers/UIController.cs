@@ -25,6 +25,7 @@ public class UIController : MonoBehaviour
     
     //HUD text
     public Text GoldCountText;
+	public Text UnemployedWorkerCountText;
     //Resource Panel things
     public Button BuyWorkerButton;
 
@@ -164,6 +165,7 @@ public class UIController : MonoBehaviour
         //TODO~
         //Caps need to be updated once buildings are implemented
         GoldCountText.text = GameController.GetInstance().getGold();
+		UnemployedWorkerCountText.text = "Unemployed: " + WorkerController.GetInstance().mWorkers["Unemployed"].getCount().ToString();
         StoneMinerCountText.text = WorkerController.GetInstance().mWorkers["Stone Miner"].getCount().ToString();
         StoneCapCountText.text = WorkerController.GetInstance().mWorkers["Stone Miner"].getCapCount().ToString();
         CopperMinerCountText.text = WorkerController.GetInstance().mWorkers["Copper Miner"].getCount().ToString();
