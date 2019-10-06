@@ -18,6 +18,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 3f2e4e26607a3e949a0fa059e5cdcd80, type: 3}
   populationIncrease: 0
   goldCost: 200
-  stoneCost: 0
+  stoneCost: 50
   brickCost: 0
   lumberCost: 0
