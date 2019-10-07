@@ -8,23 +8,25 @@ public class EventController : MonoBehaviour
 {
     private static EventController mInstance;
 
-    //public delegate void updateWorkerUI();
-    //public static event updateWorkerUI WorkerUpdate;
-
-    //Setting up our own events to send out
-    //public delegate void UpdateResourceUI();
-    //public static event UpdateResourceUI ResourceUpdateUI;
-    //public delegate void UpdateWorkerUI();
-    //public static event UpdateWorkerUI WorkerUpdateUI;
+    
     //EVENTS
     delegate void EventListener(EventInfo e);
     Dictionary<System.Type, List<EventListener>> eventListeners; //maybe use set so we dont duplicate
 
-    void Awake()
+	//events for scriptable objects
+	CopperMinePurchaseEventInfo cmpei = new CopperMinePurchaseEventInfo();
+	TinMinePurchaseEventInfo tmpei = new TinMinePurchaseEventInfo();
+	CoalMinePurchaseEventInfo coalmpei = new CoalMinePurchaseEventInfo();
+	IronMinePurchaseEventInfo impei = new IronMinePurchaseEventInfo();
+	FarmPurchaseEventInfo fpei = new FarmPurchaseEventInfo();
+	void Awake()
     {
         mInstance = this;
-        
-    }
+		cmpei.eventGO = tmpei.eventGO = coalmpei.eventGO = impei.eventGO = fpei.eventGO = gameObject;
+		
+			
+
+	}
 
     public static EventController getInstance()
     {
@@ -81,10 +83,26 @@ public class EventController : MonoBehaviour
         }
 
     }
-    
-    public void OnBuyCopperMine()
-    {
-        Debug.Log("AYYYYYY");
-        Debug.Log("LMaO");
-    }
+
+	//BUILDING UPGRADES FROM SCRIPTABLE OBJECTS
+	public void OnBuyCopperMine()
+	{
+		FireEvent(cmpei);
+	}
+	public void OnBuyTinMine()
+	{
+		FireEvent(tmpei);
+	}
+	public void OnBuyCoalMine()
+	{
+		FireEvent(coalmpei);
+	}
+	public void OnBuyIronMine()
+	{
+		FireEvent(impei);
+	}
+	public void OnBuyFarm()
+	{
+		FireEvent(fpei);
+	}
 }

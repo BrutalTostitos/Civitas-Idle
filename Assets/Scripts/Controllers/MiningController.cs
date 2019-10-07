@@ -11,19 +11,34 @@ public class MiningController : MonoBehaviour
     UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();
     
     int amount = 1;
+	//Reference to our Mines
+	public GameObject CopperMineGO;
+	public GameObject TinMineGO;
+	public GameObject CoalMineGO;
+	public GameObject IronMineGO;
 
-    void Awake()
+
+	void Awake()
     {
         mInstance = this;
 
-        #region Listening for events
+        #region EVENT SYSTEM SETUP
+		//Listening for events
         EventController.getInstance().RegisterListener<MiningWorkerEventInfo>(MiningWorkerUpdate);
+		EventController.getInstance().RegisterListener<CopperMinePurchaseEventInfo>(UnlockCopperMine);
+		EventController.getInstance().RegisterListener<TinMinePurchaseEventInfo>(UnlockTinMine);
+		EventController.getInstance().RegisterListener<CoalMinePurchaseEventInfo>(UnlockCoalMine);
+		EventController.getInstance().RegisterListener<IronMinePurchaseEventInfo>(UnlockIronMine);
+		ruei.eventGO = gameObject;
+		#endregion
 
-        #endregion
 
-        //Event system setup
-        ruei.eventGO = gameObject;
-    }
+		//Mine setup
+		CopperMineGO.gameObject.SetActive(false);
+		TinMineGO.gameObject.SetActive(false);
+		CoalMineGO.gameObject.SetActive(false);
+		IronMineGO.gameObject.SetActive(false);
+	}
 
     public static MiningController GetInstance()
     {
@@ -98,13 +113,47 @@ public class MiningController : MonoBehaviour
         EventController.getInstance().FireEvent(ruei);
     }
 
+	//UNLOCKS AND UPGRADES
+	//
+	//~~~~~~~~~~~~~~~~~~~~
+
+	private void UnlockCopperMine(CopperMinePurchaseEventInfo eventInfo)
+	{
+		CopperMineGO.gameObject.SetActive(true);
+	}
+	private void UnlockTinMine(TinMinePurchaseEventInfo eventInfo)
+	{
+		TinMineGO.gameObject.SetActive(true);
+	}
+	private void UnlockCoalMine(CoalMinePurchaseEventInfo eventInfo)
+	{
+		CoalMineGO.gameObject.SetActive(true);
+	}
+	private void UnlockIronMine(IronMinePurchaseEventInfo eventInfo)
+	{
+		IronMineGO.gameObject.SetActive(true);
+	}
 
 
-    //VVV this chunk will probably be moved to its own controller VVV
-    //PROCESSING
-    //handles all workers at once
-    //overloading for the workers
-    public void ProcessStone(int x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//VVV this chunk will probably be moved to its own controller VVV
+	//PROCESSING
+	//handles all workers at once
+	//overloading for the workers
+	public void ProcessStone(int x)
     {
         if (x > 1)
         {

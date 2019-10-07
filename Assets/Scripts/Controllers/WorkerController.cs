@@ -79,6 +79,7 @@ public class WorkerController : MonoBehaviour
         return mInstance;
     }
 
+	//This is also being used to update UI. May be wasteful to recount every single time there is a UI update
     public int getPop()
     {
         int population = 0;

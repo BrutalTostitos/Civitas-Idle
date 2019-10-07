@@ -22,10 +22,30 @@ namespace EventCallBacks
     {
         public GameObject eventGO;
     }
+	#region Scriptable Object purchases
+	public class CopperMinePurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+	public class TinMinePurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+	public class CoalMinePurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+	public class IronMinePurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+	public class FarmPurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+	#endregion
 
-    
-
-    public class BuildingUpdateEventInfo : EventInfo
+	public class BuildingUpdateEventInfo : EventInfo
     {
         public GameObject eventGO;
     }

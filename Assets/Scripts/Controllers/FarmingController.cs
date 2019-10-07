@@ -53,7 +53,7 @@ public class FarmingController : MonoBehaviour
 
 		//Listening for events
 		EventController.getInstance().RegisterListener<FarmingWorkerEventInfo>(FarmingWorkerUpdate);
-
+		EventController.getInstance().RegisterListener<FarmPurchaseEventInfo>(FarmPurchaseUpdate);
 		#endregion
 
 		mInstance = this;
@@ -86,10 +86,16 @@ public class FarmingController : MonoBehaviour
             tmp.potatoButton.onClick.AddListener(() => PlantSeed(tmp, "Potato"));
             tmp.hopsButton.onClick.AddListener(() => PlantSeed(tmp, "Hops"));
 
-            tmp.ID = i;
 
-            mFarmPlots.Add(tmp);
-        }
+            tmp.ID = i;
+			//Disabling all but the first 2 farm plots. Later ones will be purchased later
+			if (i > 1)
+			{
+				tmp.gameObject.SetActive(false);
+			}
+			mFarmPlots.Add(tmp);
+
+		}
         #endregion
         //SEEDS 
         mFarmingSeeds["Corn"] = new Seeds(5, SEED_TYPE.Corn);
@@ -140,7 +146,6 @@ public class FarmingController : MonoBehaviour
         {
             //Seed planted!
             //Planting the appropriate seed on the farmplot
-            Debug.Log((mFarmingSeeds[seedName]));
             plot.PlantSeedPlot(mFarmingSeeds[seedName]);   //This might mess with mseeds count
 			#region Background Updates
 			switch (seedName)
@@ -163,24 +168,37 @@ public class FarmingController : MonoBehaviour
 		EventController.getInstance().FireEvent(fuei);
     }
 	//Event driven - Farmer update
-	void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
+	private void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
 	{
 
 		float power = eventInfo.workerPower;
 		if (totalSeededPlots > 0)
 		{
-			float totalPower = (float)amount / (float)totalSeededPlots;
+			float totalPower = (float)power / (float)totalSeededPlots;
 			foreach (FarmPlot plot in mFarmPlots)
 			{
 				if (plot.mSeed != null)
 				{
-					plot.WeedField(power);
-					Debug.Log(power);
+					plot.WeedField(totalPower);
+					Debug.Log(totalPower);
 				}
 			}
 		}
 		
 
+	}
+	//Event driven
+	private void FarmPurchaseUpdate(FarmPurchaseEventInfo eventInfo)
+	{
+		foreach (FarmPlot farm in mFarmPlots)
+		{
+			if (farm.gameObject.activeSelf == false)
+			{
+				farm.gameObject.SetActive(true);
+				break;
+			}
+				
+		}
 	}
 
 	//breh..

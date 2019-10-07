@@ -173,7 +173,6 @@ public class FarmPlot : MonoBehaviour
         harvestProgressBar.maximum = mSeed.harvestTimeCap;
         ToggleButtonsPlanted();
 		FarmingController.GetInstance().totalSeededPlots++;
-        Debug.Log("Planted seed of type" + mSeed.mType);
     }
     //BUTTON TOGGLING STUFF. THERE IS A SMARTER WAY OF DOING THIS
     //TODO - cleanup and optimization
