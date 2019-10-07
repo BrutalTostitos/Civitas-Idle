@@ -41,11 +41,21 @@ public class BuildingController : MonoBehaviour
         {
             if (building.Prereq == null)
             {
-
             }
-            else if (!mOwnedBuildings.Contains(building.Prereq))
+            else
             {
-                continue;
+                bool test = false;
+                foreach (BuildingObject bo in building.Prereq)
+                {
+                    if (!mOwnedBuildings.Contains(bo))
+                    {
+                        test = true;
+                    }
+                }
+                if (test)
+                {
+                    continue;
+                }
             }
             Debug.Log("this running yet");
             //the world building looks weird if you stare at it too much
@@ -86,9 +96,20 @@ public class BuildingController : MonoBehaviour
             {
 
             }
-            else if (!mOwnedBuildings.Contains(building.Prereq))
+            else
             {
-                continue;
+                bool test = false;
+                foreach (BuildingObject bo in building.Prereq)
+                {
+                    if (!mOwnedBuildings.Contains(bo))
+                    {
+                        test = true;
+                    }
+                }
+                if (test)
+                {
+                    continue;
+                }
             }
             //For all the available buildings, we instantiate the icon on the left side
             GameObject temp = Instantiate(prefabGameIcon, buildingsContentPanel.transform);

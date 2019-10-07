@@ -21,4 +21,5 @@ MonoBehaviour:
   stoneCost: 0
   brickCost: 0
   lumberCost: 0
-  prereq: {fileID: 11400000, guid: d9d88c8c0e3a3ca4b9403106f7412761, type: 2}
+  prereq:
+  - {fileID: 11400000, guid: d9d88c8c0e3a3ca4b9403106f7412761, type: 2}

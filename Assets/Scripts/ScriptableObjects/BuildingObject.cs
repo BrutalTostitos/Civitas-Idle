@@ -34,7 +34,7 @@ public class BuildingObject : ScriptableObject
     private int lumberCost;
 
     [SerializeField]
-    private BuildingObject prereq;
+    private BuildingObject[] prereq;
 
     public string Name
     {
@@ -100,7 +100,7 @@ public class BuildingObject : ScriptableObject
         }
     }
 
-    public BuildingObject Prereq
+    public BuildingObject[] Prereq
     {
         get
         {
