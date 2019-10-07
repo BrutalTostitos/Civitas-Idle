@@ -37,8 +37,10 @@ public class FarmingController : MonoBehaviour
 
     int amount;
 
-    #region connecting UI things
-    public Button forageButton;
+	public int totalSeededPlots = 0;		//Keeps track of how many plots are seeded - used for workers
+
+	#region connecting UI things
+	public Button forageButton;
     public FarmPlot farmPlotPrefab;
 
     #endregion
@@ -46,10 +48,15 @@ public class FarmingController : MonoBehaviour
     //Cant use constructor to instantiate objects. Using awake() instead
     public void Awake()
     {
-        mInstance = this;
-        //Event system setup
-        fuei.eventGO = gameObject;
-        //int amount = 1;
+		#region Event setup
+		fuei.eventGO = gameObject;
+
+		//Listening for events
+		EventController.getInstance().RegisterListener<FarmingWorkerEventInfo>(FarmingWorkerUpdate);
+
+		#endregion
+
+		mInstance = this;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
@@ -103,7 +110,6 @@ public class FarmingController : MonoBehaviour
         return mInstance;
     }
 
-   
     public void Forage()
     {
         int test = UnityEngine.Random.Range(0, 4);
@@ -136,7 +142,8 @@ public class FarmingController : MonoBehaviour
             //Planting the appropriate seed on the farmplot
             Debug.Log((mFarmingSeeds[seedName]));
             plot.PlantSeedPlot(mFarmingSeeds[seedName]);   //This might mess with mseeds count
-            switch (seedName)
+			#region Background Updates
+			switch (seedName)
             {
                 case "Corn":
                 farmingDetailScript.SetPlant(plot.ID, 1);
@@ -151,10 +158,33 @@ public class FarmingController : MonoBehaviour
                 farmingDetailScript.SetPlant(plot.ID, 3);
                 break;
             }
-        }
-        EventController.getInstance().FireEvent(fuei);
+			#endregion
+		}
+		EventController.getInstance().FireEvent(fuei);
     }
-    public void UpdateMeDaddy()
+	//Event driven - Farmer update
+	void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
+	{
+
+		int amount = eventInfo.workerCount;
+		if (totalSeededPlots > 0)
+		{
+			float power = (float)amount / (float)totalSeededPlots;
+			foreach (FarmPlot plot in mFarmPlots)
+			{
+				if (plot.mSeed != null)
+				{
+					plot.WeedField(power);
+					Debug.Log(power);
+				}
+			}
+		}
+		
+
+	}
+
+	//breh..
+	public void UpdateMeDaddy()
     {
         EventController.getInstance().FireEvent(fuei);
     }

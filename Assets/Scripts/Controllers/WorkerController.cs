@@ -40,6 +40,7 @@ public class WorkerController : MonoBehaviour
         mWorkers["Tin Miner"] = new MiningWorker(15, WORKER_TYPE.TinMiner);
         mWorkers["Coal Miner"] = new MiningWorker(15, WORKER_TYPE.CoalMiner);
         mWorkers["Iron Miner"] = new MiningWorker(15, WORKER_TYPE.IronMiner);
+		mWorkers["Farmer"] = new FarmingWorker(20, WORKER_TYPE.Farmer);
         //mWorkers["Stone Mason"] = new MiningWorker(15, WORKER_TYPE.StoneMason);
         //mWorkers["Forge Worker"] = new MiningWorker(15, WORKER_TYPE.Forgeworker);
         //mWorkers["Merchant"] = new MiningWorker(15, WORKER_TYPE.Merchant);
@@ -55,8 +56,6 @@ public class WorkerController : MonoBehaviour
     }
     private void Update()
     {
-
-        Debug.Log(mWorkers["Unemployed"].mCount);
 
 
         //For worker automation
@@ -74,7 +73,6 @@ public class WorkerController : MonoBehaviour
     {
         if (mInstance == null)
         {
-            Debug.Log("ABORTWORKER");
             GameObject go = new GameObject();
             mInstance = go.AddComponent<WorkerController>();
         }
@@ -131,7 +129,9 @@ public class WorkerController : MonoBehaviour
     {
         int amount = 1;
         int cost = mWorkers[key].mValue;
-        switch (key)
+
+		//this switch case could probably be removed
+		switch (key)
         {
             //special cases for miner specialties
 
@@ -197,7 +197,17 @@ public class WorkerController : MonoBehaviour
                 EventController.getInstance().FireEvent(uwuei);
                 return;
 
-            default:
+			case "Farmer":
+				if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
+					!mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+				{
+					return;
+				}
+				//Purchase success! Adjusting counts and notifying UI
+				mWorkers[key].modifyCountCond(amount, -amount);
+				EventController.getInstance().FireEvent(uwuei);
+				return;
+			default:
                 break;
         }
 
@@ -227,6 +237,7 @@ public class WorkerController : MonoBehaviour
             case "Tin Miner":
             case "Coal Miner":
             case "Iron Miner":
+			case "Farmer":
                 //mWorkerCaps["Quarry"] 
                 mWorkers["Unemployed"].modifyCountCond(count, -count);
 

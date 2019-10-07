@@ -14,7 +14,7 @@ public class UnemployedWorker : Worker
         switch (workerType)
         {
             case WORKER_TYPE.Unemployed:
-                targetResource = "Stone";
+                targetResource = "Stone";	//TODO change this
                 break;
 
         }

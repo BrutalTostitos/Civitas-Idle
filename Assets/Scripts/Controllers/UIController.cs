@@ -57,6 +57,8 @@ public class UIController : MonoBehaviour
     public Text WheatCountText;
     public Text PotatoCountText;
     public Text HopsCountText;
+
+	public Text FarmerCountText;
     //~~~~~~
 
     
@@ -178,6 +180,8 @@ public class UIController : MonoBehaviour
         
         IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
         IronCapCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCapCount().ToString();
+		FarmerCountText.text = "Farmers: " + WorkerController.GetInstance().mWorkers["Farmer"].getCount().ToString();
+		//insert line here for farmer cap count
         
     }
     //Event driven

@@ -102,7 +102,7 @@ public class FarmPlot : MonoBehaviour
         }
         tillProgressBar.current = tillProgress;
     }
-	public void WeedField(int amount = 1)
+	public void WeedField(float amount = 1.0f)
 	{
 		overGrownProgress -= amount;
 		if (overGrownProgress < 0)
@@ -138,7 +138,8 @@ public class FarmPlot : MonoBehaviour
         ToggleButtonsHarvested();
 
 
-        //Sending notification to farmcontroller that we need an update
+		//Sending notification to farmcontroller that we need an update
+		FarmingController.GetInstance().totalSeededPlots--;
         FarmingController.GetInstance().UpdateMeDaddy();
         FarmingController.GetInstance().farmingDetailScript.ClearPlot(ID);
     }
@@ -171,6 +172,7 @@ public class FarmPlot : MonoBehaviour
         }
         harvestProgressBar.maximum = mSeed.harvestTimeCap;
         ToggleButtonsPlanted();
+		FarmingController.GetInstance().totalSeededPlots++;
         Debug.Log("Planted seed of type" + mSeed.mType);
     }
     //BUTTON TOGGLING STUFF. THERE IS A SMARTER WAY OF DOING THIS

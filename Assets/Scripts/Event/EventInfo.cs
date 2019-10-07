@@ -40,7 +40,12 @@ namespace EventCallBacks
         public GameObject eventGO;
     }
     //Used for mining worker autmation
-    public class MiningWorkerEventInfo : EventInfo
+	public class FarmingWorkerEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+	}
+
+	public class MiningWorkerEventInfo : EventInfo
     {
         public GameObject eventGO;
         public string eventTargetResource;

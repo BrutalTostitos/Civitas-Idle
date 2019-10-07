@@ -5,7 +5,7 @@ using UnityEngine;
 public enum WORKER_TYPE
 {
     StoneMiner, CopperMiner, TinMiner, CoalMiner, IronMiner,
-    StoneMason, Forgeworker, Smith, Merchant, Unemployed
+    StoneMason, Forgeworker, Smith, Merchant, Farmer, Unemployed
 }
 public abstract class Worker : MonoBehaviour
 {
@@ -57,12 +57,16 @@ public abstract class Worker : MonoBehaviour
     }
     public void UpdateTick()
     {
-        mCurTime += Time.deltaTime;
-        if (mCurTime >= mMaxTime)
-        {
-            mCurTime = 0.0f;
-            UpdateWorker();
-        }
+		if (mCount > 0)			//Ensures we arent bothering if we dont have any workers
+		{
+			mCurTime += Time.deltaTime;
+			if (mCurTime >= mMaxTime)
+			{
+				mCurTime = 0.0f;
+				UpdateWorker();
+			}
+		}
+        
     }
 
     public abstract void UpdateWorker();
