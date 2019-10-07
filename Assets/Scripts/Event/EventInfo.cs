@@ -6,7 +6,7 @@ namespace EventCallBacks
 
         //Useful for Debug.Log
         public string EventDescription;
-        public int workerCount;
+        public int workerPower;
 
 
     }

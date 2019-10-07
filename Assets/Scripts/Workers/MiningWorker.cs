@@ -46,7 +46,7 @@ public class MiningWorker : Worker
 
     public override void UpdateWorker()
     {
-        mwei.workerCount = mCount;
+        mwei.workerPower = mCount * mPower;
         EventController.getInstance().FireEvent(mwei);
     }
 }

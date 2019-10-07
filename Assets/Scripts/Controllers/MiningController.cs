@@ -68,7 +68,7 @@ public class MiningController : MonoBehaviour
     {
         
         //Debug.Log(eventInfo.workerCount);
-        int amount = eventInfo.workerCount;
+        int amount = eventInfo.workerPower;
         string target = eventInfo.eventTargetResource;
 
 

@@ -26,7 +26,7 @@ public class FarmingWorker : Worker
 
 	public override void UpdateWorker()
 	{
-		fwei.workerCount = mCount * mPower;	//will probably want a way to calculate worker power and send that over instead
+		fwei.workerPower = mCount * mPower;	//will probably want a way to calculate worker power and send that over instead
 		EventController.getInstance().FireEvent(fwei);
 	}
 }

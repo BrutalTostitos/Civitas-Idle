@@ -166,10 +166,10 @@ public class FarmingController : MonoBehaviour
 	void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
 	{
 
-		int amount = eventInfo.workerCount;
+		float power = eventInfo.workerPower;
 		if (totalSeededPlots > 0)
 		{
-			float power = (float)amount / (float)totalSeededPlots;
+			float totalPower = (float)amount / (float)totalSeededPlots;
 			foreach (FarmPlot plot in mFarmPlots)
 			{
 				if (plot.mSeed != null)
