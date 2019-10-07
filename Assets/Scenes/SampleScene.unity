@@ -10497,6 +10497,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &404163575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4342377949907493750, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4342377950073190466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &455251916
 GameObject:
   m_ObjectHideFlags: 0
@@ -15770,6 +15776,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672521100}
   m_CullTransparentMesh: 0
+--- !u!1 &711422536 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4342377951363858534, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4342377950073190466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &719479816 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4342377950440299594, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
@@ -16457,7 +16469,7 @@ GameObject:
   - component: {fileID: 955628417}
   - component: {fileID: 955628416}
   m_Layer: 5
-  m_Name: UnemployedWorkerCountText (1)
+  m_Name: PopulationCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16479,7 +16491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 108, y: -15}
+  m_AnchoredPosition: {x: 108, y: 20}
   m_SizeDelta: {x: 320.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &955628416
@@ -16556,7 +16568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 108, y: 20}
+  m_AnchoredPosition: {x: 107.99997, y: -15}
   m_SizeDelta: {x: 320.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &965282249
@@ -16744,6 +16756,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1140056382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4342377950139570778, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4342377950073190466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!223 &1144660015 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 4342377951214688365, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
@@ -22672,6 +22690,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839456620}
   m_CullTransparentMesh: 0
+--- !u!1 &1858064139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4342377950483815516, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4342377950073190466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1911497812
 GameObject:
   m_ObjectHideFlags: 0
@@ -23160,6 +23184,11 @@ PrefabInstance:
       propertyPath: FarmerCountText
       value: 
       objectReference: {fileID: 455251918}
+    - target: {fileID: 2998494239168044771, guid: 9c099a0156804964b826f42f7ad31a06,
+        type: 3}
+      propertyPath: PopulationCountText
+      value: 
+      objectReference: {fileID: 955628416}
     - target: {fileID: 2998494239168044768, guid: 9c099a0156804964b826f42f7ad31a06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23563,6 +23592,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 916147774}
+    - target: {fileID: 4342377951698245676, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Stone Miner
+      objectReference: {fileID: 0}
     - target: {fileID: 4342377951074774151, guid: 760d2cf7552c0374b9dd031fc5eb0ed9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -24592,6 +24626,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiningController
       objectReference: {fileID: 0}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: CopperMineRect
+      value: 
+      objectReference: {fileID: 404163575}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: TinMineRect
+      value: 
+      objectReference: {fileID: 1140056382}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: CoalMineRect
+      value: 
+      objectReference: {fileID: 711422536}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: IronMineRect
+      value: 
+      objectReference: {fileID: 1858064139}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: CopperMineGO
+      value: 
+      objectReference: {fileID: 404163575}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: TinMineGO
+      value: 
+      objectReference: {fileID: 1140056382}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: CoalMineGO
+      value: 
+      objectReference: {fileID: 711422536}
+    - target: {fileID: 4380213137325401598, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
+        type: 3}
+      propertyPath: IronMineGO
+      value: 
+      objectReference: {fileID: 1858064139}
     - target: {fileID: 4380213137325401593, guid: fc4f5ddf7082c6a42ac181f30e0d42d4,
         type: 3}
       propertyPath: m_LocalPosition.x

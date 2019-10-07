@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b54375ea7341a4caa0504d77d62220, type: 3}
   m_Name: Tin Mine
   m_EditorClassIdentifier: 
-  mName: 
+  mName: Tin Mine
   description: 
-  OnBuyFunction: 
-  icon: {fileID: 0}
+  OnBuyFunction: OnBuyTinMine
+  icon: {fileID: 21300000, guid: ae50a831b37835549a94a9b68fd29a69, type: 3}
   populationIncrease: 0
-  goldCost: 0
-  stoneCost: 0
+  goldCost: 200
+  stoneCost: 50
   brickCost: 0
   lumberCost: 0
