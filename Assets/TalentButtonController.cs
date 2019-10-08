@@ -55,7 +55,7 @@ public class TalentButtonController : MonoBehaviour
     {
         gameObject.transform.Translate(talent.Pos);
         if (talent.Prereq != null)
-            DrawLine(talent.Pos, talent.Prereq.Pos, Color.white, 0);
+            DrawLine(talent.Pos, talent.Prereq.Pos, Color.red, 0);
         image.sprite = talent.Icon;
         text.text = talent.Name;
     }
