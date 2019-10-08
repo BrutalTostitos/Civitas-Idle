@@ -64,7 +64,17 @@ namespace EventCallBacks
 	{
 		public GameObject eventGO;
 	}
+	public class CookingWorkerEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+		public int mSeedsToUse;
 
+		public CookingWorkerEventInfo(int seedsToUse)
+		{
+			mSeedsToUse = seedsToUse;
+		}
+	}
+	
 	public class MiningWorkerEventInfo : EventInfo
     {
         public GameObject eventGO;

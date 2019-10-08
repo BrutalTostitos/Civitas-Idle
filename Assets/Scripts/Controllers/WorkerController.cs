@@ -41,6 +41,7 @@ public class WorkerController : MonoBehaviour
         mWorkers["Coal Miner"] = new MiningWorker(15, WORKER_TYPE.CoalMiner);
         mWorkers["Iron Miner"] = new MiningWorker(15, WORKER_TYPE.IronMiner);
 		mWorkers["Farmer"] = new FarmingWorker(20, WORKER_TYPE.Farmer);
+		mWorkers["Cook"] = new CookWorker(20, WORKER_TYPE.Cook);
         //mWorkers["Stone Mason"] = new MiningWorker(15, WORKER_TYPE.StoneMason);
         //mWorkers["Forge Worker"] = new MiningWorker(15, WORKER_TYPE.Forgeworker);
         //mWorkers["Merchant"] = new MiningWorker(15, WORKER_TYPE.Merchant);
@@ -57,7 +58,7 @@ public class WorkerController : MonoBehaviour
     private void Update()
     {
 
-
+		Debug.Log(mWorkers["Cook"].mCount);
         //For worker automation
         foreach (KeyValuePair<string, Worker> worker in mWorkers)
         {
@@ -208,6 +209,16 @@ public class WorkerController : MonoBehaviour
 				mWorkers[key].modifyCountCond(amount, -amount);
 				EventController.getInstance().FireEvent(uwuei);
 				return;
+			case "Cook":
+				if (mWorkers[key].getCount() >= mWorkers[key].getCapCount() ||
+					!mWorkers["Unemployed"].modifyCountCond(-amount, amount)) //mWorkers[key].getCount() >= getPopCap())
+				{
+					return;
+				}
+				//Purchase success! Adjusting counts and notifying UI
+				mWorkers[key].modifyCountCond(amount, -amount);
+				EventController.getInstance().FireEvent(uwuei);
+				return;
 			default:
                 break;
         }
@@ -239,6 +250,7 @@ public class WorkerController : MonoBehaviour
             case "Coal Miner":
             case "Iron Miner":
 			case "Farmer":
+			case "Cook":
                 //mWorkerCaps["Quarry"] 
                 mWorkers["Unemployed"].modifyCountCond(count, -count);
 

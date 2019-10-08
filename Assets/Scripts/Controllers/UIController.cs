@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour
     public Text GoldCountText;
 	public Text UnemployedWorkerCountText;
 	public Text PopulationCountText;
+	public Text FoodCountText;
     //Resource Panel things
     public Button BuyWorkerButton;
 
@@ -61,11 +62,12 @@ public class UIController : MonoBehaviour
     public Text HopsCountText;
 
 	public Text FarmerCountText;
+	public Text CookCountText;
 	//~~~~~~
 
 
 	//MINING THINGS
-	
+
 
 	//PRIVATES
 	private static UIController mInstance;
@@ -88,8 +90,16 @@ public class UIController : MonoBehaviour
 
         #region Events
         //Listeners
-        EventController.getInstance().RegisterListener<UIResourceUpdateEventInfo>(UpdateResourceUI);
-        EventController.getInstance().RegisterListener<UIWorkerUpdateEventInfo>(UpdateWorkerUI);
+        EventController.getInstance().RegisterListener<UIResourceUpdateEventInfo>(CallUpdateResourceUI);
+		EventController.getInstance().RegisterListener<FarmPurchaseEventInfo>(CallUpdateResourceUI);
+		EventController.getInstance().RegisterListener<CopperMinePurchaseEventInfo>(CallUpdateResourceUI);
+		EventController.getInstance().RegisterListener<TinMinePurchaseEventInfo>(CallUpdateResourceUI);
+		EventController.getInstance().RegisterListener<CoalMinePurchaseEventInfo>(CallUpdateResourceUI);
+		EventController.getInstance().RegisterListener<IronMinePurchaseEventInfo>(CallUpdateResourceUI);
+
+		
+
+		EventController.getInstance().RegisterListener<UIWorkerUpdateEventInfo>(UpdateWorkerUI);
         EventController.getInstance().RegisterListener<UIFarmingUpdateEventInfo>(UpdateFarmingUI);
         //Senders
         bwuei.eventGO = gameObject;
@@ -123,8 +133,6 @@ public class UIController : MonoBehaviour
             mCanvasDict[i].transform.position = MiningCanvas.transform.position;
 
             mCanvasDict[i].gameObject.GetComponent<Canvas>().enabled = false;
-            //mCanvasDict[i].gameObject.SetActive(false);
-
             mDetailDict[i].SetActive(false);
         }
 
@@ -151,13 +159,39 @@ public class UIController : MonoBehaviour
         EventController.getInstance().FireEvent(bwuei);
     }
 
-    //~~RECEIVING EVENTS
-    //Event driven
-    //called whenever a resource action is taken
-    void UpdateResourceUI(UIResourceUpdateEventInfo eventInfo)
+	//~~RECEIVING EVENTS
+	//Event helpers
+	private void CallUpdateResourceUI(FarmPurchaseEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+	private void CallUpdateResourceUI(UIResourceUpdateEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+	private void CallUpdateResourceUI(CopperMinePurchaseEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+	private void CallUpdateResourceUI(TinMinePurchaseEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+	private void CallUpdateResourceUI(CoalMinePurchaseEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+	private void CallUpdateResourceUI(IronMinePurchaseEventInfo eventInfo)
+	{
+		UpdateResourceUI();
+	}
+
+	//called whenever a resource action is taken
+	void UpdateResourceUI()
     {
         //HUD
-        GoldCountText.text = GameController.GetInstance().getGold();    
+        GoldCountText.text = GameController.GetInstance().getGold();
+		FoodCountText.text = GameController.GetInstance().getFoodCount().ToString();
         StoneCountText.text = GameController.GetInstance().mResources["Stone"].getCount().ToString();
         CopperOreCountText.text = GameController.GetInstance().mResources["Copper Ore"].getCount().ToString();
         TinOreCountText.text = GameController.GetInstance().mResources["Tin Ore"].getCount().ToString();
@@ -189,6 +223,7 @@ public class UIController : MonoBehaviour
         IronMinerCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCount().ToString();
         IronCapCountText.text = WorkerController.GetInstance().mWorkers["Iron Miner"].getCapCount().ToString();
 		FarmerCountText.text = "Farmers: " + WorkerController.GetInstance().mWorkers["Farmer"].getCount().ToString();
+		CookCountText.text = "Cooks: " + WorkerController.GetInstance().mWorkers["Cook"].getCount().ToString();
 		//insert line here for farmer cap count
         
     }

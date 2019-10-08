@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     private static GameController mInstance;
     
     public Dictionary<string, Resource> mResources;
-    public Dictionary<string, int> mWorkerCaps; //May need moved to workercontroller
+
     public List<string> ItemsToSell;
 
     public System.Random mRandom = new System.Random();
@@ -25,7 +25,9 @@ public class GameController : MonoBehaviour
     //Mutex goldMutex;
 
     public int goldAmount = 1000;
-
+	public float mFoodAmount = 0;
+	public float foodUpdateTimer;
+	public float foodUpdateTimerMax;
     void Awake()
     {
         
@@ -33,8 +35,10 @@ public class GameController : MonoBehaviour
     private GameController()
     {
         mInstance = this;   //I dont think this is working right
-        //goldMutex = new Mutex();
-        
+							//goldMutex = new Mutex();
+		foodUpdateTimer = 0.0f;
+		foodUpdateTimerMax = 0.0f;
+
         ItemsToSell = new List<string>();
         mResources = new Dictionary<string, Resource>();
         //? mSeeds = new List<Seeds>();
@@ -71,7 +75,14 @@ public class GameController : MonoBehaviour
     }
     
     
-
+	public float getFoodCount()
+	{
+		return mFoodAmount;
+	}
+	public void ChangeFoodAmount(float amount)
+	{
+		mFoodAmount += amount;
+	}
     public int getResourceValue(string resource_id)
     {
         if (mResources.ContainsKey(resource_id))

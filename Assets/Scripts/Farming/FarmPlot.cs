@@ -79,13 +79,13 @@ public class FarmPlot : MonoBehaviour
 				overGrownProgress += Time.deltaTime;
 				overgrowthProgressBar.current = overGrownProgress;
 				//Seed specific
-				mSeed.harvestTime += Time.deltaTime;
-				harvestProgressBar.current = mSeed.harvestTime;
+				mSeed.mHarvestTime += Time.deltaTime;
+				harvestProgressBar.current = mSeed.mHarvestTime;
 			}
 
 
 
-			if (mSeed.harvestTime >= mSeed.harvestTimeCap)
+			if (mSeed.mHarvestTime >= mSeed.mHarvestTimeCap)
 			{
 				HarvestCrops();
 			}
@@ -116,16 +116,16 @@ public class FarmPlot : MonoBehaviour
         switch(mSeed.mType)
         {
             case Seeds.SEED_TYPE.Corn:
-                FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.harvestYield, 0);
+                FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.mHarvestYield, 0);
                 break;
             case Seeds.SEED_TYPE.Wheat:
-                FarmingController.GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(mSeed.harvestYield, 0);
+                FarmingController.GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(mSeed.mHarvestYield, 0);
                 break;
             case Seeds.SEED_TYPE.Potato:
-                FarmingController.GetInstance().mFarmingSeeds["Potato"].modifyCountCond(mSeed.harvestYield, 0);
+                FarmingController.GetInstance().mFarmingSeeds["Potato"].modifyCountCond(mSeed.mHarvestYield, 0);
                 break;
             case Seeds.SEED_TYPE.Hops:
-                FarmingController.GetInstance().mFarmingSeeds["Hops"].modifyCountCond(mSeed.harvestYield, 0);
+                FarmingController.GetInstance().mFarmingSeeds["Hops"].modifyCountCond(mSeed.mHarvestYield, 0);
                 break;
 
         }
@@ -170,7 +170,7 @@ public class FarmPlot : MonoBehaviour
                 gameObject.GetComponent<Image>().sprite = hopsSprite;
                 break;
         }
-        harvestProgressBar.maximum = mSeed.harvestTimeCap;
+        harvestProgressBar.maximum = mSeed.mHarvestTimeCap;
         ToggleButtonsPlanted();
 		FarmingController.GetInstance().totalSeededPlots++;
     }

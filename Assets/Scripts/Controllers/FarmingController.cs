@@ -10,9 +10,13 @@ public class FarmingController : MonoBehaviour
 {
     //PRIVATE
     private static FarmingController mInstance;
-    UIFarmingUpdateEventInfo fuei = new UIFarmingUpdateEventInfo();
+	//TODO figure out a way to not need both of these. cookworker event is having to call both
+	//TODO figure out a way to not need both of these. cookworker event is having to call both
+	//TODO figure out a way to not need both of these. cookworker event is having to call both
+	UIFarmingUpdateEventInfo fuei = new UIFarmingUpdateEventInfo();
+    UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();		
 
-    public Transform FarmingBackgroundPanel;        //Assigning this through inspector because the .Find() broke
+    public Transform FarmingBackgroundPanel;        
 
     // For Visuals
     public FarmingDetailScript farmingDetailScript;
@@ -29,7 +33,7 @@ public class FarmingController : MonoBehaviour
 
     //PUBLIC
     public List<FarmPlot> mFarmPlots;           //Holds a reference to all farm plots
-    public Dictionary<string, Seeds> mFarmingSeeds; //why is this a thing
+	public Dictionary<string, Seeds> mFarmingSeeds; 
 
 
 
@@ -50,17 +54,18 @@ public class FarmingController : MonoBehaviour
     {
 		#region Event setup
 		fuei.eventGO = gameObject;
-
+		ruei.eventGO = gameObject;
 		//Listening for events
 		EventController.getInstance().RegisterListener<FarmingWorkerEventInfo>(FarmingWorkerUpdate);
+		EventController.getInstance().RegisterListener<CookingWorkerEventInfo>(CookWorkerUpdate);
 		EventController.getInstance().RegisterListener<FarmPurchaseEventInfo>(FarmPurchaseUpdate);
+
 		#endregion
 
 		mInstance = this;
         mFarmPlots = new List<FarmPlot>();
         mFarmingSeeds = new Dictionary<string, Seeds>();
 
-       
 
 
 
@@ -68,9 +73,10 @@ public class FarmingController : MonoBehaviour
 
 
 
-        #region Init farm plots
 
-        for (int i = 0; i < 10; i++)
+		#region Init farm plots
+
+		for (int i = 0; i < 10; i++)
         {
             FarmPlot tmp = Instantiate(farmPlotPrefab, FarmingBackgroundPanel, true);
             //tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
@@ -102,6 +108,8 @@ public class FarmingController : MonoBehaviour
         mFarmingSeeds["Potato"] = new Seeds(5, SEED_TYPE.Potato);
         mFarmingSeeds["Wheat"] = new Seeds(5, SEED_TYPE.Wheat);
         mFarmingSeeds["Hops"] = new Seeds(5, SEED_TYPE.Hops);
+
+
     }
 
     
@@ -187,6 +195,41 @@ public class FarmingController : MonoBehaviour
 		
 
 	}
+	//TODO fix double event system call
+	//TODO actually use the seeds mFood value for food conversion
+	//Event Driven 
+	private void CookWorkerUpdate(CookingWorkerEventInfo eventInfo)
+	{
+		Debug.Log("Im in the event!");
+		float power = eventInfo.workerPower;
+		float count = 0.0f;
+		float totalPower = 0.0f;
+
+
+		//This feels so wasteful. May have a function that does this calculation when you check the
+		//seed to be used, so we could just retrieve the value without having to calculate every time
+		foreach(KeyValuePair<string, Seeds> seed in mFarmingSeeds)
+		{
+			if(seed.Value.mToBeCooked)
+			{
+				count++;
+			}
+		}
+		totalPower = power / count;
+		foreach(KeyValuePair<string, Seeds> seed in mFarmingSeeds)
+		{
+			if (seed.Value.getCount() >= eventInfo.mSeedsToUse & seed.Value.mToBeCooked)			//checking if we have enough and its to be cooked
+			{
+				Debug.Log("Success!");
+				//deduct seeds
+				seed.Value.modifyCountCond(-eventInfo.mSeedsToUse, 0);
+				GameController.GetInstance().ChangeFoodAmount(totalPower);
+			}
+		}
+		EventController.getInstance().FireEvent(ruei);
+		EventController.getInstance().FireEvent(fuei);
+	}
+
 	//Event driven
 	private void FarmPurchaseUpdate(FarmPurchaseEventInfo eventInfo)
 	{

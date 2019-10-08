@@ -57,10 +57,8 @@ public class BuildingController : MonoBehaviour
                     continue;
                 }
             }
-            Debug.Log("this running yet");
             //the world building looks weird if you stare at it too much
             //For all the available buildings, we instantiate the icon on the left side
-            Debug.Log(building.name);
             GameObject temp = Instantiate(prefabGameIcon, buildingsContentPanel.transform);
             temp.transform.Translate(x*150*0.016f, -y*150*0.016f, 0);
 

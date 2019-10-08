@@ -5,7 +5,7 @@ using UnityEngine;
 public enum WORKER_TYPE
 {
     StoneMiner, CopperMiner, TinMiner, CoalMiner, IronMiner,
-    StoneMason, Forgeworker, Smith, Merchant, Farmer, Unemployed
+    StoneMason, Forgeworker, Smith, Merchant, Farmer, Cook, Unemployed
 }
 public abstract class Worker : MonoBehaviour
 {
