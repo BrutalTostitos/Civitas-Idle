@@ -30,7 +30,15 @@ public class TalentButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (line != null)
+            if (transform.parent.parent.parent.GetComponent<Canvas>().enabled == false)
+            {
+                line.enabled = false;
+            }
+            else
+            {
+                line.enabled = true;
+            }
     }
 
     public void UpdateButton()

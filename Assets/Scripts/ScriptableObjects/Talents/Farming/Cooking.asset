@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32d289b12cfa1db46af6bd1d6028a3c2, type: 3}
-  m_Name: Coal
+  m_Name: Cooking
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: a1104eadbfb9f264880fc280790358e5, type: 3}
-  _name: Test2
-  pos: {x: 2, y: 2}
-  prereq: {fileID: 11400000, guid: d56cbea4799042d4ba5bb3cff6a14d11, type: 2}
+  icon: {fileID: 21300000, guid: d894fd70c493018408336cacfb7dcf14, type: 3}
+  _name: Output
+  pos: {x: 0, y: -5}
+  prereq: {fileID: 0}
   rank: 0
-  maxRank: 0
+  maxRank: 4

@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public Canvas BuildingCanvas;
     public Canvas MarketCanvas;
     public Canvas SmithingCanvas;
+    public Canvas TalentCanvas;
 
     public GameObject MiningDetail;
     public GameObject FarmingDetail;
@@ -22,12 +23,14 @@ public class UIController : MonoBehaviour
     public GameObject BuildingDetail;
     public GameObject MarketDetail;
     public GameObject SmithingDetail;
+    public GameObject TalentDetail;
     
     //HUD text
     public Text GoldCountText;
 	public Text UnemployedWorkerCountText;
 	public Text PopulationCountText;
 	public Text FoodCountText;
+    public Text TalentPoints;
     //Resource Panel things
     public Button BuyWorkerButton;
 
@@ -114,6 +117,7 @@ public class UIController : MonoBehaviour
         mCanvasDict[4] = BuildingCanvas;
         mCanvasDict[5] = MarketCanvas;
         mCanvasDict[6] = SmithingCanvas;
+        mCanvasDict[7] = TalentCanvas;
         #endregion
 
         #region Detail region
@@ -125,6 +129,7 @@ public class UIController : MonoBehaviour
         mDetailDict[4] = BuildingDetail;
         mDetailDict[5] = MarketDetail;
         mDetailDict[6] = SmithingDetail;
+        mDetailDict[7] = TalentDetail;
         #endregion
 
         //We skip ahead because MainCanvas and MiningCanvas are already where they are needed

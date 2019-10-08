@@ -283,9 +283,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa0e3f76ca7c743a07915a70f3a0a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talentObj: {fileID: 11400000, guid: d56cbea4799042d4ba5bb3cff6a14d11, type: 2}
+  talentObj: {fileID: 11400000, guid: acb1b78076abe01439c0233454eccba4, type: 2}
   text: {fileID: 8570948189785318323}
+  rankText: {fileID: 8570948190845569364}
   image: {fileID: 8570948188790842570}
+  line: {fileID: 0}
+  material: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &8570948190845569362
 GameObject:
   m_ObjectHideFlags: 0
