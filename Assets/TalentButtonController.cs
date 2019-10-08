@@ -24,6 +24,11 @@ public class TalentButtonController : MonoBehaviour
         if (talentObj != null)
         {
             setTalent(talentObj);
+
+            if (talentObj.Prereq != null)
+            {
+                gameObject.GetComponent<Button>().interactable = false;
+            }
         }
     }
 
@@ -46,6 +51,7 @@ public class TalentButtonController : MonoBehaviour
         rankText.text = talentObj.Rank + "/" + talentObj.MaxRank;
         if (talentObj.Prereq.Rank == talentObj.Prereq.MaxRank)
         {
+            gameObject.GetComponent<Button>().interactable = true;
             line.startColor = Color.green;
             line.endColor = Color.green;
         }
