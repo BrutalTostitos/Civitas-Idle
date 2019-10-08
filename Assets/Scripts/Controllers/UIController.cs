@@ -191,7 +191,7 @@ public class UIController : MonoBehaviour
     {
         //HUD
         GoldCountText.text = GameController.GetInstance().getGold();
-		FoodCountText.text = GameController.GetInstance().getFoodCount().ToString();
+		FoodCountText.text = "Food " + GameController.GetInstance().getFoodCount().ToString();
         StoneCountText.text = GameController.GetInstance().mResources["Stone"].getCount().ToString();
         CopperOreCountText.text = GameController.GetInstance().mResources["Copper Ore"].getCount().ToString();
         TinOreCountText.text = GameController.GetInstance().mResources["Tin Ore"].getCount().ToString();
