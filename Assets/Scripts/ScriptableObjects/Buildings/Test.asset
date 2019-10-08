@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1b54375ea7341a4caa0504d77d62220, type: 3}
-  m_Name: Iron Mine
+  m_Name: Test
   m_EditorClassIdentifier: 
-  mName: Iron Mine
-  description: 
-  OnBuyFunction: OnBuyIronMine
-  icon: {fileID: 21300000, guid: f782b074786b54745b6f2fde31db8a40, type: 3}
+  mName: Test
+  description: Test
+  OnBuyFunction: 
+  icon: {fileID: 21300000, guid: eea3a8968f9b05a4583fb740f71e420c, type: 3}
   populationIncrease: 0
-  goldCost: 200
-  stoneCost: 50
+  goldCost: 100
+  stoneCost: 0
   brickCost: 0
   lumberCost: 0
+  prereq: []

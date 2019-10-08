@@ -21,3 +21,4 @@ MonoBehaviour:
   stoneCost: 50
   brickCost: 0
   lumberCost: 0
+  prereq: []

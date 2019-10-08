@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3daa0e3f76ca7c743a07915a70f3a0a2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - talentObj: {instanceID: 0}
+  - text: {instanceID: 0}
+  - image: {instanceID: 0}
+  - line: {instanceID: 0}
+  - material: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

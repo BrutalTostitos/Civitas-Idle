@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b54375ea7341a4caa0504d77d62220, type: 3}
-  m_Name: Test 1
+  m_Script: {fileID: 11500000, guid: 32d289b12cfa1db46af6bd1d6028a3c2, type: 3}
+  m_Name: Iron
   m_EditorClassIdentifier: 
-  mName: Test
-  description: Test
-  OnBuyFunction: 
   icon: {fileID: 21300000, guid: a1104eadbfb9f264880fc280790358e5, type: 3}
-  populationIncrease: 0
-  goldCost: 50
-  stoneCost: 0
-  brickCost: 0
-  lumberCost: 0
+  _name: Test2
+  pos: {x: -1, y: 0}
+  prereq: {fileID: 11400000, guid: cc0b7a8d330f7aa4fa85665b230f5bc3, type: 2}
+  rank: 0
+  maxRank: 0
