@@ -9,7 +9,7 @@ public class BuildingController : MonoBehaviour
     private static BuildingController mInstance;
 
     //What buildings you can build.
-    private List<BuildingObject> mAvailableBuildings;
+    public List<BuildingObject> mAvailableBuildings;
     private Dictionary<BuildingObject, GameObject> mBuidlingIcons;
 
     //What buildings you own.
@@ -29,11 +29,13 @@ public class BuildingController : MonoBehaviour
         if (buildingsContentPanel == null)
             buildingsContentPanel = GameObject.Find("BuildingAvailablePanel");
         
-        mAvailableBuildings = new List<BuildingObject>();
         mBuidlingIcons = new Dictionary<BuildingObject, GameObject>();
 
-        BuildingObject[] buildingsFromResources = Resources.FindObjectsOfTypeAll<BuildingObject>();
-        mAvailableBuildings.AddRange(buildingsFromResources);
+        //Only works in editor.
+        //BuildingObject[] buildingsFromResources = Resources.FindObjectsOfTypeAll<BuildingObject>();
+        
+
+        //mAvailableBuildings.AddRange(buildingsFromResources);
 
         int x = 0;
         int y = 0;
