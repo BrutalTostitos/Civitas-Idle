@@ -19,9 +19,11 @@ public class BuildingInformationScript : MonoBehaviour
     
     public BuildingObject building;
 
+    public BuildingController buildingController;
+
     void Start()
     {
-        BuildingController.GetInstance().SetInfoPanel(this);
+        buildingController.SetInfoPanel(this);
     }
 
     public void SetSelected(BuildingObject buildingObject)

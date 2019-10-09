@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,16 +28,13 @@ public class BuildingController : MonoBehaviour
 
     void Awake()
     {
+        mOwnedBuildings = new List<BuildingObject>();
+
+        InfoPanel.building = null;
         if (buildingsContentPanel == null)
             buildingsContentPanel = GameObject.Find("BuildingAvailablePanel");
         
         mBuidlingIcons = new Dictionary<BuildingObject, GameObject>();
-
-        //Only works in editor.
-        //BuildingObject[] buildingsFromResources = Resources.FindObjectsOfTypeAll<BuildingObject>();
-        
-
-        //mAvailableBuildings.AddRange(buildingsFromResources);
 
         int x = 0;
         int y = 0;
@@ -160,11 +159,6 @@ public class BuildingController : MonoBehaviour
         return mInstance;
 
     }
-    //TODO uncomment this line
-    private BuildingController()
-    {
-        mOwnedBuildings = new List<BuildingObject>();
-    }
     
     //Gets the selected building (for populating the UI information panel)
     public BuildingObject GetSelectedBuilding()
@@ -226,6 +220,66 @@ public class BuildingController : MonoBehaviour
                 
                 InfoPanel.building = null;
             }
+        }
+    }
+
+    //Used for loading the save.
+    private void SimulateBuildingPurchases(List<string> name)
+    {
+        BuildingObject[] boArray = new BuildingObject[getBuildings().Count];
+        getBuildings().CopyTo(boArray);
+        foreach(BuildingObject bo in boArray)
+        {
+             if (name.Contains(bo.name))
+             {
+                 mAvailableBuildings.Remove(bo);
+                 mOwnedBuildings.Add(bo);
+
+                 bo.OnBuy();
+             }
+        }
+
+        RebuildOptions();
+    }
+
+    private BuildingSave CreateSaveGameObject()
+    {
+        BuildingSave save = new BuildingSave();
+        foreach (BuildingObject bo in mOwnedBuildings)
+        {
+            //uses name of the object, not the one assigned inside the scriptable object, just so that if we have any objects displaying the same name, it wont overlap.
+            save.ownedBuildings.Add(bo.name);
+        }
+
+        return save;
+    }
+
+    public void SaveGame(string saveName)
+    {
+        BuildingSave save = CreateSaveGameObject();
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + "/BuildingSave.save");
+        bf.Serialize(file, save);
+        file.Close();
+
+        Debug.Log("Saved buildings...");
+    }
+
+    public void LoadGame(string loadName)
+    {
+        if (File.Exists(Application.persistentDataPath + "/" + loadName + "/BuildingSave.save"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/" + loadName + "/BuildingSave.save", FileMode.Open);
+            BuildingSave save = (BuildingSave)bf.Deserialize(file);
+            file.Close();
+
+            SimulateBuildingPurchases(save.ownedBuildings);
+        }
+        else
+        {
+            Debug.Log("No Building Save Found");
         }
     }
 }

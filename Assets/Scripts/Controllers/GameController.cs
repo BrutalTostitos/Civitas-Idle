@@ -14,6 +14,7 @@ using UnityEngine.UI;
 */
 public class GameController : MonoBehaviour
 {
+
     private static GameController mInstance;
     
     public Dictionary<string, Resource> mResources;
@@ -303,5 +304,11 @@ public class GameController : MonoBehaviour
                 goldAmount -= building.GoldCost;
             }
         }
+    }
+
+    //Saved Game
+    public void SaveGame(string saveName)
+    {
+
     }
 }

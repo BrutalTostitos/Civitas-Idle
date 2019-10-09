@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CloseGame : MonoBehaviour
 {
+    public SavedGameController savedGameController;
+
     public void OnClick()
     {
-        //DO SAVE STUFF;
+        savedGameController.SaveGame("SaveGame");
         Application.Quit();
     }
 }
