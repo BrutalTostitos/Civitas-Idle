@@ -197,6 +197,7 @@ public class FarmingController : MonoBehaviour
 	}
 	//TODO fix double event system call
 	//TODO actually use the seeds mFood value for food conversion
+	//TODO only draining 1 of each type of resource
 	//Event Driven 
 	private void CookWorkerUpdate(CookingWorkerEventInfo eventInfo)
 	{
