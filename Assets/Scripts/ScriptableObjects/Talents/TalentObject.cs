@@ -80,6 +80,16 @@ public class TalentObject : ScriptableObject
         }
         return false;
     }
+    
+    public void ResetRank()
+    {
+        rank = 0;
+    }
+
+    public void SetRank(int i)
+    {
+        rank = i;
+    }
 
     public bool canIncRank => rank < maxRank;
 }

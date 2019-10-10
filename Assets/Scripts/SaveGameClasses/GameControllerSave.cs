@@ -50,3 +50,12 @@ public class BuildingSave
 {
     public List<string> ownedBuildings = new List<string>();
 }
+
+[System.Serializable]
+public class TalentSave
+{
+	public int talentPoints = 0;
+
+	public List<string> talentNames = new List<string>();
+	public List<int> talentRanks = new List<int>();
+}
