@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+
+
+[System.Serializable]
 public class Seeds
 {
-    public enum SEED_TYPE { Wheat, Corn, Potato, Hops }
-    
-    public SEED_TYPE mType;
+	[System.Serializable]
+	public enum SEED_TYPE { None, Wheat, Corn, Potato, Hops }
+
+	public SEED_TYPE mType;
     public float mHarvestTime;
     public float mHarvestTimeCap;
     public int mHarvestYield;
     public int mValue;
 	public int mFood;			//The amount of food this harvests into
     public int mCount;
-    public Mutex mMutex;
 	public bool mToBeCooked;
 
     public Seeds(int value, SEED_TYPE seed)
@@ -25,7 +28,6 @@ public class Seeds
         mCount = 0;
         mHarvestTime = 0.0f;
 		mToBeCooked = true;
-		mMutex = new Mutex();
         switch (mType)
         {
             case SEED_TYPE.Corn:
@@ -61,18 +63,16 @@ public class Seeds
     public bool modifyCountCond(int amountToAddToCount, int conditionAmount)
     {
         bool passed = true;
-        mMutex.WaitOne();
         if (mCount >= conditionAmount)
             mCount += amountToAddToCount;
         else
             passed = false;
-        mMutex.ReleaseMutex();
         return passed;
     }
 
     //Creates a shallow copy. May need to look into a deep copy
     public Seeds ShallowCopy()
     {
-        return (Seeds)this.MemberwiseClone();
+		return (Seeds)this.MemberwiseClone();
     }
 }

@@ -5,6 +5,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using static Seeds;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class FarmingController : MonoBehaviour
 {
@@ -257,7 +259,91 @@ public class FarmingController : MonoBehaviour
         //particular seed
     }
 
-    
+	//Saved Game
+	private FarmingControllerSave CreateSaveGameObject()
+	{
+		FarmingControllerSave save = new FarmingControllerSave();
+		//assign wariables
+		save.FarmingSeedsKey.AddRange(mFarmingSeeds.Keys);
+		save.FarmingSeedsValue.AddRange(mFarmingSeeds.Values);
+		
+		foreach (FarmPlot farm in mFarmPlots)
+		{
+			FarmPlotData tmp = new FarmPlotData();
+			tmp.TillProgress = farm.tillProgress;
+			tmp.TillProgressCap = farm.tillProgressCap;
+
+			tmp.OverGrownProgress = farm.overGrownProgress;
+			tmp.OverGrownCap = farm.overGrownCap;
+			tmp.Seed = farm.mSeed;
+			tmp.isTilled = farm.isTilled;
+			save.FarmPlots.Add(tmp);
+		}
+
+		return save;
+
+	}
+
+	public void SaveGame(string saveName)
+	{
+		FarmingControllerSave save = CreateSaveGameObject();
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + "/FarmingControllerSave.save");
+		bf.Serialize(file, save);
+		file.Close();
+
+		Debug.Log("Saved FarmingController...");
+	}
+
+	public void LoadGame(string loadName)
+	{
+		if (File.Exists(Application.persistentDataPath + "/" + loadName + "/FarmingControllerSave.save"))
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			System.IO.FileStream file = File.Open(Application.persistentDataPath + "/" + loadName + "/FarmingControllerSave.save", FileMode.Open);
+			FarmingControllerSave save = (FarmingControllerSave)bf.Deserialize(file);
+			file.Close();
+
+			//Reassign wariables here
+			for (int i = 0; i < (save.FarmingSeedsKey.Count); i++)
+			{
+				mFarmingSeeds[save.FarmingSeedsKey[i]] = save.FarmingSeedsValue[i];
+			}
+			//Farmplots
+			for (int i = 0; i < mFarmPlots.Count; i++)
+			{
+				
+
+				if (save.FarmPlots[i].Seed.mType != Seeds.SEED_TYPE.None)
+				{
+
+
+					mFarmPlots[i].PlantSeedPlot(save.FarmPlots[i].Seed);
+					mFarmPlots[i].ToggleButtonsTilled();
+				}
+				else if (save.FarmPlots[i].isTilled)
+				{
+					mFarmPlots[i].ToggleButtonsTilled();
+
+				}
+
+
+				mFarmPlots[i].tillProgressBar.current = mFarmPlots[i].tillProgress = save.FarmPlots[i].TillProgress;
+				mFarmPlots[i].tillProgressBar.maximum = mFarmPlots[i].tillProgressCap = save.FarmPlots[i].TillProgressCap;
+
+				mFarmPlots[i].overgrowthProgressBar.current = mFarmPlots[i].overGrownProgress = save.FarmPlots[i].OverGrownProgress;
+				mFarmPlots[i].overgrowthProgressBar.maximum = mFarmPlots[i].overGrownCap = save.FarmPlots[i].OverGrownCap;
+
+				mFarmPlots[i].harvestProgressBar.current = mFarmPlots[i].mSeed.mHarvestTime = save.FarmPlots[i].Seed.mHarvestTime;
+				mFarmPlots[i].harvestProgressBar.maximum = mFarmPlots[i].mSeed.mHarvestTimeCap = save.FarmPlots[i].Seed.mHarvestTimeCap;
+
+			}
+		}
+		else
+		{
+			Debug.Log("No FarmingController save found");
+		}
+	}
 
 
 

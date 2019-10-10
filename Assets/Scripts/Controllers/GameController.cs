@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,25 +16,21 @@ using UnityEngine.UI;
 */
 public class GameController : MonoBehaviour
 {
-
     private static GameController mInstance;
-    
+
     public Dictionary<string, Resource> mResources;
-
     public List<string> ItemsToSell;
-
     public System.Random mRandom = new System.Random();
-
-    //Mutex goldMutex;
-
-    public int goldAmount = 1000;
+	public int mGoldAmount = 1000;
 	public float mFoodAmount = 0;
 	public float foodUpdateTimer;
 	public float foodUpdateTimerMax;
+
     void Awake()
     {
         
     }
+	
     private GameController()
     {
         mInstance = this;   //I dont think this is working right
@@ -42,7 +40,6 @@ public class GameController : MonoBehaviour
 
         ItemsToSell = new List<string>();
         mResources = new Dictionary<string, Resource>();
-        //? mSeeds = new List<Seeds>();
 
 
 
@@ -105,7 +102,7 @@ public class GameController : MonoBehaviour
     //ONLY USE THIS FOR DISPLAYING -- THATS WHY ITS A STRING YOU DUMMY
     public string getGold()
     {
-        return goldAmount.ToString();
+        return mGoldAmount.ToString();
     }
 
 
@@ -113,9 +110,9 @@ public class GameController : MonoBehaviour
     {
         bool passed = true;
         //goldMutex.WaitOne();
-        if (goldAmount >= conditionAmount)
+        if (mGoldAmount >= conditionAmount)
         {
-            goldAmount += amountToAddToCount;
+            mGoldAmount += amountToAddToCount;
         }
         else
         {
@@ -156,13 +153,13 @@ public class GameController : MonoBehaviour
         if (mResources[key].modifyCountCond(-count, count))
         {
             //goldMutex.WaitOne();
-            goldAmount += mResources[key].mValue * count;
+            mGoldAmount += mResources[key].mValue * count;
             //goldMutex.ReleaseMutex();
         }
     }
-    
-    //TODO
-    /*
+
+	//TODO
+	/*
     public void CalculateWorkerCaps()
     {
         string[] keys = mWorkerCaps.Keys.ToArray<string>();
@@ -174,15 +171,13 @@ public class GameController : MonoBehaviour
     }
     */
 
- 
-    //PERHAPS MOVE THIS SOMEWHERE ELSE
-    public enum ResourceType { Unprocessed, Processed, Currency, Worker }
-   
+	//PERHAPS MOVE THIS SOMEWHERE ELSE
+	[System.Serializable]
+	public enum ResourceType { Unprocessed, Processed, Currency, Worker }
 
-    public class Resource
+	[System.Serializable]
+	public class Resource
     {
-        Mutex mMutex;
-
         public string mName;
         public int mValue;
         private int mCount;
@@ -199,7 +194,6 @@ public class GameController : MonoBehaviour
             mValue = value;
             mCount = 0;
             mType = resourceType;
-            mMutex = new Mutex();
 
             if (costs1 != null)
             {
@@ -223,12 +217,10 @@ public class GameController : MonoBehaviour
         public bool modifyCountCond(int amountToAddToCount, int conditionAmount)
         {
             bool passed = true;
-            mMutex.WaitOne();
             if (mCount >= conditionAmount)
                 mCount += amountToAddToCount;
             else
                 passed = false;
-            mMutex.ReleaseMutex();
             return passed;
         }
 
@@ -269,7 +261,7 @@ public class GameController : MonoBehaviour
     public bool canBuy(BuildingObject building)
     {
         bool canBuy = true;
-        if (building.GoldCost > goldAmount)
+        if (building.GoldCost > mGoldAmount)
         {
             canBuy = false;
         }
@@ -299,16 +291,77 @@ public class GameController : MonoBehaviour
             if (mResources.ContainsKey("Stone Slab"))
                 mResources["Stone Slab"].modifyCountCond(-building.BrickCost, building.BrickCost);
             
-            if (goldAmount >= building.GoldCost)
+            if (mGoldAmount >= building.GoldCost)
             {
-                goldAmount -= building.GoldCost;
+                mGoldAmount -= building.GoldCost;
             }
         }
     }
 
-    //Saved Game
-    public void SaveGame(string saveName)
-    {
+	//Saved Game
+	private GameControllerSave CreateSaveGameObject()
+	{
+		GameControllerSave save = new GameControllerSave();
+		//assign wariables
+		//Resource section
+		save.resourceNames.AddRange(mResources.Keys);
+		save.resourceValues.AddRange(mResources.Values);
 
-    }
+		//Gamecontroller section
+		Debug.Log(ItemsToSell);
+		save.itemsToSell.AddRange(ItemsToSell);
+		save.goldAmount = mGoldAmount;
+		save.foodAmount = mFoodAmount;
+		save.foodUpdateTimer = foodUpdateTimer;
+		save.foodUpdateTimerMax = foodUpdateTimerMax;
+
+
+		return save;
+		
+	}
+
+	public void SaveGame(string saveName)
+	{
+		GameControllerSave save = CreateSaveGameObject();
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + "/GameControllerSave.save");
+		bf.Serialize(file, save);
+		file.Close();
+
+		Debug.Log("Saved Game cOntroller...");
+	}
+
+	public void LoadGame(string loadName)
+	{
+		if (File.Exists(Application.persistentDataPath + "/" + loadName + "/GameControllerSave.save"))
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/" + loadName + "/GameControllerSave.save", FileMode.Open);
+			GameControllerSave save = (GameControllerSave)bf.Deserialize(file);
+			file.Close();
+
+			//Reassign wariables here
+			//Resource section
+			mResources.Clear();
+			for (int i = 0; i < save.resourceNames.Count; i++)
+			{
+				mResources.Add(save.resourceNames[i], save.resourceValues[i]);
+			}
+			//Gamecontroller section
+			ItemsToSell.Clear();
+			ItemsToSell.AddRange(save.itemsToSell);
+			mGoldAmount = save.goldAmount;
+			mFoodAmount = save.foodAmount;
+			foodUpdateTimer = save.foodUpdateTimer;
+			foodUpdateTimerMax = save.foodUpdateTimerMax;
+
+			
+		}
+		else
+		{
+			Debug.Log("No Gamecontroller save found");
+		}
+	}
+
+
 }

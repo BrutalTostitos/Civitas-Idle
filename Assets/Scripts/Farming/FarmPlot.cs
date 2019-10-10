@@ -23,7 +23,7 @@ public class FarmPlot : MonoBehaviour
     public Sprite potatoSprite;
     public Sprite hopsSprite;
 
-
+	public bool isTilled;
 	public float tillProgress;// = 0.0f;
 	public float tillProgressCap;// = 5.0f;
 
@@ -46,7 +46,7 @@ public class FarmPlot : MonoBehaviour
 		overgrowthProgressBar.current = overGrownProgress;          
 		overgrowthProgressBar.maximum = overGrownCap;
 		#endregion
-
+		isTilled = false;
 		mButtonList.Add(cornButton);
         mButtonList.Add(wheatButton);
         mButtonList.Add(potatoButton);
@@ -70,7 +70,7 @@ public class FarmPlot : MonoBehaviour
     }
 	public void UpdateFieldStatus()
 	{
-		if (mSeed != null)
+		if (mSeed.mType != Seeds.SEED_TYPE.None)
 		{
 			//Checking to see if our field is overgrown. If not, the seeds will continue to grow
 			if (overGrownProgress < overGrownCap)
@@ -98,6 +98,7 @@ public class FarmPlot : MonoBehaviour
         if (tillProgress >= tillProgressCap)
         {
             tillProgress = 0.0f;
+			isTilled = true;
             ToggleButtonsTilled();
         }
         tillProgressBar.current = tillProgress;
@@ -129,12 +130,13 @@ public class FarmPlot : MonoBehaviour
                 break;
 
         }
-        
-        
-        //Resetting the plot
-        mSeed = null;
+
+
+		//Resetting the plot
+		mSeed.mType = Seeds.SEED_TYPE.None;
 		overGrownProgress = 0.0f;
 		gameObject.GetComponent<Image>().sprite = null;
+		isTilled = false;
         ToggleButtonsHarvested();
 
 
@@ -147,7 +149,7 @@ public class FarmPlot : MonoBehaviour
 
     public void PlantSeedPlot(Seeds seedType)
     {
-        if (mSeed != null)
+        if (mSeed.mType != Seeds.SEED_TYPE.None)
         {
             return;
         }
@@ -178,7 +180,7 @@ public class FarmPlot : MonoBehaviour
     //TODO - cleanup and optimization
 
     //Toggles all buttons to their appropriate active state on tilled
-    private void ToggleButtonsTilled()
+    public void ToggleButtonsTilled()
     {
         foreach (Button tmp in mButtonList)
         {

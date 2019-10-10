@@ -17475,7 +17475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemsToSell: []
-  goldAmount: 1000
+  mGoldAmount: 1000
   mFoodAmount: 0
   foodUpdateTimer: 0
   foodUpdateTimerMax: 0
@@ -24635,6 +24635,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingController: {fileID: 1835974912}
+  gameController: {fileID: 837946244}
+  farmingController: {fileID: 987062929}
 --- !u!4 &1595138740
 Transform:
   m_ObjectHideFlags: 0
