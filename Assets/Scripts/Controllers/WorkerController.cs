@@ -58,7 +58,6 @@ public class WorkerController : MonoBehaviour
     private void Update()
     {
 
-		Debug.Log(mWorkers["Cook"].mCount);
         //For worker automation
         foreach (KeyValuePair<string, Worker> worker in mWorkers)
         {
