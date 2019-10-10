@@ -5683,6 +5683,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookingOutput
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: b89c5c14b04f3de42a8a6081bc043616,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5788,12 +5794,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: b89c5c14b04f3de42a8a6081bc043616,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -11074,6 +11074,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tin
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 4359a544f9747ca41a71d04c3fc9575c,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11179,12 +11185,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 4359a544f9747ca41a71d04c3fc9575c,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -11247,6 +11247,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Iron
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 911aca367eb028f4f9ef6d0932362dcb,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11352,12 +11358,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 911aca367eb028f4f9ef6d0932362dcb,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -11479,6 +11479,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: d56cbea4799042d4ba5bb3cff6a14d11,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11584,12 +11590,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: d56cbea4799042d4ba5bb3cff6a14d11,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -11730,6 +11730,7 @@ GameObject:
   - component: {fileID: 513798441}
   - component: {fileID: 513798440}
   - component: {fileID: 513798442}
+  - component: {fileID: 513798443}
   m_Layer: 5
   m_Name: TalentPanel
   m_TagString: Untagged
@@ -11808,6 +11809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0248a81d0d606d4d84e8c8c450fd7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  talentBuffController: {fileID: 513798443}
   SkillPointsText: {fileID: 89938068}
   talentButtons:
   - {fileID: 127596108}
@@ -11820,6 +11822,18 @@ MonoBehaviour:
   - {fileID: 1028918211}
   - {fileID: 1817947932}
   - {fileID: 1927261827}
+--- !u!114 &513798443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513798438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aaa7336f9650014287ad1b0a069f2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -16843,6 +16857,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Copper
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: cc0b7a8d330f7aa4fa85665b230f5bc3,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16948,12 +16968,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: cc0b7a8d330f7aa4fa85665b230f5bc3,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -16998,6 +17012,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corn
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 00283c3a169a53b4c979644b9ebc9112,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17103,12 +17123,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 00283c3a169a53b4c979644b9ebc9112,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -18784,6 +18798,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Output
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: b8ec5b08e06a13b4a882f2fec7f8dac8,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18889,12 +18909,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: b8ec5b08e06a13b4a882f2fec7f8dac8,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -23915,6 +23929,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wheat
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f4518bada8b84645bf28ef0f84d3c06,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24020,12 +24040,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 4f4518bada8b84645bf28ef0f84d3c06,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -24484,6 +24498,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coal
       objectReference: {fileID: 0}
+    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
+        type: 3}
+      propertyPath: talentObj
+      value: 
+      objectReference: {fileID: 11400000, guid: e60b03789000dc3468f6e9d707ac8743,
+        type: 2}
     - target: {fileID: 8570948190762967277, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24589,12 +24609,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8570948190762967265, guid: d6c481b5447e3824091886a33c59d6e9,
-        type: 3}
-      propertyPath: talentObj
-      value: 
-      objectReference: {fileID: 11400000, guid: e60b03789000dc3468f6e9d707ac8743,
-        type: 2}
     - target: {fileID: 8570948190762967278, guid: d6c481b5447e3824091886a33c59d6e9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

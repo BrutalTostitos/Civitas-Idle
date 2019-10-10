@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32d289b12cfa1db46af6bd1d6028a3c2, type: 3}
-  m_Name: FarmingOutput
+  m_Name: OvergrowthSpeed
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 836c9a6f3b2fd3f43b42582a739510d5, type: 3}
-  _name: Output
-  pos: {x: 2.5, y: 5}
+  icon: {fileID: 21300000, guid: a96c77b531d23c84d9542ca8fb21b7d8, type: 3}
+  _name: OvergrowthSpeed
+  pos: {x: -2.5, y: 5}
   prereq: {fileID: 0}
-  rank: 0
+  rank: 10
   maxRank: 10
+  onBuy: OvergrowthModSpeed
+  onBuyParameter: 
+  seed_type: 0

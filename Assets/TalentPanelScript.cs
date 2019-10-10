@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class TalentPanelScript : MonoBehaviour
 {
-    private int SkillPoints = 10;
+    public TalentBuffController talentBuffController;
+
+    private int SkillPoints = 100;
     public Text SkillPointsText;
 
     public List<TalentButtonController> talentButtons;
@@ -30,6 +32,7 @@ public class TalentPanelScript : MonoBehaviour
         {
             SkillPoints--;
             talent.incRank();
+            talentBuffController.SendMessage(talent.OnBuy, talent);
         }
         BroadcastMessage("UpdateButton");
     }
@@ -79,14 +82,20 @@ public class TalentPanelScript : MonoBehaviour
                     if (talentButton.talentObj.name == save.talentNames[i])
                     {
                         talentButton.talentObj.SetRank(save.talentRanks[i]);
-                        talentButton.UpdateButton();
+                        talentBuffController.SendMessage(talentButton.talentObj.OnBuy, talentButton.talentObj);
                         break;
                     }
                 }
             }
+            BroadcastMessage("UpdateButton");
         }
         else
         {
+            foreach (TalentButtonController talentButton in talentButtons)
+                {
+                    talentButton.talentObj.SetRank(0);
+                    
+                }
             Debug.Log("No Talent Save Found");
         }
     }

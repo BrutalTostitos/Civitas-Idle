@@ -30,7 +30,7 @@ public class CookWorker : Worker
 
 	public override void UpdateWorker()
 	{
-		cwei.workerPower = mCount * mPower;
+		cwei.workerPower = (int)(mCount * mPower * TalentBuffs.GetInstance().CookingOutput);
 		EventController.getInstance().FireEvent(cwei);
 	}
 }

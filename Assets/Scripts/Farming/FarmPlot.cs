@@ -70,16 +70,17 @@ public class FarmPlot : MonoBehaviour
     }
 	public void UpdateFieldStatus()
 	{
-		if (mSeed.mType != Seeds.SEED_TYPE.None)
+		if (mSeed.mType != SEED_TYPE.None)
 		{
 			//Checking to see if our field is overgrown. If not, the seeds will continue to grow
 			if (overGrownProgress < overGrownCap)
 			{
 				//Plot specific
-				overGrownProgress += Time.deltaTime;
+				overGrownProgress += Time.deltaTime * TalentBuffs.GetInstance().OvergrowthModSpeed;
 				overgrowthProgressBar.current = overGrownProgress;
 				//Seed specific
-				mSeed.mHarvestTime += Time.deltaTime;
+				mSeed.mHarvestTime += Time.deltaTime * TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType);
+                Debug.Log(TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType));
 				harvestProgressBar.current = mSeed.mHarvestTime;
 			}
 
@@ -93,7 +94,7 @@ public class FarmPlot : MonoBehaviour
 	}
     public void TillField(int amount = 1)
     {
-        tillProgress += amount;
+        tillProgress += (int)(amount * TalentBuffs.GetInstance().TillModPower);
         
         if (tillProgress >= tillProgressCap)
         {
@@ -114,26 +115,27 @@ public class FarmPlot : MonoBehaviour
 	public void HarvestCrops()
     {
         //Determining our harvest and updating farmingcontrollers seed count
+        int tempYield = (int)(mSeed.mHarvestYield * TalentBuffs.GetInstance().GetSeedModOutput(mSeed.mType));
         switch(mSeed.mType)
         {
-            case Seeds.SEED_TYPE.Corn:
-                FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(mSeed.mHarvestYield, 0);
+            case SEED_TYPE.Corn:
+                FarmingController.GetInstance().mFarmingSeeds["Corn"].modifyCountCond(tempYield, 0);
                 break;
-            case Seeds.SEED_TYPE.Wheat:
-                FarmingController.GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(mSeed.mHarvestYield, 0);
+            case SEED_TYPE.Wheat:
+                FarmingController.GetInstance().mFarmingSeeds["Wheat"].modifyCountCond(tempYield, 0);
                 break;
-            case Seeds.SEED_TYPE.Potato:
-                FarmingController.GetInstance().mFarmingSeeds["Potato"].modifyCountCond(mSeed.mHarvestYield, 0);
+            case SEED_TYPE.Potato:
+                FarmingController.GetInstance().mFarmingSeeds["Potato"].modifyCountCond(tempYield, 0);
                 break;
-            case Seeds.SEED_TYPE.Hops:
-                FarmingController.GetInstance().mFarmingSeeds["Hops"].modifyCountCond(mSeed.mHarvestYield, 0);
+            case SEED_TYPE.Hops:
+                FarmingController.GetInstance().mFarmingSeeds["Hops"].modifyCountCond(tempYield, 0);
                 break;
 
         }
 
 
 		//Resetting the plot
-		mSeed.mType = Seeds.SEED_TYPE.None;
+		mSeed.mType = SEED_TYPE.None;
 		overGrownProgress = 0.0f;
 		gameObject.GetComponent<Image>().sprite = null;
 		isTilled = false;
@@ -149,7 +151,7 @@ public class FarmPlot : MonoBehaviour
 
     public void PlantSeedPlot(Seeds seedType)
     {
-        if (mSeed.mType != Seeds.SEED_TYPE.None)
+        if (mSeed.mType != SEED_TYPE.None)
         {
             return;
         }
@@ -157,18 +159,18 @@ public class FarmPlot : MonoBehaviour
         switch (seedType.mType)
         {
             //Updating UI
-            case Seeds.SEED_TYPE.Corn:
+            case SEED_TYPE.Corn:
                 //gameObject.sprite = cornSprite;
                 gameObject.GetComponent<Image>().sprite = cornSprite;
                 //gameObject.GetComponent<Image>().transform.localScale = new Vector3(.5f, .5f);
                 break;
-            case Seeds.SEED_TYPE.Wheat:
+            case SEED_TYPE.Wheat:
                 gameObject.GetComponent<Image>().sprite = wheatSprite;
                 break;
-            case Seeds.SEED_TYPE.Potato:
+            case SEED_TYPE.Potato:
                 gameObject.GetComponent<Image>().sprite = potatoSprite;
                 break;
-            case Seeds.SEED_TYPE.Hops:
+            case SEED_TYPE.Hops:
                 gameObject.GetComponent<Image>().sprite = hopsSprite;
                 break;
         }

@@ -59,6 +59,12 @@ public class TalentButtonController : MonoBehaviour
                 line.startColor = Color.green;
                 line.endColor = Color.green;
             }
+            else
+            {
+                gameObject.GetComponent<Button>().interactable = false;
+                line.startColor = Color.red;
+                line.endColor = Color.red;
+            }
     }
 
     public void setTalent(TalentObject talent)
