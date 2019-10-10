@@ -924,7 +924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.30707756, b: 0.0047169924, a: 1}
+  m_Color: {r: 0.119799756, g: 0.5283019, b: 0.027411893, a: 0.3137255}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -961,10 +961,20 @@ MonoBehaviour:
   potatoButton: {fileID: 2082151854202663995}
   hopsButton: {fileID: 754955072404503994}
   mButtonList: []
+  mSeed:
+    mType: 0
+    mHarvestTime: 0
+    mHarvestTimeCap: 0
+    mHarvestYield: 0
+    mValue: 0
+    mFood: 0
+    mCount: 0
+    mToBeCooked: 0
   cornSprite: {fileID: 21300000, guid: f3bcd2d0f0b040b44acda5dcf588267f, type: 3}
   wheatSprite: {fileID: 21300000, guid: 5f10cb94b1c15aa4abe2bd47c983e430, type: 3}
   potatoSprite: {fileID: 21300000, guid: 25d366da81852684787d99f5c9648fc2, type: 3}
   hopsSprite: {fileID: 21300000, guid: 8dd0b53bdc6027549bfcf31f76ab4a1b, type: 3}
+  isTilled: 0
   tillProgress: 0
   tillProgressCap: 10
   overGrownProgress: 0
