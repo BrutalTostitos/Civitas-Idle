@@ -23,6 +23,32 @@ public class TalentObject : ScriptableObject
     [SerializeField]
     private int maxRank;
 
+    [SerializeField]
+    private string onBuy;
+
+    [SerializeField]
+    private string onBuyParameter;
+
+    //Used for farming talents
+    [SerializeField]
+    private SEED_TYPE seed_type;
+
+    public string OnBuyParameter
+    {
+        get
+        {
+            return onBuyParameter;
+        }
+    }
+
+    public SEED_TYPE Seed_Type
+    {
+        get
+        {
+            return seed_type;
+        }
+    }
+
     public Sprite Icon
     {
         get
@@ -55,6 +81,14 @@ public class TalentObject : ScriptableObject
         }
     }
 
+    public string OnBuy
+    {
+        get
+        {
+            return onBuy;
+        }
+    }
+
     public int Rank
     {
         get
@@ -79,6 +113,16 @@ public class TalentObject : ScriptableObject
             return true;
         }
         return false;
+    }
+    
+    public void ResetRank()
+    {
+        rank = 0;
+    }
+
+    public void SetRank(int i)
+    {
+        rank = i;
     }
 
     public bool canIncRank => rank < maxRank;

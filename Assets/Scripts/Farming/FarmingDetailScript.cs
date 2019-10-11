@@ -13,13 +13,20 @@ public class FarmingDetailScript : MonoBehaviour
     {
         farmPlots = new List<GameObject>();
 
-        for (int x = 0; x < 5; x++)
+        int y = 0;
+        for (int x = 0; x < 6; x++)
         {
-            for (int y = 0; y < 2; y++)
+            GameObject temp = Instantiate(farmPlotPrefab, this.gameObject.transform);
+            temp.transform.Translate(10*x, 0, -10*y);
+            farmPlots.Add(temp);
+            if (x == 4)
             {
-                GameObject temp = Instantiate(farmPlotPrefab, this.gameObject.transform);
-                temp.transform.Translate(10*x, 0, 10*y);
-                farmPlots.Add(temp);
+                x = -1;
+                y++;
+                if (y == 2)
+                {
+                    break;
+                }
             }
         }
     }

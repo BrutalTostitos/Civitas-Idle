@@ -18,3 +18,6 @@ MonoBehaviour:
   prereq: {fileID: 11400000, guid: acb1b78076abe01439c0233454eccba4, type: 2}
   rank: 0
   maxRank: 5
+  onBuy: SpeedModPower
+  onBuyParameter: 
+  seed_type: 2

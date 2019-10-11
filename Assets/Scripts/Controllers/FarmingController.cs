@@ -314,7 +314,7 @@ public class FarmingController : MonoBehaviour
 			{
 				
 
-				if (save.FarmPlots[i].Seed.mType != Seeds.SEED_TYPE.None)
+				if (save.FarmPlots[i].Seed.mType != SEED_TYPE.None)
 				{
 
 

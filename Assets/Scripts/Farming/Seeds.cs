@@ -5,12 +5,12 @@ using System.Threading;
 using UnityEngine;
 
 
+[System.Serializable]
+public enum SEED_TYPE { None, Wheat, Corn, Potato, Hops }
 
 [System.Serializable]
 public class Seeds
 {
-	[System.Serializable]
-	public enum SEED_TYPE { None, Wheat, Corn, Potato, Hops }
 
 	public SEED_TYPE mType;
     public float mHarvestTime;

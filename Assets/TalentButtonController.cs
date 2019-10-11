@@ -23,6 +23,7 @@ public class TalentButtonController : MonoBehaviour
     {
         if (talentObj != null)
         {
+            //talentObj.ResetRank();
             setTalent(talentObj);
 
             if (talentObj.Prereq != null)
@@ -30,6 +31,8 @@ public class TalentButtonController : MonoBehaviour
                 gameObject.GetComponent<Button>().interactable = false;
             }
         }
+
+        UpdateButton();
     }
 
     // Update is called once per frame
@@ -49,12 +52,19 @@ public class TalentButtonController : MonoBehaviour
     public void UpdateButton()
     {
         rankText.text = talentObj.Rank + "/" + talentObj.MaxRank;
-        if (talentObj.Prereq.Rank == talentObj.Prereq.MaxRank)
-        {
-            gameObject.GetComponent<Button>().interactable = true;
-            line.startColor = Color.green;
-            line.endColor = Color.green;
-        }
+        if (talentObj.Prereq != null)
+            if (talentObj.Prereq.Rank == talentObj.Prereq.MaxRank)
+            {
+                gameObject.GetComponent<Button>().interactable = true;
+                line.startColor = Color.green;
+                line.endColor = Color.green;
+            }
+            else
+            {
+                gameObject.GetComponent<Button>().interactable = false;
+                line.startColor = Color.red;
+                line.endColor = Color.red;
+            }
     }
 
     public void setTalent(TalentObject talent)
@@ -96,6 +106,7 @@ public class TalentButtonController : MonoBehaviour
 
     public void OnClick()
     {
-        GetComponentInParent<TalentPanelScript>().BuyTalent(talentObj);
+        //GetComponentInParent<TalentPanelScript>().BuyTalent(talentObj);
+        gameObject.transform.parent.parent.GetComponent<TalentPanelScript>().BuyTalent(talentObj);
     }
 }
