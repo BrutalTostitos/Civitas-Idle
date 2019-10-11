@@ -2,6 +2,7 @@
 using System.Threading;
 using UnityEngine;
 
+[System.Serializable]
 public enum WORKER_TYPE
 {
     StoneMiner, CopperMiner, TinMiner, CoalMiner, IronMiner,

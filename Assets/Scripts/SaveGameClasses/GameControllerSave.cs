@@ -34,6 +34,28 @@ public class FarmingControllerSave
 }
 
 [System.Serializable]
+public class WorkerControllerSave
+{
+	
+	public List<string> WorkerNames = new List<string>();
+	public List<UnemployedWorker> unemployedValues = new List<UnemployedWorker>();
+	public List<MiningWorker> miningValues = new List<MiningWorker>();
+	public List<FarmingWorker> farmingValues = new List<FarmingWorker>();
+	public List<CookWorker> cookValues = new List<CookWorker>();
+
+
+	//UnemployedWorker unemployed = new UnemployedWorker(15, WORKER_TYPE.Unemployed);
+	//MiningWorker stoneMiner = new MiningWorker(15, WORKER_TYPE.StoneMiner);
+	//MiningWorker copperMiner = new MiningWorker(15, WORKER_TYPE.CopperMiner);
+	//MiningWorker tinMiner = new MiningWorker(15, WORKER_TYPE.TinMiner);
+	//MiningWorker coalMiner = new MiningWorker(15, WORKER_TYPE.CoalMiner);
+	//MiningWorker ironMiner = new MiningWorker(15, WORKER_TYPE.IronMiner);
+	//FarmingWorker farmWorker = new FarmingWorker(20, WORKER_TYPE.Farmer);
+	//CookWorker cookWorker = new CookWorker(20, WORKER_TYPE.Cook);
+
+}
+
+[System.Serializable]
 public class FarmPlotData
 {
 	public float TillProgress = 0;

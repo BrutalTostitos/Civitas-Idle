@@ -1,6 +1,8 @@
 ﻿using EventCallBacks;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using UnityEngine;
 
@@ -266,8 +268,96 @@ public class WorkerController : MonoBehaviour
 
     }
 
-    
 
-    
+
+
+
+
+	//Saved Game
+	private WorkerControllerSave CreateSaveGameObject()
+	{
+		WorkerControllerSave save = new WorkerControllerSave();
+		//assign wariables
+
+		save.WorkerNames.AddRange(mWorkers.Keys);
+
+		//The ordering in which we save these is very important.
+		//Please update the load method if you change any of the orderings
+		foreach(KeyValuePair<string, Worker> worker in mWorkers)
+		{
+			if(worker is UnemployedWorker)
+			{
+				save.unemployedValues.Add((UnemployedWorker)worker.Value);
+			}
+			if(worker is MiningWorker)
+			{
+				save.miningValues.Add((MiningWorker)worker.Value);
+			}
+			if(worker is FarmingWorker) 
+			{
+				save.farmingValues.Add((FarmingWorker)worker.Value);
+			}
+			if(worker is CookWorker)
+			{
+				save.cookValues.Add((CookWorker)worker.Value);
+			}
+
+		}
+		
+
+		return save;
+		
+	}
+
+	public void SaveGame(string saveName)
+	{
+		WorkerControllerSave save = CreateSaveGameObject();
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + "/WorkerControllerSave.save");
+		bf.Serialize(file, save);
+		file.Close();
+
+		Debug.Log("Saved Worker cOntroller...");
+	}
+
+	public void LoadGame(string loadName)
+	{
+		if (File.Exists(Application.persistentDataPath + "/" + loadName + "/WorkerControllerSave.save"))
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/" + loadName + "/WorkerControllerSave.save", FileMode.Open);
+			WorkerControllerSave save = (WorkerControllerSave)bf.Deserialize(file);
+			file.Close();
+
+			//Reassign wariables here
+			mWorkers.Clear();
+			for(int i = 0; i < save.unemployedValues.Count; i++)
+			{
+				mWorkers[save.WorkerNames[i]] = save.unemployedValues[i];
+				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
+			}
+			for(int i = 0; i < save.miningValues.Count; i++)
+			{
+				mWorkers[save.WorkerNames[i]] = save.miningValues[i];
+				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
+			}
+			for(int i = 0; i < save.farmingValues.Count; i++)
+			{
+				mWorkers[save.WorkerNames[i]] = save.farmingValues[i];
+				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
+			}
+			for(int i = 0; i < save.cookValues.Count; i++)
+			{
+				mWorkers[save.WorkerNames[i]] = save.cookValues[i];
+				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
+			}
+
+
+		}
+		else
+		{
+			Debug.Log("No Workercontroller save found");
+		}
+	}
 
 }

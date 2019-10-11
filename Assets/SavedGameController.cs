@@ -8,6 +8,7 @@ public class SavedGameController : MonoBehaviour
     public BuildingController buildingController;
 	public GameController gameController;
 	public FarmingController farmingController;
+	public WorkerController workerController;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class SavedGameController : MonoBehaviour
         buildingController.SaveGame(saveName);
 		gameController.SaveGame(saveName);
 		farmingController.SaveGame(saveName);
+		//workerController.SaveGame(saveName);
 	}
 
     public void LoadGame(string loadName)
@@ -40,5 +42,6 @@ public class SavedGameController : MonoBehaviour
         buildingController.LoadGame(loadName);
 		gameController.LoadGame(loadName);
 		farmingController.LoadGame(loadName);
+		//workerController.LoadGame(loadName);
     }
 }
