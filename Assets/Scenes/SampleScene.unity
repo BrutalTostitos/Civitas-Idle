@@ -25182,6 +25182,7 @@ MonoBehaviour:
   buildingController: {fileID: 1835974912}
   gameController: {fileID: 837946244}
   farmingController: {fileID: 987062929}
+  workerController: {fileID: 916147774}
   talentPanelScript: {fileID: 513798442}
 --- !u!4 &1595138740
 Transform:

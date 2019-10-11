@@ -279,31 +279,21 @@ public class WorkerController : MonoBehaviour
 		WorkerControllerSave save = new WorkerControllerSave();
 		//assign wariables
 
-		save.WorkerNames.AddRange(mWorkers.Keys);
 
-		//The ordering in which we save these is very important.
-		//Please update the load method if you change any of the orderings
-		foreach(KeyValuePair<string, Worker> worker in mWorkers)
+		foreach (KeyValuePair<string, Worker> worker in mWorkers)
 		{
-			if(worker is UnemployedWorker)
-			{
-				save.unemployedValues.Add((UnemployedWorker)worker.Value);
-			}
-			if(worker is MiningWorker)
-			{
-				save.miningValues.Add((MiningWorker)worker.Value);
-			}
-			if(worker is FarmingWorker) 
-			{
-				save.farmingValues.Add((FarmingWorker)worker.Value);
-			}
-			if(worker is CookWorker)
-			{
-				save.cookValues.Add((CookWorker)worker.Value);
-			}
-
+			save.WorkerNames.Add(worker.Key);
+			WorkerControllerData tmp = new WorkerControllerData();
+			tmp.mName = worker.Key;
+			tmp.mType = worker.Value.mType;
+			tmp.mValue = worker.Value.mValue;
+			tmp.mCount = worker.Value.mCount;
+			tmp.mCapCount = worker.Value.mCapCount;
+			tmp.mPower = worker.Value.mPower;
+			tmp.mCurTime = worker.Value.mCurTime;
+			tmp.mMaxTime = worker.Value.mMaxTime;
+			save.workers.Add(tmp);
 		}
-		
 
 		return save;
 		
@@ -317,7 +307,7 @@ public class WorkerController : MonoBehaviour
 		bf.Serialize(file, save);
 		file.Close();
 
-		Debug.Log("Saved Worker cOntroller...");
+		Debug.Log("Saved Worker controller...");
 	}
 
 	public void LoadGame(string loadName)
@@ -329,29 +319,31 @@ public class WorkerController : MonoBehaviour
 			WorkerControllerSave save = (WorkerControllerSave)bf.Deserialize(file);
 			file.Close();
 
-			//Reassign wariables here
-			mWorkers.Clear();
-			for(int i = 0; i < save.unemployedValues.Count; i++)
+			//Assign variables
+			foreach (KeyValuePair<string, Worker> worker in mWorkers)
 			{
-				mWorkers[save.WorkerNames[i]] = save.unemployedValues[i];
-				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
+				int i = save.WorkerNames.IndexOf(worker.Key);
+				Debug.Log("worker value " + worker.Value.mValue);
+				Debug.Log("saved worker value " + save.workers[i].mValue);
+				Debug.Log("worker count " + worker.Value.mCount);
+				Debug.Log("saved worker count " + save.workers[i].mCount);
+				Debug.Log("worker capcount " + worker.Value.mCapCount);
+				Debug.Log("saved worker capcount " + save.workers[i].mCapCount);
+				Debug.Log(worker.Value.mPower);
+				Debug.Log(save.workers[i].mPower);
+				Debug.Log(worker.Value.mCurTime);
+				Debug.Log(save.workers[i].mCurTime);
+				Debug.Log(worker.Value.mMaxTime);
+				Debug.Log(save.workers[i].mMaxTime);
+				Debug.Log(worker.Value.mType);
+				//worker.Value.mType = save.workers[i].mType;
+				worker.Value.mValue = save.workers[i].mValue;
+				worker.Value.mCount = save.workers[i].mCount;
+				worker.Value.mCapCount = save.workers[i].mCapCount;
+				worker.Value.mPower = save.workers[i].mPower;
+				worker.Value.mCurTime = save.workers[i].mCurTime;
+				worker.Value.mMaxTime = save.workers[i].mMaxTime;
 			}
-			for(int i = 0; i < save.miningValues.Count; i++)
-			{
-				mWorkers[save.WorkerNames[i]] = save.miningValues[i];
-				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
-			}
-			for(int i = 0; i < save.farmingValues.Count; i++)
-			{
-				mWorkers[save.WorkerNames[i]] = save.farmingValues[i];
-				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
-			}
-			for(int i = 0; i < save.cookValues.Count; i++)
-			{
-				mWorkers[save.WorkerNames[i]] = save.cookValues[i];
-				save.WorkerNames.RemoveAt(i);		//removing the string from the list of names
-			}
-
 
 		}
 		else

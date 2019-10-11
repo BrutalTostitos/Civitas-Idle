@@ -308,7 +308,6 @@ public class GameController : MonoBehaviour
 		save.resourceValues.AddRange(mResources.Values);
 
 		//Gamecontroller section
-		Debug.Log(ItemsToSell);
 		save.itemsToSell.AddRange(ItemsToSell);
 		save.goldAmount = mGoldAmount;
 		save.foodAmount = mFoodAmount;

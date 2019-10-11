@@ -34,7 +34,7 @@ public class SavedGameController : MonoBehaviour
         buildingController.SaveGame(saveName);
 		gameController.SaveGame(saveName);
 		farmingController.SaveGame(saveName);
-		//workerController.SaveGame(saveName);
+		workerController.SaveGame(saveName);
 		talentPanelScript.SaveGame(saveName);
 	}
 
@@ -44,7 +44,7 @@ public class SavedGameController : MonoBehaviour
         buildingController.LoadGame(loadName);
 		gameController.LoadGame(loadName);
 		farmingController.LoadGame(loadName);
-		//workerController.LoadGame(loadName);
+		workerController.LoadGame(loadName);
         talentPanelScript.LoadGame(loadName);
     }
 

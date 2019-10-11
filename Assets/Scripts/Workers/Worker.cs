@@ -5,10 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public enum WORKER_TYPE
 {
-    StoneMiner, CopperMiner, TinMiner, CoalMiner, IronMiner,
+    None, StoneMiner, CopperMiner, TinMiner, CoalMiner, IronMiner,
     StoneMason, Forgeworker, Smith, Merchant, Farmer, Cook, Unemployed
 }
-public abstract class Worker //:MonoBehavior Not sure if this was required but was causing warning, so I got rid of that.
+
+[System.Serializable]
+public abstract class Worker//:MonoBehavior Not sure if this was required but was causing warning, so I got rid of that.
 {
     Mutex mMutex;
     public int mValue;
