@@ -77,6 +77,7 @@ public class BuildingController : MonoBehaviour
         }
 
         BuildingController.SetInstance(this);
+        InfoPanel.SetSelected(null);
     }
 
     public void RebuildOptions()
@@ -219,6 +220,7 @@ public class BuildingController : MonoBehaviour
                 RebuildOptions();
                 
                 InfoPanel.building = null;
+                InfoPanel.SetSelected(null);
             }
         }
     }
