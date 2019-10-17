@@ -151,9 +151,9 @@ public class MiningController : MonoBehaviour
 
 	}
 
-	public void GetReward(string resource_name)
+	public void GetReward(string resource_name, int amount = 1)
 	{
-		int amount = 1;
+
 		if (!GameController.GetInstance().mResources.ContainsKey(resource_name))
 		{
 			return; //should not be accessible, thus performs no action
