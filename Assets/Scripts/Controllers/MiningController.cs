@@ -94,7 +94,7 @@ public class MiningController : MonoBehaviour
 		switch (resource_name)
 		{
 			case "Stone":
-				StoneProgress++;
+				StoneProgress += 1 + TalentBuffs.GetInstance().StoneMultiplier;
 				if (StoneProgress > StoneProgressCap)
 				{
 					StoneProgress = 0;
@@ -104,7 +104,7 @@ public class MiningController : MonoBehaviour
 				break;
 		
 			case "Copper Ore":
-				CopperProgress++;
+				CopperProgress += 1 + TalentBuffs.GetInstance().CopperMultiplier;
 				if (CopperProgress > CopperProgressCap)
 				{
 					CopperProgress = 0;
@@ -114,7 +114,7 @@ public class MiningController : MonoBehaviour
 				break;
 		
 			case "Tin Ore":
-				TinProgress++;
+				TinProgress += 1 + TalentBuffs.GetInstance().TinMultiplier;
 				if (TinProgress > TinProgressCap)
 				{
 					TinProgress = 0;
@@ -124,7 +124,7 @@ public class MiningController : MonoBehaviour
 				break;
 		
 			case "Coal":
-				CoalProgress++;
+				CoalProgress += 1 + TalentBuffs.GetInstance().CoalMultiplier;
 				if (CoalProgress > CoalProgressCap)
 				{
 					CoalProgress = 0;
@@ -134,7 +134,7 @@ public class MiningController : MonoBehaviour
 				break;
 		
 			case "Iron Ore":
-				IronProgress++;
+				IronProgress += 1 + TalentBuffs.GetInstance().IronMultiplier;
 				if (IronProgress > IronProgressCap)
 				{
 					IronProgress = 0;
