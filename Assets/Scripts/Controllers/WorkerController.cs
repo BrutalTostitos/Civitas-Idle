@@ -323,19 +323,19 @@ public class WorkerController : MonoBehaviour
 			foreach (KeyValuePair<string, Worker> worker in mWorkers)
 			{
 				int i = save.WorkerNames.IndexOf(worker.Key);
-				Debug.Log("worker value " + worker.Value.mValue);
-				Debug.Log("saved worker value " + save.workers[i].mValue);
-				Debug.Log("worker count " + worker.Value.mCount);
-				Debug.Log("saved worker count " + save.workers[i].mCount);
-				Debug.Log("worker capcount " + worker.Value.mCapCount);
-				Debug.Log("saved worker capcount " + save.workers[i].mCapCount);
-				Debug.Log(worker.Value.mPower);
-				Debug.Log(save.workers[i].mPower);
-				Debug.Log(worker.Value.mCurTime);
-				Debug.Log(save.workers[i].mCurTime);
-				Debug.Log(worker.Value.mMaxTime);
-				Debug.Log(save.workers[i].mMaxTime);
-				Debug.Log(worker.Value.mType);
+				//Debug.Log("worker value " + worker.Value.mValue);
+				//Debug.Log("saved worker value " + save.workers[i].mValue);
+				//Debug.Log("worker count " + worker.Value.mCount);
+				//Debug.Log("saved worker count " + save.workers[i].mCount);
+				//Debug.Log("worker capcount " + worker.Value.mCapCount);
+				//Debug.Log("saved worker capcount " + save.workers[i].mCapCount);
+				//Debug.Log(worker.Value.mPower);
+				//Debug.Log(save.workers[i].mPower);
+				//Debug.Log(worker.Value.mCurTime);
+				//Debug.Log(save.workers[i].mCurTime);
+				//Debug.Log(worker.Value.mMaxTime);
+				//Debug.Log(save.workers[i].mMaxTime);
+				//Debug.Log(worker.Value.mType);
 				//worker.Value.mType = save.workers[i].mType;
 				worker.Value.mValue = save.workers[i].mValue;
 				worker.Value.mCount = save.workers[i].mCount;

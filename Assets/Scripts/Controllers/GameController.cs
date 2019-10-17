@@ -327,7 +327,7 @@ public class GameController : MonoBehaviour
 		bf.Serialize(file, save);
 		file.Close();
 
-		Debug.Log("Saved Game cOntroller...");
+		Debug.Log("Saved Game Controller...");
 	}
 
 	public void LoadGame(string loadName)

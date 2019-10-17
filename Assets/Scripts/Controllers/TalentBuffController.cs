@@ -30,4 +30,31 @@ public class TalentBuffController : MonoBehaviour
         TalentBuffs.GetInstance().CookingOutput = 1 + talentObject.Rank;
     }
     #endregion
+
+    #region Mining
+    public void CoalYield(TalentObject talentObject)
+    {
+        TalentBuffs.GetInstance().CoalMultiplier = talentObject.Rank * 0.2f + 1f;
+    }
+
+    public void CopperYield(TalentObject talentObject)
+    {
+        TalentBuffs.GetInstance().CopperMultiplier = talentObject.Rank * 0.2f + 1f;
+    }
+
+    public void IronYield(TalentObject talentObject)
+    {
+        TalentBuffs.GetInstance().IronMultiplier = talentObject.Rank * 0.2f + 1f;
+    }
+
+    public void StoneYield(TalentObject talentObject)
+    {
+        TalentBuffs.GetInstance().StoneMultiplier = talentObject.Rank * 0.2f + 1f;
+    }
+
+    public void TinYield(TalentObject talentObject)
+    {
+        TalentBuffs.GetInstance().TinMultiplier = talentObject.Rank * 0.2f + 1f;
+    }
+    #endregion
 }
