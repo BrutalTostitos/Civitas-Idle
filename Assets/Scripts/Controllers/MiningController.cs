@@ -178,24 +178,80 @@ public class MiningController : MonoBehaviour
     {
         
         //Debug.Log(eventInfo.workerCount);
-        int amount = eventInfo.workerPower;
+        int power = eventInfo.workerPower;
         string target = eventInfo.eventTargetResource;
 
 
 
 
-        if (!GameController.GetInstance().mResources.ContainsKey(target))
-        {
-            return; //should not be accessible, thus performs no action
-        }
-        int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
 
-        GameController.GetInstance().mResources["Stone"].modifyCountCond(modResult, 0);
-        GameController.GetInstance().mResources[target].modifyCountCond(amount - modResult, 0);
 
-        ruei.EventDescription = "Mining Stone with worker";  //TODO remove this. useful for testing
-        ruei.eventGO = gameObject;      
-        EventController.getInstance().FireEvent(ruei);
+		switch (target)
+		{
+			case "Stone":
+				StoneProgress += power;
+				if (StoneProgress > StoneProgressCap)
+				{
+					int rewardAmount = (int) (StoneProgress / StoneProgressCap);
+					StoneProgress = (int) (StoneProgress % StoneProgressCap);
+					GetReward(target, rewardAmount);
+				}
+				StoneProgressBar.current = StoneProgress;
+				break;
+
+			case "Copper Ore":
+				CopperProgress += power;
+				if (CopperProgress > CopperProgressCap)
+				{
+					int rewardAmount = (int)(CopperProgress / CopperProgressCap);
+					CopperProgress = (int)(CopperProgress % CopperProgressCap);
+					GetReward(target, rewardAmount);
+				}
+				CopperProgressBar.current = CopperProgress;
+				break;
+
+			case "Tin Ore":
+				TinProgress += power;
+				if (TinProgress > TinProgressCap)
+				{
+					int rewardAmount = (int)(TinProgress / TinProgressCap);
+					TinProgress = (int)(TinProgress % TinProgressCap);
+					GetReward(target, rewardAmount);
+				}
+				TinProgressBar.current = TinProgress;
+				break;
+
+			case "Coal":
+				CoalProgress += power;
+				if (CoalProgress > CoalProgressCap)
+				{
+					int rewardAmount = (int)(CoalProgress / CoalProgressCap);
+					CoalProgress = (int)(CoalProgress % CoalProgressCap);
+					GetReward(target, rewardAmount);
+				}
+				CoalProgressBar.current = CoalProgress;
+				break;
+
+			case "Iron Ore":
+				IronProgress += power;
+				if (IronProgress > IronProgressCap)
+				{
+					int rewardAmount = (int)(IronProgress / IronProgressCap);
+					IronProgress = (int)(IronProgress % IronProgressCap);
+					GetReward(target, rewardAmount);
+				}
+				IronProgressBar.current = IronProgress;
+				break;
+			default:
+				break;
+		}
+
+
+
+
+
+
+
     }
 
     //SELLING
