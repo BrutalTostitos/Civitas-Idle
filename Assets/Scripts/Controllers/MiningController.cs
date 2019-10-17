@@ -1,5 +1,7 @@
 ﻿using EventCallBacks;
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class MiningController : MonoBehaviour
@@ -12,10 +14,32 @@ public class MiningController : MonoBehaviour
     
     int amount = 1;
 	//Reference to our Mines
+	//This is our gross way to get of making a mineshaft class
 	public GameObject CopperMineGO;
 	public GameObject TinMineGO;
 	public GameObject CoalMineGO;
 	public GameObject IronMineGO;
+	
+	//assigned in inspector
+	public ProgressBar StoneProgressBar;
+	public ProgressBar CopperProgressBar;
+	public ProgressBar TinProgressBar;
+	public ProgressBar CoalProgressBar;
+	public ProgressBar IronProgressBar;
+
+	public float StoneProgress;
+	public float StoneProgressCap;
+	public float CopperProgress;
+	public float CopperProgressCap;
+	public float TinProgress;
+	public float TinProgressCap;
+	public float CoalProgress;
+	public float CoalProgressCap;
+	public float IronProgress;
+	public float IronProgressCap;
+
+
+
 
 
 	void Awake()
@@ -33,14 +57,26 @@ public class MiningController : MonoBehaviour
 		#endregion
 
 
-		//Mine setup
+		#region Mine setup
 		CopperMineGO.gameObject.SetActive(false);
 		TinMineGO.gameObject.SetActive(false);
 		CoalMineGO.gameObject.SetActive(false);
 		IronMineGO.gameObject.SetActive(false);
+
+		StoneProgress = StoneProgressBar.current = 0.0f;
+		StoneProgressCap = StoneProgressBar.maximum = 10.0f;
+		CopperProgress = CopperProgressBar.current = 0.0f;
+		CopperProgressCap = CopperProgressBar.maximum = 20.0f;
+		TinProgress = TinProgressBar.current = 0.0f;
+		TinProgressCap = TinProgressBar.maximum = 50.0f;
+		CoalProgress = CoalProgressBar.current = 0.0f;
+		CoalProgressCap = CoalProgressBar.maximum  = 100.0f;
+		IronProgress = IronProgressBar.current = 0.0f;
+		IronProgressCap = IronProgressBar.maximum = 200.0f;
+		#endregion
 	}
 
-    public static MiningController GetInstance()
+	public static MiningController GetInstance()
     {
         if (mInstance == null)
         {
@@ -51,29 +87,88 @@ public class MiningController : MonoBehaviour
         return mInstance;
     }
     
-    //TODO this used to also take an int for the amount. 
-    //Unity wouldnt let me have 2 args for the inspector hook ups
-    //Find a work around
+	//Mining by hand
     public void Mine(string resource_name)
     {
-        int amount = 1;
-        if (!GameController.GetInstance().mResources.ContainsKey(resource_name))
-        {
-            return; //should not be accessible, thus performs no action
-        }
-        int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
-
-        GameController.GetInstance().mResources[resource_name].modifyCountCond(modResult, 0);
-        GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
-
         
+		switch (resource_name)
+		{
+			case "Stone":
+				StoneProgress++;
+				if (StoneProgress > StoneProgressCap)
+				{
+					StoneProgress = 0;
+					GetReward(resource_name);
+				}
+				StoneProgressBar.current = StoneProgress;
+				break;
+		
+			case "Copper Ore":
+				CopperProgress++;
+				if (CopperProgress > CopperProgressCap)
+				{
+					CopperProgress = 0;
+					GetReward(resource_name);
+				}
+				CopperProgressBar.current = CopperProgress;
+				break;
+		
+			case "Tin Ore":
+				TinProgress++;
+				if (TinProgress > TinProgressCap)
+				{
+					TinProgress = 0;
+					GetReward(resource_name);
+				}
+				TinProgressBar.current = TinProgress;
+				break;
+		
+			case "Coal":
+				CoalProgress++;
+				if (CoalProgress > CoalProgressCap)
+				{
+					CoalProgress = 0;
+					GetReward(resource_name);
+				}
+				CoalProgressBar.current = CoalProgress;
+				break;
+		
+			case "Iron Ore":
+				IronProgress++;
+				if (IronProgress > IronProgressCap)
+				{
+					IronProgress = 0;
+					GetReward(resource_name);
+				}
+				IronProgressBar.current = IronProgress;
+				break;
+			default:
+				break;
+		}
 
-        
-        ruei.EventDescription = "Mining Resource by hand";  //TODO remove this. useful for testing  
-        EventController.getInstance().FireEvent(ruei);
+		
 
-        
-    }
+
+	}
+
+	public void GetReward(string resource_name)
+	{
+		int amount = 1;
+		if (!GameController.GetInstance().mResources.ContainsKey(resource_name))
+		{
+			return; //should not be accessible, thus performs no action
+		}
+		int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
+
+		GameController.GetInstance().mResources[resource_name].modifyCountCond(modResult, 0);
+		GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
+
+
+
+
+		ruei.EventDescription = "Mining Resource by hand";  //TODO remove this. useful for testing  
+		EventController.getInstance().FireEvent(ruei);
+	}
 
 
     //TODO keep working on this ya bum
@@ -136,6 +231,70 @@ public class MiningController : MonoBehaviour
 
 
 
+
+	//SAVE GAME STUFF
+	private MiningControllerSave CreateSaveGameObject()
+	{
+		MiningControllerSave save = new MiningControllerSave();
+		//assign wariables
+
+		save.stoneProgress = StoneProgress;
+		save.stoneProgressCap = StoneProgressCap;
+		save.copperProgress = CopperProgress;
+		save.copperProgressCap = CopperProgressCap;
+		save.tinProgress = TinProgress;
+		save.tinProgressCap = TinProgressCap;
+		save.coalProgress = CoalProgress;
+		save.coalProgressCap = CoalProgressCap;
+		save.ironProgress = IronProgress;
+		save.ironProgressCap = IronProgressCap;
+
+
+
+		return save;
+
+	}
+
+	public void SaveGame(string saveName)
+	{
+		MiningControllerSave save = CreateSaveGameObject();
+		BinaryFormatter bf = new BinaryFormatter();
+		System.IO.FileStream file = File.Create(Application.persistentDataPath + "/" + saveName + "/MiningControllerSave.save");
+		bf.Serialize(file, save);
+		file.Close();
+
+		Debug.Log("Saved Mining Controller...");
+	}
+
+	public void LoadGame(string loadName)
+	{
+		if (File.Exists(Application.persistentDataPath + "/" + loadName + "/MiningControllerSave.save"))
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/" + loadName + "/MiningControllerSave.save", FileMode.Open);
+			MiningControllerSave save = (MiningControllerSave)bf.Deserialize(file);
+			file.Close();
+
+			//Reassign wariables here
+			StoneProgress = save.stoneProgress;
+			StoneProgressCap = save.stoneProgressCap;
+			CopperProgress = save.copperProgress;
+			CopperProgressCap = save.copperProgressCap;
+			TinProgress = save.tinProgress;
+			TinProgressCap = save.tinProgressCap;
+			CoalProgress = save.coalProgress;
+			CoalProgressCap = save.coalProgressCap;
+			IronProgress = save.ironProgress;
+			IronProgressCap = save.ironProgressCap;
+
+
+
+		}
+		else
+		{
+			Debug.Log("No MiningController save found");
+		}
+	}
 
 
 

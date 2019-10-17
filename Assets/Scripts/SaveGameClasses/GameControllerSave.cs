@@ -22,6 +22,21 @@ public class GameControllerSave
 }
 
 [System.Serializable]
+public class MiningControllerSave
+{
+	public float stoneProgress;
+	public float stoneProgressCap;
+	public float copperProgress;
+	public float copperProgressCap;
+	public float tinProgress;
+	public float tinProgressCap;
+	public float coalProgress;
+	public float coalProgressCap;
+	public float ironProgress;
+	public float ironProgressCap;
+}
+
+[System.Serializable]
 public class FarmingControllerSave
 {
 	public List<string> FarmingSeedsKey = new List<string>();
