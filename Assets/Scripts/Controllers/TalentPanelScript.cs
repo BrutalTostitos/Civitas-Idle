@@ -82,7 +82,9 @@ public class TalentPanelScript : MonoBehaviour
                     if (talentButton.talentObj.name == save.talentNames[i])
                     {
                         talentButton.talentObj.SetRank(save.talentRanks[i]);
-                        talentBuffController.SendMessage(talentButton.talentObj.OnBuy, talentButton.talentObj);
+                        Debug.LogError(talentButton.talentObj.name);
+                        if (save.talentRanks[i] > 0)
+                            talentBuffController.SendMessage(talentButton.talentObj.OnBuy, talentButton.talentObj);
                         break;
                     }
                 }

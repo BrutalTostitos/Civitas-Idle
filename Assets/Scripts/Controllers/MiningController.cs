@@ -61,7 +61,29 @@ public class MiningController : MonoBehaviour
         {
             return; //should not be accessible, thus performs no action
         }
+
+        switch (resource_name)
+        {
+            case "Stone":
+            amount = (int) (amount * TalentBuffs.GetInstance().StoneMultiplier);
+            break;
+            case "Coal":
+            amount = (int) (amount * TalentBuffs.GetInstance().CoalMultiplier);
+            break;
+            case "Copper Ore":
+            amount = (int) (amount * TalentBuffs.GetInstance().CopperMultiplier);
+            break;
+            case "Iron Ore":
+            amount = (int) (amount * TalentBuffs.GetInstance().IronMultiplier);
+            break;
+            case "Tin Ore":
+            amount = (int) (amount * TalentBuffs.GetInstance().TinMultiplier);
+            break;
+        }
+
         int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
+
+
 
         GameController.GetInstance().mResources[resource_name].modifyCountCond(modResult, 0);
         GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);

@@ -80,7 +80,6 @@ public class FarmPlot : MonoBehaviour
 				overgrowthProgressBar.current = overGrownProgress;
 				//Seed specific
 				mSeed.mHarvestTime += Time.deltaTime * TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType);
-                Debug.Log(TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType));
 				harvestProgressBar.current = mSeed.mHarvestTime;
 			}
 

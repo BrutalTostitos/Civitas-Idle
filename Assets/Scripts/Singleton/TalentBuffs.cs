@@ -47,6 +47,14 @@ public class TalentBuffs
     }
     #endregion
 
+    #region Mining
+    public float CoalMultiplier = 1f;
+    public float CopperMultiplier = 1f;
+    public float TinMultiplier = 1f;
+    public float IronMultiplier = 1f;
+    public float StoneMultiplier = 1f;
+    #endregion
+
     //Singleton Variables and Functions
     private static TalentBuffs mInstance;
 
