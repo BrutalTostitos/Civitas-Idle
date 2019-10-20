@@ -71,6 +71,7 @@ public abstract class Worker//:MonoBehavior Not sure if this was required but wa
 		}
         
     }
+	
 
     public abstract void UpdateWorker();
 

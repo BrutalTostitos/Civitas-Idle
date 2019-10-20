@@ -57,6 +57,8 @@ public class WorkerController : MonoBehaviour
         //mWorkerCaps["Iron Mine"] = 10;
 
     }
+
+	//depricated - workers will now function inside of their appropriate controllers
     private void Update()
     {
 
@@ -147,11 +149,10 @@ public class WorkerController : MonoBehaviour
                     //No purchase made
                     return;
                 }
-                Debug.Log("Purchase success!?");
                 //Purchase success! Adjusting counts and notifying UI
-                Debug.Log(mWorkers[key].modifyCountCond(amount, -amount));
-                //Firing off our event
-
+                mWorkers[key].modifyCountCond(amount, -amount);
+				//Firing off our event
+				mWorkers[key].UpdateWorker();
                 EventController.getInstance().FireEvent(uwuei);
                 return;
             case "Copper Miner":
@@ -262,7 +263,7 @@ public class WorkerController : MonoBehaviour
         }
 
         mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
-
+		mWorkers[key].UpdateWorker();
         //Check to see if we have observers listening in
         EventController.getInstance().FireEvent(uwuei);
 

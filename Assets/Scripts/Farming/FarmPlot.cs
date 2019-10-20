@@ -63,11 +63,11 @@ public class FarmPlot : MonoBehaviour
 		overGrowthButton.onClick.AddListener(() => WeedField());	
 
     }
-    private void Update()
-    {
-		UpdateFieldStatus();
-        
-    }
+	//private void Update()
+	//{
+	//	UpdateFieldStatus();
+
+	//}
 	public void UpdateFieldStatus()
 	{
 		if (mSeed.mType != SEED_TYPE.None)

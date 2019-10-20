@@ -12,6 +12,11 @@ public class FarmingController : MonoBehaviour
 {
     //PRIVATE
     private static FarmingController mInstance;
+
+	private float weedingPower = 0;
+
+
+
 	//TODO figure out a way to not need both of these. cookworker event is having to call both
 	//TODO figure out a way to not need both of these. cookworker event is having to call both
 	//TODO figure out a way to not need both of these. cookworker event is having to call both
@@ -113,11 +118,14 @@ public class FarmingController : MonoBehaviour
 
 
     }
+	private void Update()
+	{
+		AutomatedWeeding();
+	}
 
-    
 
-    //TODO update for unity
-    public static FarmingController GetInstance()
+	//TODO update for unity
+	public static FarmingController GetInstance()
     {
         if (mInstance == null)
         {
@@ -177,25 +185,28 @@ public class FarmingController : MonoBehaviour
 		}
 		EventController.getInstance().FireEvent(fuei);
     }
-	//Event driven - Farmer update
-	private void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
-	{
 
-		float power = eventInfo.workerPower;
+	private void AutomatedWeeding()
+	{
 		if (totalSeededPlots > 0)
 		{
-			float totalPower = (float)power / (float)totalSeededPlots;
+			float totalPower = ((float)weedingPower / (float)totalSeededPlots) * Time.deltaTime;
 			foreach (FarmPlot plot in mFarmPlots)
 			{
+
+				plot.UpdateFieldStatus();
 				if (plot.mSeed != null)
 				{
 					plot.WeedField(totalPower);
-					Debug.Log(totalPower);
 				}
 			}
 		}
-		
+	}
 
+	//Event driven - Farmer update
+	private void FarmingWorkerUpdate(FarmingWorkerEventInfo eventInfo)
+	{
+		weedingPower = eventInfo.workerPower;
 	}
 	//TODO fix double event system call
 	//TODO actually use the seeds mFood value for food conversion

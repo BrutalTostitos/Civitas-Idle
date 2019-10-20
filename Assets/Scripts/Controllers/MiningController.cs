@@ -8,7 +8,14 @@ public class MiningController : MonoBehaviour
 {
     
     private static MiningController mInstance;
-    public System.Random mRandom = new System.Random();
+
+	private int stonePower = 0;
+	private int copperPower = 0;
+	private int tinPower = 0;
+	private int coalPower = 0;
+	private int ironPower = 0;
+
+	public System.Random mRandom = new System.Random();
     //Creating our event
     UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();
     
@@ -37,7 +44,6 @@ public class MiningController : MonoBehaviour
 	public float CoalProgressCap;
 	public float IronProgress;
 	public float IronProgressCap;
-
 
 
 
@@ -75,7 +81,13 @@ public class MiningController : MonoBehaviour
 		IronProgressCap = IronProgressBar.maximum = 200.0f;
 		#endregion
 	}
+	private void Update()
+	{
+		AutomatedMining();
 
+
+		
+	}
 	public static MiningController GetInstance()
     {
         if (mInstance == null)
@@ -145,12 +157,58 @@ public class MiningController : MonoBehaviour
 			default:
 				break;
 		}
+	}
+	//worker mining
+	private void AutomatedMining()
+	{
+		StoneProgress += stonePower * Time.deltaTime;
+		if (StoneProgress > StoneProgressCap)
+		{
+			int rewardAmount = (int)(StoneProgress / StoneProgressCap);
+			StoneProgress = (int)(StoneProgress % StoneProgressCap);
+			GetReward("Stone", rewardAmount);
+		}
+		StoneProgressBar.current = StoneProgress;
 
-		
+		CopperProgress += copperPower * Time.deltaTime;
+		if (CopperProgress > CopperProgressCap)
+		{
+			int rewardAmount = (int)(CopperProgress / CopperProgressCap);
+			CopperProgress = (int)(CopperProgress % CopperProgressCap);
+			GetReward("Copper Ore", rewardAmount);
+		}
+		CopperProgressBar.current = CopperProgress;
 
 
+		TinProgress += tinPower * Time.deltaTime;
+		if (TinProgress > TinProgressCap)
+		{
+			int rewardAmount = (int)(TinProgress / TinProgressCap);
+			TinProgress = (int)(TinProgress % TinProgressCap);
+			GetReward("Tin Ore", rewardAmount);
+		}
+		TinProgressBar.current = TinProgress;
+
+		CoalProgress += coalPower * Time.deltaTime;
+		if (CoalProgress > CoalProgressCap)
+		{
+			int rewardAmount = (int)(CoalProgress / CoalProgressCap);
+			CoalProgress = (int)(CoalProgress % CoalProgressCap);
+			GetReward("Coal", rewardAmount);
+		}
+		CoalProgressBar.current = CoalProgress;
+
+		IronProgress += ironPower * Time.deltaTime;
+		if (IronProgress > IronProgressCap)
+		{
+			int rewardAmount = (int)(IronProgress / IronProgressCap);
+			IronProgress = (int)(IronProgress % IronProgressCap);
+			GetReward("Iron Ore", rewardAmount);
+		}
+		IronProgressBar.current = IronProgress;
 	}
 
+	//Receiving ore from mining
 	public void GetReward(string resource_name, int amount = 1)
 	{
 
@@ -160,7 +218,7 @@ public class MiningController : MonoBehaviour
 		}
 		int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
 
-		GameController.GetInstance().mResources[resource_name].modifyCountCond(modResult, 0);
+		GameController.GetInstance().mResources[resource_name].modifyCountCond(Mathf.Max( modResult, 1), 0);
 		GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
 
 
@@ -171,87 +229,34 @@ public class MiningController : MonoBehaviour
 	}
 
 
-    //TODO keep working on this ya bum
-    //Update method for mining workers
-    //Event driven
-    void MiningWorkerUpdate(MiningWorkerEventInfo eventInfo)
+
+	//called whenever a worker purchase occurs. Updates the mining power.
+	//Event driven
+	void MiningWorkerUpdate(MiningWorkerEventInfo eventInfo)
     {
         
         //Debug.Log(eventInfo.workerCount);
         int power = eventInfo.workerPower;
         string target = eventInfo.eventTargetResource;
 
-
-
-
-
-
 		switch (target)
 		{
 			case "Stone":
-				StoneProgress += power;
-				if (StoneProgress > StoneProgressCap)
-				{
-					int rewardAmount = (int) (StoneProgress / StoneProgressCap);
-					StoneProgress = (int) (StoneProgress % StoneProgressCap);
-					GetReward(target, rewardAmount);
-				}
-				StoneProgressBar.current = StoneProgress;
+				stonePower = power;
 				break;
-
 			case "Copper Ore":
-				CopperProgress += power;
-				if (CopperProgress > CopperProgressCap)
-				{
-					int rewardAmount = (int)(CopperProgress / CopperProgressCap);
-					CopperProgress = (int)(CopperProgress % CopperProgressCap);
-					GetReward(target, rewardAmount);
-				}
-				CopperProgressBar.current = CopperProgress;
+				copperPower = power;
 				break;
-
 			case "Tin Ore":
-				TinProgress += power;
-				if (TinProgress > TinProgressCap)
-				{
-					int rewardAmount = (int)(TinProgress / TinProgressCap);
-					TinProgress = (int)(TinProgress % TinProgressCap);
-					GetReward(target, rewardAmount);
-				}
-				TinProgressBar.current = TinProgress;
+				tinPower = power;
 				break;
-
 			case "Coal":
-				CoalProgress += power;
-				if (CoalProgress > CoalProgressCap)
-				{
-					int rewardAmount = (int)(CoalProgress / CoalProgressCap);
-					CoalProgress = (int)(CoalProgress % CoalProgressCap);
-					GetReward(target, rewardAmount);
-				}
-				CoalProgressBar.current = CoalProgress;
+				coalPower = power;
 				break;
-
 			case "Iron Ore":
-				IronProgress += power;
-				if (IronProgress > IronProgressCap)
-				{
-					int rewardAmount = (int)(IronProgress / IronProgressCap);
-					IronProgress = (int)(IronProgress % IronProgressCap);
-					GetReward(target, rewardAmount);
-				}
-				IronProgressBar.current = IronProgress;
-				break;
-			default:
+				ironPower = power;
 				break;
 		}
-
-
-
-
-
-
-
     }
 
     //SELLING
