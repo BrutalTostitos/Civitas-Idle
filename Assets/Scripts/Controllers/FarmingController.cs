@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using static Seeds;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using Random = UnityEngine.Random;
 
 public class FarmingController : MonoBehaviour
 {
@@ -214,34 +215,71 @@ public class FarmingController : MonoBehaviour
 	//Event Driven 
 	private void CookWorkerUpdate(CookingWorkerEventInfo eventInfo)
 	{
-		Debug.Log("Im in the event!");
 		float power = eventInfo.workerPower;
-		float count = 0.0f;
-		float totalPower = 0.0f;
+		int seedTypesToCook = 0;    //amount of selected seedtypes to cook
 
-
+		int totalSeedsToUse = 0;
+		
 		//This feels so wasteful. May have a function that does this calculation when you check the
 		//seed to be used, so we could just retrieve the value without having to calculate every time
-		foreach(KeyValuePair<string, Seeds> seed in mFarmingSeeds)
+		foreach (KeyValuePair<string, Seeds> seed in mFarmingSeeds)
 		{
-			if(seed.Value.mToBeCooked)
+			if(seed.Value.mToBeCooked && seed.Value.getCount() > 0)
 			{
-				count++;
+				seedTypesToCook++;
 			}
 		}
-		totalPower = power / count;
-		foreach(KeyValuePair<string, Seeds> seed in mFarmingSeeds)
+
+		if(seedTypesToCook > 0)
 		{
-			if (seed.Value.getCount() >= eventInfo.mSeedsToUse & seed.Value.mToBeCooked)			//checking if we have enough and its to be cooked
+			totalSeedsToUse = (eventInfo.mSeedsToUse * eventInfo.mWorkerCount) / seedTypesToCook;
+		}
+		else
+		{
+			return;
+		}
+
+		//Special case for when we have too few workers for the amount of plants to cook
+		//in theory, totalSeedsToUse should never natrually be 0
+		if (totalSeedsToUse < 1)
+		{
+			//do special case
+		}
+
+		//Normal routine for when we have plenty of workers
+		else
+		{
+			foreach (KeyValuePair<string, Seeds> seed in mFarmingSeeds)
 			{
-				Debug.Log("Success!");
-				//deduct seeds
-				seed.Value.modifyCountCond(-eventInfo.mSeedsToUse, 0);
-				GameController.GetInstance().ChangeFoodAmount(totalPower);
+				//if we have enough seeds AND its selected to be cooked
+				if (seed.Value.mToBeCooked)
+				{
+					if (seed.Value.modifyCountCond(-totalSeedsToUse, totalSeedsToUse))
+					{
+						GameController.GetInstance().ChangeFoodAmount(seed.Value.mFood * totalSeedsToUse * power);
+					}
+					else if (seed.Value.getCount() > 0)
+					{
+						int tmpAmount = seed.Value.getCount();
+						seed.Value.modifyCountCond(-tmpAmount, tmpAmount);
+						GameController.GetInstance().ChangeFoodAmount(seed.Value.mFood * tmpAmount * power);
+					}
+				}
 			}
 		}
+		
+
+
 		EventController.getInstance().FireEvent(ruei);
 		EventController.getInstance().FireEvent(fuei);
+
+
+
+
+
+
+
+		
 	}
 
 	//Event driven

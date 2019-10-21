@@ -21,7 +21,7 @@ public class CookWorker : Worker
 		mCapCount = 10;         //TODO set this to zero and make it unlockable
 
 		amountOfSeedsToUse = 1;
-		cwei = new CookingWorkerEventInfo(amountOfSeedsToUse);		// this isnt going to update when we change?
+		cwei = new CookingWorkerEventInfo();		// this isnt going to update when we change?
 		cwei.eventGO = go;
 	}
 
@@ -32,6 +32,8 @@ public class CookWorker : Worker
 	public override void UpdateWorker()
 	{
 		cwei.workerPower = (int)(mCount * mPower * TalentBuffs.GetInstance().CookingOutput);
+		cwei.mSeedsToUse = amountOfSeedsToUse;
+		cwei.mWorkerCount = mCount;
 		EventController.getInstance().FireEvent(cwei);
 	}
 }

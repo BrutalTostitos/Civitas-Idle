@@ -68,10 +68,12 @@ namespace EventCallBacks
 	{
 		public GameObject eventGO;
 		public int mSeedsToUse;
+		public int mWorkerCount;
 
-		public CookingWorkerEventInfo(int seedsToUse)
+		public CookingWorkerEventInfo()
 		{
-			mSeedsToUse = seedsToUse;
+			mSeedsToUse = 1;
+			mWorkerCount = 0;
 		}
 	}
 	

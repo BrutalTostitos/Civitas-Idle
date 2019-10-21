@@ -116,12 +116,6 @@ public class WorkerController : MonoBehaviour
             mWorkers["Unemployed"].modifyCountCond(amount, -amount);
         }
 
-
-        //if (mWorkers["Unemployed"].getCount() >= mWorkers["Unemployed"].getCapCount())
-        //{
-        //    return;
-        //}
-        //mWorkers["Unemployed"].modifyCountCond(amount, -amount);
         //Firing off our event
         EventController.getInstance().FireEvent(uwuei);
 
@@ -133,7 +127,6 @@ public class WorkerController : MonoBehaviour
     public void BuySpecializedWorker(string key)
     {
         int amount = 1;
-        int cost = mWorkers[key].mValue;
 
 		//this switch case could probably be removed
 		switch (key)
@@ -225,17 +218,9 @@ public class WorkerController : MonoBehaviour
                 break;
         }
 
-        //TODO
-        //No special case, we're just buying Unemplyed workers
-        //if ((getPop() <= (getPopCap() - amount)) && GameController.GetInstance().changeGold(-cost * amount, cost * amount))
-        //{
-        //    mWorkers["Miner"].modifyCountCond(amount, -amount);
-        //}
-        //EventController.getInstance().FireEvent(uwuei);
-
     }
 
-    //used to accept count as an arg. Unity inspector no like. Fix
+
     public void SellWorker(string key)
     {
         int count = 1;
