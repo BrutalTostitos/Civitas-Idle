@@ -237,18 +237,25 @@ public class WorkerController : MonoBehaviour
             case "Coal Miner":
             case "Iron Miner":
 			case "Farmer":
-			case "Cook":
                 //mWorkerCaps["Quarry"] 
                 mWorkers["Unemployed"].modifyCountCond(count, -count);
+				mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
+				mWorkers[key].UpdateWorker();
+				break;
 
+				//UpdateWorker should NOT be called on cooks, as they use the legacy update system still
+				//this would cause them to cook every time one is sold
+			case "Cook":
 
-                break;
+				mWorkers["Unemployed"].modifyCountCond(count, -count);
+				mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
+				break;
             default:
                 break;
         }
 
-        mWorkers[key].modifyCountCond(-count, count);   //no if check needed, as we are not making gold from this
-		mWorkers[key].UpdateWorker();
+        
+		
         //Check to see if we have observers listening in
         EventController.getInstance().FireEvent(uwuei);
 
