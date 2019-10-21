@@ -210,8 +210,6 @@ public class FarmingController : MonoBehaviour
 		weedingPower = eventInfo.workerPower;
 	}
 	//TODO fix double event system call
-	//TODO actually use the seeds mFood value for food conversion
-	//TODO only draining 1 of each type of resource
 	//Event Driven 
 	private void CookWorkerUpdate(CookingWorkerEventInfo eventInfo)
 	{
@@ -219,10 +217,9 @@ public class FarmingController : MonoBehaviour
 		int seedTypesToCook = 0;        //amount of selected seedtypes to cook
 		float totalSeedsToUse = 0;
 
-		//Special Case stuff
+		
 		int availableSeedsToCook = 0;
 		List<Seeds> seedsToCook = new List<Seeds>();
-		//--
 
 		//This feels so wasteful. May have a function that does this calculation when you check the
 		//seed to be used, so we could just retrieve the value without having to calculate every time
@@ -236,64 +233,36 @@ public class FarmingController : MonoBehaviour
 			}
 		}
 
-		if(seedTypesToCook > 0)
-		{
-			totalSeedsToUse = (eventInfo.mSeedsToUse * eventInfo.mWorkerCount) / seedTypesToCook;
-		}
-		else //No seeds to be cooked, we're done
+		if(seedTypesToCook < 1)
 		{
 			return;
 		}
 
-		//Special case for when we have too few workers for the amount of plants to cook
-		//in theory, totalSeedsToUse should never natrually be 0
-		if (totalSeedsToUse < 1)
+
+
+		//the true amount of seeds to use
+		totalSeedsToUse = (eventInfo.mSeedsToUse * eventInfo.mWorkerCount);
+		//possible amount we can cook&&possible seeds that can be cooked
+		while (totalSeedsToUse > 0 && availableSeedsToCook > 0) 
 		{
-			totalSeedsToUse = (eventInfo.mSeedsToUse * eventInfo.mWorkerCount);	//the true amount of seeds to use
-
-			while(totalSeedsToUse > 0 && availableSeedsToCook > 0)	//possible amount we can cook||possible seeds that can be cooked
+			int idx = Random.Range(0, seedsToCook.Count);
+			if (seedsToCook[idx].modifyCountCond(-1, 1))
 			{
-				int idx = Random.Range(0, seedsToCook.Count);
-				if(seedsToCook[idx].modifyCountCond(-1, 1))
+				Debug.Log("true?");
+				availableSeedsToCook--;
+				totalSeedsToUse--;
+				GameController.GetInstance().ChangeFoodAmount(seedsToCook[idx].mFood * power);
+				if (seedsToCook[idx].mCount == 0)
 				{
-					Debug.Log("true?");
-					availableSeedsToCook--;
-					totalSeedsToUse--;
-					GameController.GetInstance().ChangeFoodAmount(seedsToCook[idx].mFood * power);
-					if (seedsToCook[idx].mCount == 0)
-					{
-						seedsToCook.RemoveAt(idx);
-					}
-				}
-
-
-			}
-		}
-
-
-		//TODO numbers arent converting right. test cooking bulk of one resource for more details.
-		//Normal routine for when we have plenty of workers
-		else
-		{
-			foreach (KeyValuePair<string, Seeds> seed in mFarmingSeeds)
-			{
-				//if we have enough seeds AND its selected to be cooked
-				if (seed.Value.mToBeCooked)
-				{
-					if (seed.Value.modifyCountCond((int)-totalSeedsToUse, (int)totalSeedsToUse))
-					{
-						GameController.GetInstance().ChangeFoodAmount(seed.Value.mFood * totalSeedsToUse * power);
-					}
-					else if (seed.Value.getCount() > 0)
-					{
-						int tmpAmount = seed.Value.getCount();
-						seed.Value.modifyCountCond(-tmpAmount, tmpAmount);
-						GameController.GetInstance().ChangeFoodAmount(seed.Value.mFood * tmpAmount * power);
-					}
+					seedsToCook.RemoveAt(idx);
 				}
 			}
+
+
 		}
 		
+
+
 
 
 		EventController.getInstance().FireEvent(ruei);
