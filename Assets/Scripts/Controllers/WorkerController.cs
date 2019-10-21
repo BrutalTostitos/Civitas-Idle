@@ -266,6 +266,7 @@ public class WorkerController : MonoBehaviour
 		//assign wariables
 
 
+		//issue with saving working variables
 		foreach (KeyValuePair<string, Worker> worker in mWorkers)
 		{
 			save.WorkerNames.Add(worker.Key);

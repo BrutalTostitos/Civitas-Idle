@@ -17,7 +17,8 @@ public class CookWorker : Worker
 
 		Debug.Log("Cookworker has arrived");
 		mCurTime = 0.0f;
-		mMaxTime = 1.0f;
+		mMaxTime = 5.0f;
+		Debug.Log("max time for cook set to: " + mMaxTime);
 		mCapCount = 10;         //TODO set this to zero and make it unlockable
 
 		amountOfSeedsToUse = 1;
@@ -31,6 +32,7 @@ public class CookWorker : Worker
 
 	public override void UpdateWorker()
 	{
+		Debug.Log(mMaxTime);
 		cwei.workerPower = (int)(mCount * mPower * TalentBuffs.GetInstance().CookingOutput);
 		cwei.mSeedsToUse = amountOfSeedsToUse;
 		cwei.mWorkerCount = mCount;
