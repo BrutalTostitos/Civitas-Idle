@@ -25434,7 +25434,7 @@ PrefabInstance:
     - target: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
         type: 3}
       propertyPath: mAvailableBuildings.Array.size
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
         type: 3}
@@ -25540,6 +25540,18 @@ PrefabInstance:
       propertyPath: mAvailableBuildings.Array.data[14]
       value: 
       objectReference: {fileID: 11400000, guid: 113883278cc4bf04eae7dc5ccc914258,
+        type: 2}
+    - target: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
+        type: 3}
+      propertyPath: mAvailableBuildings.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7119e716436940940babfdfa5ff1c014,
+        type: 2}
+    - target: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
+        type: 3}
+      propertyPath: mAvailableBuildings.Array.data[16]
+      value: 
+      objectReference: {fileID: 11400000, guid: 976e19279452aae4e89f028c9c9ff0f3,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d7e6c94f38f8a64c966cdf8658458fc, type: 3}
