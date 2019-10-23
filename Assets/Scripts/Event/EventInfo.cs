@@ -43,6 +43,11 @@ namespace EventCallBacks
 	{
 		public GameObject eventGO;
 	}
+	public class HousePurchaseEventInfo : EventInfo
+	{
+		public GameObject eventGO;
+		public int populationIncrease;
+	}
 	#endregion
 
 	public class BuildingUpdateEventInfo : EventInfo

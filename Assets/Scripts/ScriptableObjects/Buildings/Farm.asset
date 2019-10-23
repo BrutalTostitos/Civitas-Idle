@@ -15,7 +15,7 @@ MonoBehaviour:
   mName: Farm
   description: This farm is still disapointed in Josho.
   OnBuyFunction: OnBuyFarm
-  icon: {fileID: 21300000, guid: f3bcd2d0f0b040b44acda5dcf588267f, type: 3}
+  icon: {fileID: 21300000, guid: d4ab32eb2e1922d47aa8c6ec6bee9a06, type: 3}
   populationIncrease: 0
   goldCost: 150
   stoneCost: 0

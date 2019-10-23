@@ -28,6 +28,7 @@ public class WorkerController : MonoBehaviour
         #region Events
         //LISTENERS
         EventController.getInstance().RegisterListener<BuyWorkerUpdateEventInfo>(BuyStandardWorker);
+		EventController.getInstance().RegisterListener<HousePurchaseEventInfo>(IncreasePopCap);
         //SENDERS
         uwuei.eventGO = gameObject;
         #endregion
@@ -120,10 +121,15 @@ public class WorkerController : MonoBehaviour
         EventController.getInstance().FireEvent(uwuei);
 
     }
-  
+
+	//Event driven
+	private void IncreasePopCap(HousePurchaseEventInfo eventInfo)
+	{
+		popCap += eventInfo.populationIncrease;
+	}
 
 
-
+	//Driven directly by button press
     public void BuySpecializedWorker(string key)
     {
         int amount = 1;
@@ -220,7 +226,7 @@ public class WorkerController : MonoBehaviour
 
     }
 
-
+	//Driven directly by button press
     public void SellWorker(string key)
     {
         int count = 1;
@@ -265,7 +271,7 @@ public class WorkerController : MonoBehaviour
 
 
 
-
+	#region Save Game
 	//Saved Game
 	private WorkerControllerSave CreateSaveGameObject()
 	{
@@ -345,5 +351,5 @@ public class WorkerController : MonoBehaviour
 			Debug.Log("No Workercontroller save found");
 		}
 	}
-
+	#endregion
 }

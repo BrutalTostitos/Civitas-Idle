@@ -19,6 +19,7 @@ public class EventController : MonoBehaviour
 	CoalMinePurchaseEventInfo coalmpei = new CoalMinePurchaseEventInfo();
 	IronMinePurchaseEventInfo impei = new IronMinePurchaseEventInfo();
 	FarmPurchaseEventInfo fpei = new FarmPurchaseEventInfo();
+	HousePurchaseEventInfo hpei = new HousePurchaseEventInfo();
 	void Awake()
     {
         mInstance = this;
@@ -105,4 +106,5 @@ public class EventController : MonoBehaviour
 	{
 		FireEvent(fpei);
 	}
+	
 }

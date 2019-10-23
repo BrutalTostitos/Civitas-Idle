@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1b54375ea7341a4caa0504d77d62220, type: 3}
-  m_Name: Farm 4
+  m_Name: House 2
   m_EditorClassIdentifier: 
-  mName: Farm 4
+  mName: House 2
   description: 
-  OnBuyFunction: OnBuyFarm
-  icon: {fileID: 21300000, guid: d4ab32eb2e1922d47aa8c6ec6bee9a06, type: 3}
-  populationIncrease: 0
-  goldCost: 150
+  OnBuyFunction: 
+  icon: {fileID: 21300000, guid: a26d165da59a92f4c947a7a9282f4ed3, type: 3}
+  populationIncrease: 100
+  goldCost: 0
   stoneCost: 0
   brickCost: 0
   lumberCost: 0
   prereq:
-  - {fileID: 11400000, guid: 49edc9994a566b14ab9f089c6ea1322a, type: 2}
+  - {fileID: 11400000, guid: 7119e716436940940babfdfa5ff1c014, type: 2}

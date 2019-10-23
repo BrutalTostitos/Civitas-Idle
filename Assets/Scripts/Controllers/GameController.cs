@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventCallBacks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -17,19 +18,19 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     private static GameController mInstance;
+	HousePurchaseEventInfo hpei = new HousePurchaseEventInfo();
 
-    public Dictionary<string, Resource> mResources;
+	public Dictionary<string, Resource> mResources;
     public List<string> ItemsToSell;
     public System.Random mRandom = new System.Random();
 	public int mGoldAmount = 1000;
 	public float mFoodAmount = 0;
 	public float foodUpdateTimer;
 	public float foodUpdateTimerMax;
-
-    void Awake()
+	void Awake()
     {
-        
-    }
+		
+	}
 	
     private GameController()
     {
@@ -158,18 +159,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-	//TODO
-	/*
-    public void CalculateWorkerCaps()
-    {
-        string[] keys = mWorkerCaps.Keys.ToArray<string>();
-        foreach (string key in keys)
-        {
-            //10 is the default value.
-            mWorkerCaps[key] = Buildings.GetInstance().getWorkerPopCap(key) + 10;
-        }
-    }
-    */
+
+
 
 	//PERHAPS MOVE THIS SOMEWHERE ELSE
 	[System.Serializable]
@@ -295,9 +286,19 @@ public class GameController : MonoBehaviour
             {
                 mGoldAmount -= building.GoldCost;
             }
+			if(building.PopulationIncrease != 0)
+			{
+				hpei.populationIncrease = building.PopulationIncrease;
+				EventController.getInstance().FireEvent(hpei);
+				//Fire event for workercontroller
+				//OR
+				//just call workercontroller function?
+				//this event system is a pain
+			}
         }
     }
 
+	#region Save Game
 	//Saved Game
 	private GameControllerSave CreateSaveGameObject()
 	{
@@ -361,6 +362,6 @@ public class GameController : MonoBehaviour
 			Debug.Log("No Gamecontroller save found");
 		}
 	}
-
+	#endregion
 
 }
