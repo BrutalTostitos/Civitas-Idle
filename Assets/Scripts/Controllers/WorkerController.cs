@@ -294,7 +294,7 @@ public class WorkerController : MonoBehaviour
 			tmp.mMaxTime = worker.Value.mMaxTime;
 			save.workers.Add(tmp);
 		}
-
+		save.popCap = popCap;
 		return save;
 		
 	}
@@ -344,6 +344,7 @@ public class WorkerController : MonoBehaviour
 				worker.Value.mCurTime = save.workers[i].mCurTime;
 				worker.Value.mMaxTime = save.workers[i].mMaxTime;
 			}
+			popCap = save.popCap;
 
 		}
 		else

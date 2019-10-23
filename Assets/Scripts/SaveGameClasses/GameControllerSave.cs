@@ -64,6 +64,7 @@ public class WorkerControllerSave
 	public List<string> WorkerNames = new List<string>();
 	//public List<Worker> WorkerValues = new List<Worker>();
 	public List<WorkerControllerData> workers = new List<WorkerControllerData>();
+	public int popCap;
 	//public List<MiningWorker> miningValues = new List<MiningWorker>();
 	//public List<FarmingWorker> farmingValues = new List<FarmingWorker>();
 	//public List<CookWorker> cookValues = new List<CookWorker>();
