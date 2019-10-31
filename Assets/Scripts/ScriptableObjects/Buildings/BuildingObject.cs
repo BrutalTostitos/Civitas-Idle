@@ -36,6 +36,50 @@ public class BuildingObject : ScriptableObject
     [SerializeField]
     private BuildingObject[] prereq;
 
+    [SerializeField]
+    private bool isMultiSprite;
+
+    [SerializeField]
+    private Sprite buildingTileSprite;
+    
+    [SerializeField]
+    private Sprite buildingTileSpriteLower;
+    
+    [SerializeField]
+    private Sprite buildingTileSpriteUpper;
+
+    public bool IsMultiSprite
+    {
+        get
+        {
+            return isMultiSprite;
+        }
+    }
+
+    public Sprite BuildingTileSprite
+    {
+        get
+        {
+            return buildingTileSprite;
+        }
+    }
+
+    public Sprite BuildingTileSpriteLower
+    {
+        get
+        {
+            return buildingTileSpriteLower;
+        }
+    }
+
+    public Sprite BuildingTileSpriteUpper
+    {
+        get
+        {
+            return buildingTileSpriteUpper;
+        }
+    }
+
     public string Name
     {
         get

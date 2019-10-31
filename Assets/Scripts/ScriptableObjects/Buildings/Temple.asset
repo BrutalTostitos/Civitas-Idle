@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b54375ea7341a4caa0504d77d62220, type: 3}
   m_Name: Temple
   m_EditorClassIdentifier: 
-  mName: 
-  description: 
+  mName: Temple
+  description: Expands your knowledge and faith.
   OnBuyFunction: 
   icon: {fileID: 0}
   populationIncrease: 0
@@ -22,3 +22,9 @@ MonoBehaviour:
   brickCost: 0
   lumberCost: 0
   prereq: []
+  isMultiSprite: 1
+  buildingTileSprite: {fileID: 0}
+  buildingTileSpriteLower: {fileID: 21300000, guid: 8023fd3e80e429142820e1325ac99406,
+    type: 3}
+  buildingTileSpriteUpper: {fileID: 21300000, guid: e5728af7370046a43bf5cc6f36973665,
+    type: 3}
