@@ -16980,6 +16980,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 740954849}
+    - target: {fileID: 3966949907446207693, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: aa355b343889b624b932ec21a96926c5,
+        type: 3}
+    - target: {fileID: 3966949907446207695, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cb72d640c3f7fea419fd571a36e38fe3,
+        type: 3}
     - target: {fileID: 3966949907528719057, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_Sprite
@@ -16988,6 +17000,11 @@ PrefabInstance:
     - target: {fileID: 3966949907528719057, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3966949907535335298, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3966949907548796384, guid: 1842ea52b64e0884e9774eb1f5ec7951,
