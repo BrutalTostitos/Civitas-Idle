@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    //Figure out loading and saving.
-    List<GameObject> gameObjects = new List<GameObject>();
-    Vector2 mapPos = new Vector2(0, 0);
+    //TODO: Load from save the current map.
+    List<BuildingTileController> buildingTileControllers = new List<BuildingTileController>();
     public GameObject map;
     Vector3 lastPos = new Vector3(0, 0, 0);
     Vector3 defaultPos = new Vector3(0, 0, 0);
+
+    public Canvas discoveryCanvas;
+    public SpriteMask spriteMask;
     void Update()
     {
+        //Make more efficient later.
+        spriteMask.enabled = discoveryCanvas.enabled;
+
+
         if (Input.GetMouseButton(0))
         {
             if (lastPos != defaultPos)
@@ -24,5 +30,16 @@ public class MapController : MonoBehaviour
         {
             lastPos = defaultPos;
         }
+
+        //for testing
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            UpdateMap();
+        }
+    }
+
+    void UpdateMap()
+    {
+
     }
 }

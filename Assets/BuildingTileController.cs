@@ -8,9 +8,12 @@ public class BuildingTileController : MonoBehaviour
     public SpriteRenderer BuildingSpriteLower;
     public SpriteRenderer BuildingSpriteUpper;
 
+    public bool isDiscovered;
+
     // Start is called before the first frame update
     void Start()
     {
+        BuildingSprite.sprite = null;
         BuildingSpriteLower.sprite = null;
         BuildingSpriteUpper.sprite = null;
     }
@@ -23,12 +26,25 @@ public class BuildingTileController : MonoBehaviour
 
     public void SetBuilding(BuildingObject buildingObject)
     {
+        NullifySprites();
         if (buildingObject.IsMultiSprite)
         {
+            
 
             BuildingSpriteLower.sprite = buildingObject.BuildingTileSpriteLower;
             BuildingSpriteUpper.sprite = buildingObject.BuildingTileSpriteUpper;
 
         }
+        else
+        {
+            BuildingSprite.sprite = buildingObject.BuildingTileSprite;
+        }
+    }
+
+    void NullifySprites()
+    {
+        BuildingSprite.sprite = null;
+        BuildingSpriteLower.sprite = null;
+        BuildingSpriteUpper.sprite = null;
     }
 }
