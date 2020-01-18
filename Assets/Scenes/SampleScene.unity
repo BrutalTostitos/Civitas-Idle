@@ -10486,6 +10486,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1051889553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3966949907475139163, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+    type: 3}
+  m_PrefabInstance: {fileID: 3966949908207653902}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b845e974b9fbbf438b0551cc2837acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!223 &1090411129 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 1144475996960241077, guid: 1842ea52b64e0884e9774eb1f5ec7951,
@@ -15712,6 +15724,7 @@ MonoBehaviour:
   workerController: {fileID: 916147774}
   miningController: {fileID: 595967259}
   talentPanelScript: {fileID: 513798442}
+  mapController: {fileID: 0}
 --- !u!4 &1595138740
 Transform:
   m_ObjectHideFlags: 0
@@ -15877,9 +15890,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2da5c4ccd7f70468dad61a15150635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResourceSprites:
+  - {fileID: 21300000, guid: 9e480b3a97b883e4eb1c7dc1d52753f7, type: 3}
+  - {fileID: 21300000, guid: 1f681c9b077aadd4c80d82651ecb70c1, type: 3}
+  - {fileID: 21300000, guid: 770e56bc10b70f64ab2357060ce53dd2, type: 3}
+  - {fileID: 21300000, guid: 2b30b49d244cd8b4b9e41f63d63344b7, type: 3}
+  - {fileID: 21300000, guid: 86f66159ff542cd44aef9f1d3c97de78, type: 3}
+  - {fileID: 21300000, guid: 4b016b21f3d6b614b8d642c70f4d8ee5, type: 3}
+  - {fileID: 21300000, guid: 7eacde42dbfc885478feb393c78ce961, type: 3}
+  - {fileID: 21300000, guid: c28e9131f7127c247b639fb48c12b7bc, type: 3}
+  - {fileID: 21300000, guid: ca554ea94f500f4428ea86d47ced82ed, type: 3}
+  - {fileID: 21300000, guid: a70ce258008d5a94f9b1c1c181d92089, type: 3}
+  - {fileID: 21300000, guid: a92a4ea81528fc04199d50c1eabc3efb, type: 3}
+  - {fileID: 21300000, guid: a122c17487e9943449107cc36281c68b, type: 3}
+  - {fileID: 21300000, guid: 8e24d1e124501774ba1c81a407926204, type: 3}
+  - {fileID: 21300000, guid: a59c2acfab13ebd49878710370369bca, type: 3}
+  - {fileID: 21300000, guid: 3390b2ef73f84d64884b9840d0e8fbf6, type: 3}
+  - {fileID: 21300000, guid: 3237fd7bcd155194a9bdff59652dea78, type: 3}
+  - {fileID: 21300000, guid: 30a3ee729657c4646bee0e18284b2b79, type: 3}
+  - {fileID: 21300000, guid: 04c374af0da4ed9489c3fdeba35629ee, type: 3}
+  - {fileID: 21300000, guid: b57806f60778d5e47af978ed239f2e38, type: 3}
+  - {fileID: 21300000, guid: 8cb873812c73dc84ea3b6e6f50e31591, type: 3}
   map: {fileID: 719424148}
+  mapOriginTile: {fileID: 1051889553}
   discoveryCanvas: {fileID: 2090964352}
   spriteMask: {fileID: 761980950}
+  TileTemplate: {fileID: 7372652399674997360, guid: 712baf78559cb14448aabb66ea30fef8,
+    type: 3}
 --- !u!114 &1835974912 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4818662721682313626, guid: 7d7e6c94f38f8a64c966cdf8658458fc,
@@ -16576,6 +16613,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 916147774}
+    - target: {fileID: 3966949906578899625, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3966949906607897802, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -16594,7 +16636,7 @@ PrefabInstance:
     - target: {fileID: 3966949906637473141, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3966949906645924726, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
@@ -17055,6 +17097,16 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3966949907475139163, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: isDiscovered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3966949907475139163, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: isResourceTile
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3966949907475139165, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17157,6 +17209,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 916147774}
+    - target: {fileID: 3966949907983028182, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3966949908002390658, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

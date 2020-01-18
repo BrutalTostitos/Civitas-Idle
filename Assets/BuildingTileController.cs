@@ -57,5 +57,6 @@ public class BuildingTileController : MonoBehaviour
     public void Discover()
     {
         isDiscovered = true;
+        EventController.getInstance().OnDiscover();
     }
 }

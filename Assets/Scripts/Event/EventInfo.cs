@@ -93,4 +93,9 @@ namespace EventCallBacks
         }
         
     }
+
+	public class MapUpdateEventInfo : EventInfo
+	{
+
+	}
 }

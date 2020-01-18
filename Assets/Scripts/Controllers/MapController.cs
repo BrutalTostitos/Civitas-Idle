@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using EventCallBacks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +23,13 @@ public class MapController : MonoBehaviour
     Vector3 lastPos = new Vector3(0, 0, 0);
     Vector3 defaultPos = new Vector3(0, 0, 0);
 
+    MapUpdateEventInfo mapUpdateEventInfo = new MapUpdateEventInfo();
+
     void Start()
     {
+        EventController.getInstance().RegisterListener<MapUpdateEventInfo>(UpdateMap);
         buildingTileControllers[new Vector2(0, 0)] = mapOriginTile;
+        UpdateMap(null);
     }
 
     void Update()
@@ -45,15 +50,9 @@ public class MapController : MonoBehaviour
         {
             lastPos = defaultPos;
         }
-
-        //for testing
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UpdateMap();
-        }
     }
 
-    void UpdateMap()
+    public void UpdateMap(MapUpdateEventInfo meui)
     {
         Dictionary<Vector2, BuildingTileController> buildingTileControllers2 = new Dictionary<Vector2, BuildingTileController>();
         BuildingTileController btc;
@@ -64,7 +63,7 @@ public class MapController : MonoBehaviour
                 if (!buildingTileControllers.ContainsKey(v2 - new Vector2(-1, 0)) && !buildingTileControllers2.ContainsKey(v2 - new Vector2(-1, 0)))
                 {
                     GameObject temp = GameObject.Instantiate(TileTemplate, map.transform);
-                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(174.6f, 0);
+                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(173.7521f, 0);
                     buildingTileControllers2[v2 - new Vector2(-1, 0)] = temp.GetComponent<BuildingTileController>();
                     btc = temp.GetComponent<BuildingTileController>();
                     int i = (int)Random.Range(0, 99);
@@ -73,13 +72,12 @@ public class MapController : MonoBehaviour
                         btc.isResourceTile = true;
                         btc.BuildingSprite.gameObject.SetActive(true);
                         btc.BuildingSprite.sprite = ResourceSprites[i - 80];
-                        Debug.Log("GOT RESOURCE");
                     }
                 }
                 if (!buildingTileControllers.ContainsKey(v2 - new Vector2(1, 0)) && !buildingTileControllers2.ContainsKey(v2 - new Vector2(1, 0)))
                 {
                     GameObject temp = GameObject.Instantiate(TileTemplate, map.transform);
-                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(-174.6f, 0);
+                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(-173.7521f, 0);
                     buildingTileControllers2[v2 - new Vector2(1, 0)] = temp.GetComponent<BuildingTileController>();
                     btc = temp.GetComponent<BuildingTileController>();
                     int i = (int)Random.Range(0, 99);
@@ -88,13 +86,12 @@ public class MapController : MonoBehaviour
                         btc.isResourceTile = true;
                         btc.BuildingSprite.gameObject.SetActive(true);
                         btc.BuildingSprite.sprite = ResourceSprites[i - 80];
-                        Debug.Log("GOT RESOURCE");
                     }
                 }
                 if (!buildingTileControllers.ContainsKey(v2 - new Vector2(0, 1)) && !buildingTileControllers2.ContainsKey(v2 - new Vector2(0, 1)))
                 {
                     GameObject temp = GameObject.Instantiate(TileTemplate, map.transform);
-                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(0, -174.6f);
+                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(0, -173.7521f);
                     buildingTileControllers2[v2 - new Vector2(0, 1)] = temp.GetComponent<BuildingTileController>();
                     btc = temp.GetComponent<BuildingTileController>();
                     int i = (int)Random.Range(0, 99);
@@ -103,13 +100,12 @@ public class MapController : MonoBehaviour
                         btc.isResourceTile = true;
                         btc.BuildingSprite.gameObject.SetActive(true);
                         btc.BuildingSprite.sprite = ResourceSprites[i - 80];
-                        Debug.Log("GOT RESOURCE");
                     }
                 }
                 if (!buildingTileControllers.ContainsKey(v2 - new Vector2(0, -1)) && !buildingTileControllers2.ContainsKey(v2 - new Vector2(0, -1)))
                 {
                     GameObject temp = GameObject.Instantiate(TileTemplate, map.transform);
-                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(0, 174.6f);
+                    temp.transform.localPosition = buildingTileControllers[v2].gameObject.transform.localPosition - new Vector3(0, 173.7521f);
                     buildingTileControllers2[v2 - new Vector2(0, -1)] = temp.GetComponent<BuildingTileController>();
                     btc = temp.GetComponent<BuildingTileController>();
                     int i = (int)Random.Range(0, 99);
@@ -118,8 +114,6 @@ public class MapController : MonoBehaviour
                         btc.isResourceTile = true;
                         btc.BuildingSprite.gameObject.SetActive(true);
                         btc.BuildingSprite.sprite = ResourceSprites[i - 80];
-                        Debug.Log(btc.BuildingSprite.sprite.name);
-                        Debug.Log("GOT RESOURCE");
                     }
                 }
             }

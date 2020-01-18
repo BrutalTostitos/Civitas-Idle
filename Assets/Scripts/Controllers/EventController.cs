@@ -20,6 +20,7 @@ public class EventController : MonoBehaviour
 	IronMinePurchaseEventInfo impei = new IronMinePurchaseEventInfo();
 	FarmPurchaseEventInfo fpei = new FarmPurchaseEventInfo();
 	HousePurchaseEventInfo hpei = new HousePurchaseEventInfo();
+    MapUpdateEventInfo muei = new MapUpdateEventInfo();
 	void Awake()
     {
         mInstance = this;
@@ -107,4 +108,8 @@ public class EventController : MonoBehaviour
 		FireEvent(fpei);
 	}
 	
+    public void OnDiscover()
+    {
+        FireEvent(muei);
+    }
 }
