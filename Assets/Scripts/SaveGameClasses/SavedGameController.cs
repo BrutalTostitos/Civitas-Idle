@@ -11,17 +11,11 @@ public class SavedGameController : MonoBehaviour
 	public WorkerController workerController;
 	public MiningController miningController;
 	public TalentPanelScript talentPanelScript;
+    public MapController mapController;
 
-    // Start is called before the first frame update
     void Start()
     {
         LoadGame("SaveGame");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SaveGame(string saveName)

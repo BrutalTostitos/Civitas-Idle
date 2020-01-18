@@ -8,14 +8,14 @@ public class BuildingTileController : MonoBehaviour
     public SpriteRenderer BuildingSpriteLower;
     public SpriteRenderer BuildingSpriteUpper;
 
-    public bool isDiscovered;
+    public bool isDiscovered = false;
+    public bool isResourceTile = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        BuildingSprite.sprite = null;
-        BuildingSpriteLower.sprite = null;
-        BuildingSpriteUpper.sprite = null;
+
     }
 
     // Update is called once per frame
@@ -26,6 +26,11 @@ public class BuildingTileController : MonoBehaviour
 
     public void SetBuilding(BuildingObject buildingObject)
     {
+        //Cannot build on a resource tile.
+        if (isResourceTile)
+        {
+            return;
+        }
         NullifySprites();
         if (buildingObject.IsMultiSprite)
         {
@@ -46,5 +51,11 @@ public class BuildingTileController : MonoBehaviour
         BuildingSprite.sprite = null;
         BuildingSpriteLower.sprite = null;
         BuildingSpriteUpper.sprite = null;
+    }
+
+    //TODO : Create a cost to discovering more land.
+    public void Discover()
+    {
+        isDiscovered = true;
     }
 }
