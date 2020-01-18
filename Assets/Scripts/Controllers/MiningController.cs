@@ -216,10 +216,14 @@ public class MiningController : MonoBehaviour
 		{
 			return; //should not be accessible, thus performs no action
 		}
-		int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
 
+		/*//why dis?
+		int modResult = (int)Math.Round(mRandom.NextDouble() * amount);
+		*/
+		int modResult = amount; //probably have buffs from talents applied here, or directly affect the amount
 		GameController.GetInstance().mResources[resource_name].modifyCountCond(Mathf.Max( modResult, 1), 0);
 		GameController.GetInstance().mResources["Stone"].modifyCountCond(amount - modResult, 0);
+		
 
 
 
