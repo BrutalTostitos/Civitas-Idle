@@ -19,14 +19,16 @@ public class GameController : MonoBehaviour
 {
     private static GameController mInstance;
 	HousePurchaseEventInfo hpei = new HousePurchaseEventInfo();
+    UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();
 
-	public Dictionary<string, Resource> mResources;
+    public Dictionary<string, Resource> mResources;
     public List<string> ItemsToSell;
     public System.Random mRandom = new System.Random();
 	public int mGoldAmount = 1000;
 	public float mFoodAmount = 0;
 	public float foodUpdateTimer;
 	public float foodUpdateTimerMax;
+    public int DiscoverGoldCost = 100;
 	void Awake()
     {
 		
@@ -59,6 +61,11 @@ public class GameController : MonoBehaviour
         
     }
 
+    public int GetDiscoverCost()
+    {
+        return DiscoverGoldCost;
+    }
+
     public static GameController GetInstance()
     {
         
@@ -81,6 +88,7 @@ public class GameController : MonoBehaviour
 	public void ChangeFoodAmount(float amount)
 	{
 		mFoodAmount += amount;
+        EventController.getInstance().FireEvent(ruei);
 	}
     public int getResourceValue(string resource_id)
     {
@@ -119,7 +127,8 @@ public class GameController : MonoBehaviour
         {
             passed = false;
         }
-        //goldMutex.ReleaseMutex();
+
+        EventController.getInstance().FireEvent(ruei);
         return passed;
     }
     
@@ -153,9 +162,7 @@ public class GameController : MonoBehaviour
 
         if (mResources[key].modifyCountCond(-count, count))
         {
-            //goldMutex.WaitOne();
             mGoldAmount += mResources[key].mValue * count;
-            //goldMutex.ReleaseMutex();
         }
     }
 
@@ -315,8 +322,9 @@ public class GameController : MonoBehaviour
 		save.foodUpdateTimer = foodUpdateTimer;
 		save.foodUpdateTimerMax = foodUpdateTimerMax;
 
+        save.DiscoverCost = DiscoverGoldCost;
 
-		return save;
+        return save;
 		
 	}
 
@@ -354,9 +362,11 @@ public class GameController : MonoBehaviour
 			mFoodAmount = save.foodAmount;
 			foodUpdateTimer = save.foodUpdateTimer;
 			foodUpdateTimerMax = save.foodUpdateTimerMax;
+            DiscoverGoldCost = save.DiscoverCost;
 
-			
-		}
+
+
+        }
 		else
 		{
 			Debug.Log("No Gamecontroller save found");

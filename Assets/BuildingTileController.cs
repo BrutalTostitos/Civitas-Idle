@@ -10,7 +10,7 @@ public class BuildingTileController : MonoBehaviour
 
     public bool isDiscovered = false;
     public bool isResourceTile = false;
-
+    public int resourceType = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +56,12 @@ public class BuildingTileController : MonoBehaviour
     //TODO : Create a cost to discovering more land.
     public void Discover()
     {
-        isDiscovered = true;
-        EventController.getInstance().OnDiscover();
+        if (GameController.GetInstance().changeGold(-GameController.GetInstance().GetDiscoverCost(), GameController.GetInstance().GetDiscoverCost()))
+        {
+            GameController.GetInstance().DiscoverGoldCost = (int) (GameController.GetInstance().DiscoverGoldCost * 1.5f);
+            isDiscovered = true;
+            EventController.getInstance().OnDiscover();
+        }
+        
     }
 }
