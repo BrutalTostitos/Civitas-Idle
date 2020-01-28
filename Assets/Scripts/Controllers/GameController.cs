@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
         mResources["Iron Ore"] = new Resource("Iron Ore", 15, ResourceType.Unprocessed);
         //PROCESSED
         mResources["Stone Slab"] = new Resource("Stone Slab", 4, ResourceType.Processed);
-
+        mResources["Copper Ingot"] = new Resource("Copper Ingot", 15, ResourceType.Processed);
         //TODO need some variable to control tick update.
         //the other controllers will likely need a customized update function
         //gamecontroller -> eventcontroller -> othercontrollers.UpdateTick()
