@@ -12,7 +12,9 @@ public class SmithingController : MonoBehaviour
 
     private float mFuelAmount;
     private float mFuelCap;
-    
+    private int mFurnaceDecrementAmount = 5;
+    private float mFurnaceUpdateTimer = 5.0f;
+    private float mFurnaceTimerReset = 5.0f;
 	#endregion
 
     
@@ -31,7 +33,12 @@ public class SmithingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        mFurnaceUpdateTimer -= Time.deltaTime;
+        if (mFurnaceUpdateTimer <= 0)
+        {
+            FurnaceUpdate();
+            mFurnaceUpdateTimer = mFurnaceTimerReset;
+        }
     }
 
     #endregion
@@ -53,11 +60,27 @@ public class SmithingController : MonoBehaviour
         }
 
         mHeatProggressBar.current = mFuelAmount;
+        FurnaceGraphicUpdate();
 
+        }
 
+    public void FurnaceUpdate()
+    {
+        mFuelAmount -= mFurnaceDecrementAmount;
+        if (mFuelAmount < 0)
+        {
+            mFuelAmount = 0;
+        }
+
+        mHeatProggressBar.current = mFuelAmount;
+        FurnaceGraphicUpdate();
+    }
+    public void FurnaceGraphicUpdate()
+    {
         mHeatProggressBar.gameObject.transform.GetChild(0)
             .gameObject.transform.GetChild(0).GetComponent<Image>().color =
             Color.Lerp(Color.blue, Color.red, mHeatProggressBar.current / mHeatProggressBar.maximum);
+
     }
 
 }
