@@ -18,7 +18,7 @@ public class GameControllerSave
 	public float foodUpdateTimer = 0f;
 	public float foodUpdateTimerMax = 0f;
 
-	
+	public int DiscoverCost;
 }
 
 [System.Serializable]
@@ -100,4 +100,29 @@ public class TalentSave
 
 	public List<string> talentNames = new List<string>();
 	public List<int> talentRanks = new List<int>();
+}
+
+//For helping the map save / load.
+[System.Serializable]
+public class TileSave
+{
+	public float posX;
+	public float posY;
+
+	public bool isResource;
+	public int resourceType;
+
+	public string building;
+
+	public float worldPosX;
+	public float worldPosY;
+	public float worldPosZ;
+}
+
+[System.Serializable]
+public class MapSave
+{
+	public List<TileSave> tileSaves = new List<TileSave>();
+
+	public int DiscoverCost;
 }

@@ -10360,6 +10360,7 @@ MonoBehaviour:
   mFoodAmount: 0
   foodUpdateTimer: 0
   foodUpdateTimerMax: 0
+  DiscoverGoldCost: 100
 --- !u!4 &837946245
 Transform:
   m_ObjectHideFlags: 0
@@ -16087,7 +16088,8 @@ MonoBehaviour:
   workerController: {fileID: 916147774}
   miningController: {fileID: 595967259}
   talentPanelScript: {fileID: 513798442}
-  mapController: {fileID: 0}
+  mapController: {fileID: 1811609179}
+  autoSaveTargetTime: 300
 --- !u!4 &1595138740
 Transform:
   m_ObjectHideFlags: 0

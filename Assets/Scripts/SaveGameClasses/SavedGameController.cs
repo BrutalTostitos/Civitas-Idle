@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using EventCallBacks;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -12,10 +13,24 @@ public class SavedGameController : MonoBehaviour
 	public MiningController miningController;
 	public TalentPanelScript talentPanelScript;
     public MapController mapController;
+    UIResourceUpdateEventInfo ruei = new UIResourceUpdateEventInfo();
+
+    public float autoSaveTargetTime = 300.0f;
 
     void Start()
     {
         LoadGame("SaveGame");
+    }
+
+    void Update()
+    {
+        autoSaveTargetTime -= Time.deltaTime;
+
+        if (autoSaveTargetTime <= 0.0f)
+        {
+            SaveGame("SaveGame");
+            autoSaveTargetTime = 300.0f;
+        }
     }
 
     public void SaveGame(string saveName)
@@ -32,6 +47,7 @@ public class SavedGameController : MonoBehaviour
 		workerController.SaveGame(saveName);
 		miningController.SaveGame(saveName);
 		talentPanelScript.SaveGame(saveName);
+        mapController.SaveGame(saveName);
 	}
 
     public void LoadGame(string loadName)
@@ -43,6 +59,8 @@ public class SavedGameController : MonoBehaviour
 		workerController.LoadGame(loadName);
 		miningController.LoadGame(loadName);
         talentPanelScript.LoadGame(loadName);
+        mapController.LoadGame(loadName);
+        EventController.getInstance().FireEvent(ruei);
     }
 
     void OnApplicationQuit()
