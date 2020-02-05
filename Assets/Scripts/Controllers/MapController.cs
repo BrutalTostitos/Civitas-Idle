@@ -170,6 +170,12 @@ public class MapController : MonoBehaviour
                     btc.BuildingSprite.gameObject.SetActive(true);
                     btc.BuildingSprite.sprite = ResourceSprites[ts.resourceType];
                 }
+
+                if (ts.isDiscovered)
+                {
+                    btc.isDiscovered = true;
+                    btc.DisableButton();
+                }
             }
         }
         else
@@ -199,6 +205,8 @@ public class MapController : MonoBehaviour
             tileSave.isResource = buildingTileControllers[key].isResourceTile;
 
             tileSave.resourceType = buildingTileControllers[key].resourceType;
+
+            tileSave.isDiscovered = buildingTileControllers[key].isDiscovered;
 
             tileSave.worldPosX = buildingTileControllers[key].gameObject.transform.localPosition.x;
             tileSave.worldPosY = buildingTileControllers[key].gameObject.transform.localPosition.y;
