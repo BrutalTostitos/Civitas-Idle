@@ -117,6 +117,7 @@ public class TileSave
 	public float worldPosX;
 	public float worldPosY;
 	public float worldPosZ;
+    public bool isDiscovered;
 }
 
 [System.Serializable]
