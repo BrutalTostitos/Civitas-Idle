@@ -5745,7 +5745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -453.72992, y: 427.35992}
+  m_AnchoredPosition: {x: -453.72992, y: 427.36023}
   m_SizeDelta: {x: 907.46, y: 1261.7}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &455251918 stripped
@@ -11331,9 +11331,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.21
     y: 0
-    width: 1
+    width: 0.64
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -11363,7 +11363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877935930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.95, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11908,8 +11908,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 564969769}
   m_HandleRect: {fileID: 564969768}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.3387183
+  m_Value: 0.9999994
+  m_Size: 0.3387174
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19326,6 +19326,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319828579967683462, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319828579967683462, guid: 1842ea52b64e0884e9774eb1f5ec7951,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3453732924371375576, guid: 1842ea52b64e0884e9774eb1f5ec7951,
         type: 3}
