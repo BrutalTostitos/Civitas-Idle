@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
     public Canvas MainCanvas;
     public Canvas MiningCanvas;
     public Canvas FarmingCanvas;
-    public Canvas ForestryCanvas;
+    public Canvas DiscoveryCanvas;
     public Canvas BuildingCanvas;
     public Canvas MarketCanvas;
     public Canvas SmithingCanvas;
@@ -24,6 +24,8 @@ public class UIController : MonoBehaviour
     public GameObject MarketDetail;
     public GameObject SmithingDetail;
     public GameObject TalentDetail;
+
+    public GameObject DiscoveryGoldCostCamera;
     
     //HUD text
     public Text GoldCountText;
@@ -113,7 +115,7 @@ public class UIController : MonoBehaviour
         mCanvasDict[0] = MainCanvas;
         mCanvasDict[1] = MiningCanvas;
         mCanvasDict[2] = FarmingCanvas;
-        mCanvasDict[3] = ForestryCanvas;
+        mCanvasDict[3] = DiscoveryCanvas;
         mCanvasDict[4] = BuildingCanvas;
         mCanvasDict[5] = MarketCanvas;
         mCanvasDict[6] = SmithingCanvas;
@@ -254,6 +256,15 @@ public class UIController : MonoBehaviour
         CurrentCanvasIdx = idx;
         mCanvasDict[idx].gameObject.GetComponent<Canvas>().enabled = true;
         mDetailDict[idx].SetActive(true);
+
+        if (idx == 3)
+        {
+            DiscoveryGoldCostCamera.SetActive(true);
+        }
+        else
+        {
+            DiscoveryGoldCostCamera.SetActive(false);
+        }
 
     
         //Disable current zone @ zoneIndex
