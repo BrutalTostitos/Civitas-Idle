@@ -9,12 +9,7 @@ public class FarmPlot : MonoBehaviour
     public Button tillButton;
     public ProgressBar tillProgressBar;     //horizontal bar
 	public ProgressBar overgrowthProgressBar;
-	public Button overGrowthButton;
 	public ProgressBar harvestProgressBar;  //Radial bar
-    public Button cornButton;
-    public Button wheatButton;
-    public Button potatoButton;
-    public Button hopsButton;
     public List<Button> mButtonList;
     //public GameObject go;   //maybe not needed
     public Seeds mSeed = null;
@@ -27,8 +22,6 @@ public class FarmPlot : MonoBehaviour
 	public float tillProgress;// = 0.0f;
 	public float tillProgressCap;// = 5.0f;
 
-	public float overGrownProgress;	//Monitors the current state of the field being over grown
-	public float overGrownCap;		//The assigned value to signify the field is completely overgrown
 	
 
     public int ID = -1;
@@ -38,31 +31,19 @@ public class FarmPlot : MonoBehaviour
 		#region Progress Bar init
 		tillProgress = 0.0f;
 		tillProgressCap = 5.0f;
-		overGrownProgress = 0.0f;
-		overGrownCap = 5.0f;
 
 		tillProgressBar.current = tillProgress;
 		tillProgressBar.maximum = tillProgressCap;
-		overgrowthProgressBar.current = overGrownProgress;          
-		overgrowthProgressBar.maximum = overGrownCap;
 		#endregion
 		isTilled = false;
-		mButtonList.Add(cornButton);
-        mButtonList.Add(wheatButton);
-        mButtonList.Add(potatoButton);
-        mButtonList.Add(hopsButton);
-        cornButton.gameObject.SetActive(false);
-        wheatButton.gameObject.SetActive(false);
-        potatoButton.gameObject.SetActive(false);
-        hopsButton.gameObject.SetActive(false);
         harvestProgressBar.gameObject.SetActive(false);
 		overgrowthProgressBar.gameObject.SetActive(false);
 		
 		//adding click events
         tillButton.onClick.AddListener(() => TillField());			
-		overGrowthButton.onClick.AddListener(() => WeedField());	
 
     }
+    //I dont think this actually matters at all anymore
 	//private void Update()
 	//{
 	//	UpdateFieldStatus();
@@ -73,15 +54,12 @@ public class FarmPlot : MonoBehaviour
 		if (mSeed.mType != SEED_TYPE.None)
 		{
 			//Checking to see if our field is overgrown. If not, the seeds will continue to grow
-			if (overGrownProgress < overGrownCap)
-			{
-				//Plot specific
-				overGrownProgress += Time.deltaTime * TalentBuffs.GetInstance().OvergrowthModSpeed;
-				overgrowthProgressBar.current = overGrownProgress;
-				//Seed specific
-				mSeed.mHarvestTime += Time.deltaTime * TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType);
-				harvestProgressBar.current = mSeed.mHarvestTime;
-			}
+			
+			
+			//Seed specific
+			mSeed.mHarvestTime += Time.deltaTime * TalentBuffs.GetInstance().GetGrowthModSpeed(mSeed.mType);
+			harvestProgressBar.current = mSeed.mHarvestTime;
+			
 
 
 
@@ -103,14 +81,7 @@ public class FarmPlot : MonoBehaviour
         }
         tillProgressBar.current = tillProgress;
     }
-	public void WeedField(float amount = 1.0f)
-	{
-		overGrownProgress -= amount;
-		if (overGrownProgress < 0)
-		{
-			overGrownProgress = 0.0f;
-		}
-	}
+	
 	public void HarvestCrops()
     {
         //Determining our harvest and updating farmingcontrollers seed count
@@ -135,7 +106,6 @@ public class FarmPlot : MonoBehaviour
 
 		//Resetting the plot
 		mSeed.mType = SEED_TYPE.None;
-		overGrownProgress = 0.0f;
 		gameObject.GetComponent<Image>().sprite = null;
 		isTilled = false;
         ToggleButtonsHarvested();

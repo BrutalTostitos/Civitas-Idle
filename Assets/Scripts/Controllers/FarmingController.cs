@@ -86,33 +86,36 @@ public class FarmingController : MonoBehaviour
 
 		for (int i = 0; i < 10; i++)
         {
-            FarmPlot tmp = Instantiate(farmPlotPrefab, FarmingBackgroundPanel, true);
-            //tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
-            tmp.transform.localScale = new Vector3(1, 1, 1);    //resetting scale
-            float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
-            float height = tmp.GetComponent<RectTransform>().sizeDelta.y;
-            tmp.transform.localPosition = new Vector3(plotSpawnX + ((width + 20) * (i%5)), //20 is our buffer
-                plotSpawnY + -((height + 80) * (int)(i / 5)));                           //20 is our buffer
-
-            //Setting up button click events
-            tmp.cornButton.onClick.AddListener(() => PlantSeed(tmp, "Corn"));
-            tmp.wheatButton.onClick.AddListener(() => PlantSeed(tmp, "Wheat"));
-            tmp.potatoButton.onClick.AddListener(() => PlantSeed(tmp, "Potato"));
-            tmp.hopsButton.onClick.AddListener(() => PlantSeed(tmp, "Hops"));
 
 
-            tmp.ID = i;
-			//Disabling all but the first 2 farm plots. Later ones will be purchased later
-			if (i > 1)
-			{
-				tmp.gameObject.SetActive(false);
-			}
-			mFarmPlots.Add(tmp);
+			#region old farmplot code
+			//FarmPlot tmp = Instantiate(farmPlotPrefab, FarmingBackgroundPanel, true);
+			////tmp.transform.SetParent(FarmPlotParent, true);      //gets rescaled when we set the parent?
+			//tmp.transform.localScale = new Vector3(1, 1, 1);    //resetting scale
+			//float width = tmp.GetComponent<RectTransform>().sizeDelta.x;    //getting our width
+			//float height = tmp.GetComponent<RectTransform>().sizeDelta.y;
+			//tmp.transform.localPosition = new Vector3(plotSpawnX + ((width + 20) * (i%5)), //20 is our buffer
+			//    plotSpawnY + -((height + 80) * (int)(i / 5)));                           //20 is our buffer
 
+			////Setting up button click events
+			//tmp.cornButton.onClick.AddListener(() => PlantSeed(tmp, "Corn"));
+			//tmp.wheatButton.onClick.AddListener(() => PlantSeed(tmp, "Wheat"));
+			//tmp.potatoButton.onClick.AddListener(() => PlantSeed(tmp, "Potato"));
+			//tmp.hopsButton.onClick.AddListener(() => PlantSeed(tmp, "Hops"));
+
+			//tmp.ID = i;
+			////Disabling all but the first 2 farm plots. Later ones will be purchased later
+			//if (i > 1)
+			//{
+			//	tmp.gameObject.SetActive(false);
+			//}
+			//mFarmPlots.Add(tmp);
+
+			#endregion
 		}
-        #endregion
-        //SEEDS 
-        mFarmingSeeds["Corn"] = new Seeds(5, SEED_TYPE.Corn);
+		#endregion
+		//SEEDS 
+		mFarmingSeeds["Corn"] = new Seeds(5, SEED_TYPE.Corn);
         mFarmingSeeds["Potato"] = new Seeds(5, SEED_TYPE.Potato);
         mFarmingSeeds["Wheat"] = new Seeds(5, SEED_TYPE.Wheat);
         mFarmingSeeds["Hops"] = new Seeds(5, SEED_TYPE.Hops);
@@ -187,6 +190,7 @@ public class FarmingController : MonoBehaviour
 		EventController.getInstance().FireEvent(fuei);
     }
 
+	//TODO this probably needs completely changed
 	private void AutomatedWeeding()
 	{
 		if (totalSeededPlots > 0)
@@ -195,11 +199,8 @@ public class FarmingController : MonoBehaviour
 			foreach (FarmPlot plot in mFarmPlots)
 			{
 
-				plot.UpdateFieldStatus();
-				if (plot.mSeed != null)
-				{
-					plot.WeedField(totalPower);
-				}
+				plot.UpdateFieldStatus(); //probably useless
+				
 			}
 		}
 	}
@@ -317,8 +318,6 @@ public class FarmingController : MonoBehaviour
 			tmp.TillProgress = farm.tillProgress;
 			tmp.TillProgressCap = farm.tillProgressCap;
 
-			tmp.OverGrownProgress = farm.overGrownProgress;
-			tmp.OverGrownCap = farm.overGrownCap;
 			tmp.Seed = farm.mSeed;
 			tmp.isTilled = farm.isTilled;
 			save.FarmPlots.Add(tmp);
@@ -375,8 +374,6 @@ public class FarmingController : MonoBehaviour
 				mFarmPlots[i].tillProgressBar.current = mFarmPlots[i].tillProgress = save.FarmPlots[i].TillProgress;
 				mFarmPlots[i].tillProgressBar.maximum = mFarmPlots[i].tillProgressCap = save.FarmPlots[i].TillProgressCap;
 
-				mFarmPlots[i].overgrowthProgressBar.current = mFarmPlots[i].overGrownProgress = save.FarmPlots[i].OverGrownProgress;
-				mFarmPlots[i].overgrowthProgressBar.maximum = mFarmPlots[i].overGrownCap = save.FarmPlots[i].OverGrownCap;
 
 				mFarmPlots[i].harvestProgressBar.current = mFarmPlots[i].mSeed.mHarvestTime = save.FarmPlots[i].Seed.mHarvestTime;
 				mFarmPlots[i].harvestProgressBar.maximum = mFarmPlots[i].mSeed.mHarvestTimeCap = save.FarmPlots[i].Seed.mHarvestTimeCap;
