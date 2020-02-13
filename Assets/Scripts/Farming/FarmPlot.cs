@@ -7,9 +7,8 @@ public class FarmPlot : MonoBehaviour
 {
 
     public Button tillButton;
-    public ProgressBar tillProgressBar;     //horizontal bar
-	public ProgressBar overgrowthProgressBar;
-	public ProgressBar harvestProgressBar;  //Radial bar
+    public ProgressBar tillProgressBar;     //radial bar
+	public ProgressBar harvestProgressBar;  //horizontal bar/mask
     public List<Button> mButtonList;
     //public GameObject go;   //maybe not needed
     public Seeds mSeed = null;
@@ -37,7 +36,6 @@ public class FarmPlot : MonoBehaviour
 		#endregion
 		isTilled = false;
         harvestProgressBar.gameObject.SetActive(false);
-		overgrowthProgressBar.gameObject.SetActive(false);
 		
 		//adding click events
         tillButton.onClick.AddListener(() => TillField());			
@@ -169,7 +167,6 @@ public class FarmPlot : MonoBehaviour
         }
 
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
-		overgrowthProgressBar.gameObject.SetActive(!overgrowthProgressBar.gameObject.activeSelf);
 	}
     private void ToggleButtonsHarvested()
     {
@@ -177,7 +174,6 @@ public class FarmPlot : MonoBehaviour
         tillButton.gameObject.SetActive(!tillButton.gameObject.activeSelf);
         tillProgressBar.gameObject.SetActive(!tillProgressBar.gameObject.activeSelf);
         harvestProgressBar.gameObject.SetActive(!harvestProgressBar.gameObject.activeSelf);
-		overgrowthProgressBar.gameObject.SetActive(!overgrowthProgressBar.gameObject.activeSelf);
     }
     
 }
